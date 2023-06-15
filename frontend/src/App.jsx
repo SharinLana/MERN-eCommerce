@@ -41,20 +41,16 @@ function App() {
           <Route path="/product-details/:id" element={<ProductDetailsPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="*" element="Page not found 404" />
-
-          {/* User Protected Routes */}
-          <Route element={<ProtectedRoutesComponent />}>
-            <Route path="/user" element={<UserProfilePage />} />
-            <Route path="/user/my-orders" element={<UserOrderPage />} />
-            <Route
-              path="/user/order-details"
-              element={<UserOrderDetailsPage />}
-            />
-            <Route
-              path="/user/cart-details"
-              element={<UserCartDetailsPage />}
-            />
-          </Route>
+        </Route>
+        {/* User Protected Routes */}
+        <Route element={<ProtectedRoutesComponent admin={false} />}>
+          <Route path="/user" element={<UserProfilePage />} />
+          <Route path="/user/my-orders" element={<UserOrderPage />} />
+          <Route
+            path="/user/order-details"
+            element={<UserOrderDetailsPage />}
+          />
+          <Route path="/user/cart-details" element={<UserCartDetailsPage />} />
         </Route>
 
         {/* Admin Protected Routes */}
