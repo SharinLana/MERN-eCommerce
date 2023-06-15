@@ -24,7 +24,7 @@ function App() {
         <Route path="*" element="Page not found 404" />
 
         {/* Protected routes */}
-        <Route path="/protected-routes" element={<ProtectedRoutesComponent />}>
+        <Route element={<ProtectedRoutesComponent />}>
           <Route path="/user" element={<UserProfilePage />} />
           <Route path="/user/my-orders" element={<UserOrderPage />} />
           <Route
