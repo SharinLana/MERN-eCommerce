@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Card } from "react-bootstrap";
 
-const ProductCardComponent = () => {
+const CategoryCardComponent = () => {
   return (
     <Card style={{ width: "18rem" }}>
       <Card.Img variant="top" src="images/games-category.png" />
@@ -17,4 +17,4 @@ const ProductCardComponent = () => {
   );
 };
 
-export default ProductCardComponent;
+export default CategoryCardComponent;
