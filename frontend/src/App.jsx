@@ -1,11 +1,15 @@
 import React, { BrowserRouter, Routes, Route } from "react-router-dom";
+// Publicly available pages
 import HomePage from "./pages/HomePage";
 import CartPage from "./pages/CartPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import ProductListPage from "./pages/ProductListPage";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
-// User Pages
+// Components
+import HeaderComponent from "./components/HeaderComponent";
+import FooterComponent from "./components/FooterComponent";
+// User pages
 import UserProfilePage from "./pages/user/UserProfilePage";
 import UserOrderPage from "./pages/user/UserOrderPage";
 import UserOrderDetailsPage from "./pages/user/UserOrderDetailsPage";
@@ -25,6 +29,7 @@ import AdminAnalyticsPage from "./pages/admin/AdminAnalyticsPage";
 function App() {
   return (
     <BrowserRouter>
+      <HeaderComponent />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/register" element={<RegisterPage />} />
@@ -71,6 +76,7 @@ function App() {
           <Route path="/admin/analytics" element={<AdminAnalyticsPage />} />
         </Route>
       </Routes>
+      <FooterComponent />
     </BrowserRouter>
   );
 }
