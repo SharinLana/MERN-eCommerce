@@ -9,6 +9,8 @@ import ProductDetailsPage from "./pages/ProductDetailsPage";
 // Components
 import HeaderComponent from "./components/HeaderComponent";
 import FooterComponent from "./components/FooterComponent";
+// User components
+import RoutesWithUserChatComponent from "./components/user/RoutesWithUserChatComponent";
 // User pages
 import UserProfilePage from "./pages/user/UserProfilePage";
 import UserOrderPage from "./pages/user/UserOrderPage";
@@ -31,23 +33,28 @@ function App() {
     <BrowserRouter>
       <HeaderComponent />
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/product-list" element={<ProductListPage />} />
-        <Route path="/product-details/:id" element={<ProductDetailsPage />} />
-        <Route path="/cart" element={<CartPage />} />
-        <Route path="*" element="Page not found 404" />
+        <Route element={<RoutesWithUserChatComponent />}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/product-list" element={<ProductListPage />} />
+          <Route path="/product-details/:id" element={<ProductDetailsPage />} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="*" element="Page not found 404" />
 
-        {/* User Protected Routes */}
-        <Route element={<ProtectedRoutesComponent />}>
-          <Route path="/user" element={<UserProfilePage />} />
-          <Route path="/user/my-orders" element={<UserOrderPage />} />
-          <Route
-            path="/user/order-details"
-            element={<UserOrderDetailsPage />}
-          />
-          <Route path="/user/cart-details" element={<UserCartDetailsPage />} />
+          {/* User Protected Routes */}
+          <Route element={<ProtectedRoutesComponent />}>
+            <Route path="/user" element={<UserProfilePage />} />
+            <Route path="/user/my-orders" element={<UserOrderPage />} />
+            <Route
+              path="/user/order-details"
+              element={<UserOrderDetailsPage />}
+            />
+            <Route
+              path="/user/cart-details"
+              element={<UserCartDetailsPage />}
+            />
+          </Route>
         </Route>
 
         {/* Admin Protected Routes */}
