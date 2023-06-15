@@ -9,6 +9,7 @@ import UserProfilePage from "./pages/user/UserProfilePage";
 import UserOrderPage from "./pages/user/UserOrderPage";
 import UserOrderDetailsPage from "./pages/user/UserOrderDetailsPage";
 import UserCartDetailsPage from "./pages/user/UserCartDetailsPage";
+import ProtectedRoutesComponent from "./components/ProtectedRoutesComponent";
 
 function App() {
   return (
@@ -23,11 +24,14 @@ function App() {
         <Route path="*" element="Page not found 404" />
 
         {/* Protected routes */}
-        <Route path="/protected-routes" element={}> 
-        <Route path="/user" element={<UserProfilePage />} />
-        <Route path="/user/my-orders" element={<UserOrderPage />} />
-        <Route path="/user/order-details" element={<UserOrderDetailsPage />} />
-        <Route path="/user/cart-details" element={<UserCartDetailsPage />} />
+        <Route path="/protected-routes" element={<ProtectedRoutesComponent />}>
+          <Route path="/user" element={<UserProfilePage />} />
+          <Route path="/user/my-orders" element={<UserOrderPage />} />
+          <Route
+            path="/user/order-details"
+            element={<UserOrderDetailsPage />}
+          />
+          <Route path="/user/cart-details" element={<UserCartDetailsPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
