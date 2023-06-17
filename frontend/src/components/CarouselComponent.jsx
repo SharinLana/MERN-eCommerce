@@ -9,6 +9,7 @@ const CarouselComponent = () => {
           className="d-block w-100"
           src="images/carousel/carousel-1.png"
           alt="First slide"
+          style={{ height: "300px", objectFit: "cover" }}
         />
         <Carousel.Caption>
           <h3>First slide label</h3>
@@ -20,6 +21,7 @@ const CarouselComponent = () => {
           className="d-block w-100"
           src="images/carousel/carousel-2.png"
           alt="Second slide"
+          style={{ height: "300px", objectFit: "cover" }}
         />
 
         <Carousel.Caption>
@@ -32,6 +34,7 @@ const CarouselComponent = () => {
           className="d-block w-100"
           src="images/carousel/carousel-3.png"
           alt="Third slide"
+          style={{ height: "300px", objectFit: "cover" }}
         />
 
         <Carousel.Caption>
