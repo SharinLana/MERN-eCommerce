@@ -8,6 +8,7 @@ const UserChatComponent = () => {
       <label className="chat-btn" htmlFor="check">
         {/* chat bootstrap icon */}
         <i className="bi bi-chat-dots comment"></i>
+        <span className="position-absolute top-0 start-10 translate-middle p-2 bg-danger border border-light rounded-circle"></span>
         {/* close bootstrap icon */}
         <i className="bi bi-x-circle close"></i>
       </label>
