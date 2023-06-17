@@ -1,6 +1,7 @@
 import React from "react";
 import { Row, Col, Container, ListGroup, Button } from "react-bootstrap";
 import ProductCartComponent from "../components/ProductCardComponent";
+import SortingSidebarComponent from "../components/SortingSidebarComponent";
 
 const ProductListPage = () => {
   return (
@@ -9,6 +10,9 @@ const ProductListPage = () => {
         <Row>
           <Col md={3}>
             <ListGroup variant="flush">
+              <ListGroup.Item>
+                <SortingSidebarComponent />
+              </ListGroup.Item>
               <ListGroup.Item>
                 <Button variant="primary">Primary</Button>
                 <Button variant="danger">Danger</Button>
