@@ -1,5 +1,6 @@
 import React from "react";
 import { Carousel } from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
 
 const CarouselComponent = () => {
   return (
@@ -12,7 +13,9 @@ const CarouselComponent = () => {
           style={{ height: "300px", objectFit: "cover" }}
         />
         <Carousel.Caption>
-          <h3>First slide label</h3>
+          <LinkContainer to="/product-details" style={{ cursor: "pointer" }}>
+            <h3>Bestseller in Laptops Category</h3>
+          </LinkContainer>
           <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
         </Carousel.Caption>
       </Carousel.Item>
@@ -25,7 +28,9 @@ const CarouselComponent = () => {
         />
 
         <Carousel.Caption>
-          <h3>Second slide label</h3>
+          <LinkContainer to="/product-details" style={{ cursor: "pointer" }}>
+            <h3>Bestseller in Books Category</h3>
+          </LinkContainer>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
         </Carousel.Caption>
       </Carousel.Item>
@@ -38,7 +43,9 @@ const CarouselComponent = () => {
         />
 
         <Carousel.Caption>
-          <h3>Third slide label</h3>
+          <LinkContainer to="/product-details" style={{ cursor: "pointer" }}>
+            <h3>Bestseller in Cameras Category</h3>
+          </LinkContainer>
           <p>Present commodo cursus magna, vel scelerisque nisl consectetur.</p>
         </Carousel.Caption>
       </Carousel.Item>
