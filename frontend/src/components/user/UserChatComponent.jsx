@@ -2,12 +2,15 @@ import React from "react";
 
 const UserChatComponent = () => {
   return (
-    <div>
-      {/* chat bootstrap icon */}
-      <i className="bi bi-chat-dots"></i> 
-      {/* close bootstrap icon */}
-      <i className="bi bi-x-circle"></i>
-    </div>
+    <>
+      <input type="checkbox" id="check" />
+      <label className="chat-btn" htmlFor="check">
+        {/* chat bootstrap icon */}
+        <i className="bi bi-chat-dots"></i>
+        {/* close bootstrap icon */}
+        <i className="bi bi-x-circle"></i>
+      </label>
+    </>
   );
 };
 
