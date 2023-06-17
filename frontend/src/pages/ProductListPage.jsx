@@ -5,6 +5,7 @@ import SortingSidebarComponent from "../components/SortingSidebarComponent";
 import PaginationComponent from "../components/PaginationComponent";
 import AttributesFilterComponent from "../components/filteringOptions/AttributesFilterComponent";
 import CategoryFilterComponent from "../components/filteringOptions/CategoryFilterComponent";
+import PriceFilterComponent from "../components/filteringOptions/PriceFilterComponent";
 
 const ProductListPage = () => {
   return (
@@ -15,6 +16,9 @@ const ProductListPage = () => {
             <ListGroup variant="flush">
               <ListGroup.Item>
                 <SortingSidebarComponent />
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <PriceFilterComponent />
               </ListGroup.Item>
               <ListGroup.Item>
                 <CategoryFilterComponent />
