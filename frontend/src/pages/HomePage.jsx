@@ -17,8 +17,8 @@ const HomePage = () => {
     <>
       <CarouselComponent />
 
-      <Container>
-        <Row xs={1} md={2} className="g-4" mt={5}>
+      <Container style={{marginTop: "40px"}}>
+        <Row xs={1} md={2} className="g-4">
           {categories.map((item, index) => (
             <CategoryCardComponent item={item} key={index} />
           ))}
