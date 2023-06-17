@@ -3,7 +3,7 @@ import { Button, Card } from "react-bootstrap";
 
 const CategoryCardComponent = () => {
   return (
-    <Card style={{ width: "18rem" }}>
+    <Card >
       <Card.Img variant="top" src="images/games-category.png" />
       <Card.Body>
         <Card.Title>Card Title</Card.Title>
