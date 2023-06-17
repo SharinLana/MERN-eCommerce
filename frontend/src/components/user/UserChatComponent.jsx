@@ -18,8 +18,18 @@ const UserChatComponent = () => {
         </div>
         <div className="chat-form">
           <div className="cht-msg">
-            <p>Chat history</p>
+            {Array.from({ length: 10 }).map((_, id) => (
+              <div key={id}>
+                <p>
+                  <b>You wrote:</b> Hello, world! This is a toast message.
+                </p>
+                <p className="bg-primary p-3 ms-4 text-light rounded-pill">
+                  <b>Support wrote:</b> Hello, world! This is a toast message.
+                </p>
+              </div>
+            ))}
           </div>
+
           <textarea
             id="clientChatMsg"
             className="form-control"
