@@ -6,6 +6,7 @@ import PaginationComponent from "../components/PaginationComponent";
 import AttributesFilterComponent from "../components/filteringOptions/AttributesFilterComponent";
 import CategoryFilterComponent from "../components/filteringOptions/CategoryFilterComponent";
 import PriceFilterComponent from "../components/filteringOptions/PriceFilterComponent";
+import RatingFilterComponent from "../components/filteringOptions/RatingFilterComponent";
 
 const ProductListPage = () => {
   return (
@@ -19,6 +20,9 @@ const ProductListPage = () => {
               </ListGroup.Item>
               <ListGroup.Item>
                 <PriceFilterComponent />
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <RatingFilterComponent />
               </ListGroup.Item>
               <ListGroup.Item>
                 <CategoryFilterComponent />
