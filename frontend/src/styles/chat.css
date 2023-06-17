@@ -52,3 +52,22 @@
   border-radius: 5px 5px 0px 0px;
   color: #fff;
 }
+
+.chat-form {
+  padding: 15px;
+}
+
+.chat-form input,
+.chat-form textarea,
+.chat-form button {
+  margin-bottom: 10px;
+}
+
+.chat-form textarea {
+  resize: none;
+}
+
+.form-control:focus,
+.btn:focus {
+  box-shadow: none;
+}
