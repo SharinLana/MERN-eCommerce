@@ -2,6 +2,7 @@ import React from "react";
 import { Row, Col, Container, ListGroup, Button } from "react-bootstrap";
 import ProductCartComponent from "../components/ProductCardComponent";
 import SortingSidebarComponent from "../components/SortingSidebarComponent";
+import PaginationComponent from "../components/PaginationComponent";
 
 const ProductListPage = () => {
   return (
@@ -21,6 +22,7 @@ const ProductListPage = () => {
           </Col>
           <Col md={9}>
             <ProductCartComponent />
+            <PaginationComponent />
           </Col>
         </Row>
       </Container>
