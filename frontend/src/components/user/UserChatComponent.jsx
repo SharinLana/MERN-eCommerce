@@ -3,7 +3,10 @@ import React from "react";
 const UserChatComponent = () => {
   return (
     <div>
-      <p>Chat</p>
+      {/* chat bootstrap icon */}
+      <i className="bi bi-chat-dots"></i> 
+      {/* close bootstrap icon */}
+      <i className="bi bi-x-circle"></i>
     </div>
   );
 };
