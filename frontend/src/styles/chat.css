@@ -14,3 +14,15 @@
   justify-content: center;
   align-items: center;
 }
+
+.chat-btn .close {
+  display: none;
+}
+
+#check:checked ~ .chat-btn i {
+  display: block;
+}
+
+#check:checked ~ .chat-btn .comment {
+  display: none;
+}
