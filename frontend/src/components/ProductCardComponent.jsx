@@ -9,7 +9,10 @@ const ProductCardComponent = ({ images, idx }) => {
       <Row>
         {/* Product Image */}
         <Col lg={5}>
-          <Card.Img variant="top" src="/images/tablets-category.png" />
+          <Card.Img
+            variant="top"
+            src={"/images/" + images[idx] + "-category.png"}
+          />
         </Col>
         {/* Product Description */}
         <Col lg={7}>
