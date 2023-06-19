@@ -1,7 +1,7 @@
 import React from "react";
 import { Form } from "react-bootstrap";
 
-const SortingSidebarComponent = () => {
+const SortingComponent = () => {
   return (
     <Form.Select aria-label="Default select example">
       <option>SORT BY:</option>
@@ -14,4 +14,4 @@ const SortingSidebarComponent = () => {
   );
 };
 
-export default SortingSidebarComponent;
+export default SortingComponent;

@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col, Container, ListGroup, Button } from "react-bootstrap";
 import ProductCardComponent from "../components/ProductCardComponent";
-import SortingSidebarComponent from "../components/SortingSidebarComponent";
+import SortingComponent from "../components/SortingComponent";
 import PaginationComponent from "../components/PaginationComponent";
 import AttributesFilterComponent from "../components/filteringOptions/AttributesFilterComponent";
 import CategoryFilterComponent from "../components/filteringOptions/CategoryFilterComponent";
@@ -16,7 +16,7 @@ const ProductListPage = () => {
           <Col md={3}>
             <ListGroup variant="flush">
               <ListGroup.Item>
-                <SortingSidebarComponent />
+                <SortingComponent />
               </ListGroup.Item>
               <ListGroup.Item>
                 <PriceFilterComponent />
