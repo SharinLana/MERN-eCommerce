@@ -19,6 +19,7 @@ const ProductListPage = () => {
                 <SortingComponent />
               </ListGroup.Item>
               <ListGroup.Item>
+                FILTER: <br />
                 <PriceFilterComponent />
               </ListGroup.Item>
               <ListGroup.Item>
