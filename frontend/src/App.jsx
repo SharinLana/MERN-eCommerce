@@ -27,11 +27,14 @@ import AdminEditProductPage from "./pages/admin/AdminEditProductPage";
 import AdminCreateProductPage from "./pages/admin/AdminCreateProductPage";
 import AdminChatsPage from "./pages/admin/AdminChatsPage";
 import AdminAnalyticsPage from "./pages/admin/AdminAnalyticsPage";
+// util functions
+import ScrollToTop from "./utils/ScrollToTop";
 
 function App() {
   return (
     <BrowserRouter>
       <HeaderComponent />
+      <ScrollToTop />
       <Routes>
         <Route element={<RoutesWithUserChatComponent />}>
           <Route path="/" element={<HomePage />} />
