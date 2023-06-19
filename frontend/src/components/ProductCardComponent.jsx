@@ -28,7 +28,7 @@ const ProductCardComponent = ({ images, idx }) => {
             </Card.Text>
             <Card.Text>
               $124{" "}
-              <LinkContainer to="/product-details:/1">
+              <LinkContainer to="/product-details">
                 <Button variant="danger">See product</Button>
               </LinkContainer>
             </Card.Text>
