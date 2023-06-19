@@ -1,9 +1,11 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
+import AddedToCartMessageComponent from "../components/AddedToCartMessageComponent";
 
 const ProductDetailsPage = () => {
   return (
     <Container>
+      <AddedToCartMessageComponent />
       <Row className="mt-5">
         <Col md={4}>images</Col>
         <Col md={8}>
