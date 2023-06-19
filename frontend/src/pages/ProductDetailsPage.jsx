@@ -1,14 +1,26 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { Container, Row, Col } from "react-bootstrap";
 
 const ProductDetailsPage = () => {
-  const { id } = useParams();
-  console.log(id);
-
   return (
-    <div>
-      <h1>Product details page</h1>
-    </div>
+    <Container>
+      <Row className="mt-5">
+        <Col md={4}>images</Col>
+        <Col md={8}>
+          <Row>
+            <Col md={8}>product name, prise, description, rating</Col>
+            <Col md={4}>product status, quantity</Col>
+          </Row>
+          <Row>
+            <Col className="mt-5">
+              <h5>REVIEWS</h5>
+            </Col>
+          </Row>
+          <hr />
+          send review form
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
