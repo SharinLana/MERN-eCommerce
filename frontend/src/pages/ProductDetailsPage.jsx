@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Image } from "react-bootstrap";
 import AddedToCartMessageComponent from "../components/AddedToCartMessageComponent";
 
 const ProductDetailsPage = () => {
@@ -7,7 +7,12 @@ const ProductDetailsPage = () => {
     <Container>
       <AddedToCartMessageComponent />
       <Row className="mt-5">
-        <Col md={4}>images</Col>
+        <Col md={4}>
+          <Image fluid src="/images/games-category.png" />
+          <Image fluid src="/images/monitors-category.png" />
+          <Image fluid src="/images/tablets-category.png" />
+          <Image fluid src="/images/games-category.png" />
+        </Col>
         <Col md={8}>
           <Row>
             <Col md={8}>product name, prise, description, rating</Col>
