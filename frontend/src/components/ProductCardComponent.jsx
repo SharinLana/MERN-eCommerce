@@ -1,5 +1,6 @@
 import React from "react";
 import { Card, Button, Row, Col } from "react-bootstrap";
+import { Rating } from "react-simple-star-rating";
 
 const ProductCardComponent = () => {
   return (
@@ -16,6 +17,10 @@ const ProductCardComponent = () => {
             <Card.Text>
               {` Some quick example text to build on the card title and make up the
           bulk of the card's content.`}
+            </Card.Text>
+            <Card.Text>
+              <Rating readonly size={20} initialValue={5} />
+              (1)
             </Card.Text>
             <Button variant="primary">Go somewhere</Button>
           </Card.Body>
