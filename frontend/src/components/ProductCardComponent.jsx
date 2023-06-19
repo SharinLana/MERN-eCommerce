@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Button } from "react-bootstrap";
 
-const ProductCartComponent = () => {
+const ProductCardComponent = () => {
   return (
     <Card style={{ width: "18rem" }}>
       <Card.Img variant="top" src="/images/tablets-category.png" />
@@ -17,4 +17,4 @@ const ProductCartComponent = () => {
   );
 };
 
-export default ProductCartComponent;
+export default ProductCardComponent;
