@@ -4,6 +4,7 @@ import { Form } from "react-bootstrap";
 const CategoryFilterComponent = () => {
   return (
     <Form>
+      <span className="fw-bold">Category</span>
       {Array.from({ length: 5 }).map((_, idx) => (
         <div key={idx} className="mb-3">
           <Form.Check type="checkbox" id={`check-api2-${idx}`}>
