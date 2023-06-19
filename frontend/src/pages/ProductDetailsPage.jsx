@@ -1,5 +1,13 @@
 import React from "react";
-import { Container, Row, Col, Image, ListGroup } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Image,
+  ListGroup,
+  Form,
+  Button,
+} from "react-bootstrap";
 import { Rating } from "react-simple-star-rating";
 import AddedToCartMessageComponent from "../components/AddedToCartMessageComponent";
 
@@ -27,11 +35,34 @@ const ProductDetailsPage = () => {
                 <ListGroup.Item>Porta ac consectetur ac</ListGroup.Item>
               </ListGroup>
             </Col>
-            <Col md={4}>product status, quantity</Col>
+            <Col md={4}>
+              <ListGroup>
+                <ListGroup.Item>Cras justo odio</ListGroup.Item>
+                <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
+                <ListGroup.Item>
+                  <Form.Select size="lg" aria-label="Default select example">
+                    <option>Open this select menu</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </Form.Select>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <Button variant="danger">Danger</Button>
+                </ListGroup.Item>
+                <ListGroup.Item>Vestibulum at eros</ListGroup.Item>
+              </ListGroup>
+            </Col>
           </Row>
           <Row>
             <Col className="mt-5">
               <h5>REVIEWS</h5>
+              <ListGroup variant="flush">
+                <ListGroup.Item>Cras justo odio</ListGroup.Item>
+                <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
+                <ListGroup.Item>Morbi leo risus</ListGroup.Item>
+                <ListGroup.Item>Porta ac consectetur ac</ListGroup.Item>
+              </ListGroup>
             </Col>
           </Row>
           <hr />
