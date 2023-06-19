@@ -1,8 +1,9 @@
 import React from "react";
 import { Card, Button, Row, Col } from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
 import { Rating } from "react-simple-star-rating";
 
-const ProductCardComponent = () => {
+const ProductCardComponent = ({ images, idx }) => {
   return (
     <Card style={{ marginTop: "30px", marginBottom: "50px" }}>
       <Row>
@@ -22,7 +23,12 @@ const ProductCardComponent = () => {
               <Rating readonly size={20} initialValue={5} />
               (1)
             </Card.Text>
-            <Button variant="primary">Go somewhere</Button>
+            <Card.Text>
+              $124{" "}
+              <LinkContainer to="/product-details:/1">
+                <Button variant="danger">See product</Button>
+              </LinkContainer>
+            </Card.Text>
           </Card.Body>
         </Col>
       </Row>
