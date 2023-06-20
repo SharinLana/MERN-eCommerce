@@ -63,14 +63,21 @@ const ProductDetailsPage = () => {
               </ListGroup>
             </Col>
           </Row>
+          {/* Review section */}
           <Row>
             <Col className="mt-5">
               <h5>REVIEWS</h5>
               <ListGroup variant="flush">
-                <ListGroup.Item>Cras justo odio</ListGroup.Item>
-                <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
-                <ListGroup.Item>Morbi leo risus</ListGroup.Item>
-                <ListGroup.Item>Porta ac consectetur ac</ListGroup.Item>
+                {Array.from({ length: 5 }).map((_, idx) => (
+                  <ListGroup.Item key={idx}>
+                    John Doe <br />{" "}
+                    <Rating readonly size={20} initialValue={4} />
+                    <br />
+                    06-19-2023
+                    <br />
+                    drhgfh cfhjfyj erter fg dsfdf jkuk xdfsd ffd sdf
+                  </ListGroup.Item>
+                ))}
               </ListGroup>
             </Col>
           </Row>
@@ -78,24 +85,22 @@ const ProductDetailsPage = () => {
           {/* Send review form */}
           <Alert variant="danger">Login first to write a review</Alert>
           <Form>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control type="email" placeholder="name@example.com" />
-            </Form.Group>
             <Form.Group
               className="mb-3"
               controlId="exampleForm.ControlTextarea1"
             >
-              <Form.Label>Example textarea</Form.Label>
+              <Form.Label>Write a review</Form.Label>
               <Form.Control as="textarea" rows={3} />
             </Form.Group>
             <Form.Select aria-label="Default select example">
               <option>Open this select menu</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
+              <option value="5">5 (excellent)</option>
+              <option value="4">4 (good)</option>
+              <option value="3">3 (average)</option>
+              <option value="2">2 (bad)</option>
+              <option value="1">1 (awful)</option>
             </Form.Select>
-            <Button variant="primary">Primary</Button>
+            <Button variant="primary" className="mb-3 mt-3">Submit</Button>
           </Form>
         </Col>
       </Row>
