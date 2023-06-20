@@ -13,7 +13,7 @@ const CartItemComponent = () => {
             <Image
               fluid
               crossorigin="anonymous"
-              src="images/games-category.png"
+              src="/images/games-category.png"
             />
           </Col>
 
