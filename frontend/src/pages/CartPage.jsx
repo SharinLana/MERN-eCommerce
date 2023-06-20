@@ -1,6 +1,7 @@
 import React from "react";
 import { Row, Col, Container, Alert, ListGroup, Button } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
+import CartItemComponent from "../components/CartItemComponent";
 
 const CartPage = () => {
   return (
@@ -9,9 +10,7 @@ const CartPage = () => {
         <Col md={8}>
           <h1>Shopping cart</h1>
           {Array.from({ length: 3 }).map((item, idx) => (
-            <div key={idx}>
-              CartItemComponent <br />
-            </div>
+            <CartItemComponent key={idx}/>
           ))}
           <Alert variant="info">Your cart is empty</Alert>
         </Col>
