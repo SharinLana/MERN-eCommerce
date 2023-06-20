@@ -1,5 +1,6 @@
 import React from "react";
 import { Row, Col, Table } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const UserOrdersPage = () => {
   return (
@@ -10,29 +11,30 @@ const UserOrdersPage = () => {
           <thead>
             <tr>
               <th>#</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Username</th>
+              <th>User</th>
+              <th>Date</th>
+              <th>Total</th>
+              <th>Delivered</th>
+              <th>Order details</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td colSpan={2}>Larry the Bird</td>
-              <td>@twitter</td>
-            </tr>
+            {["bi bi-check-lg text-success", "bi bi-x-lg text-danger"].map(
+              (item, idx) => (
+                <tr key={idx}>
+                  <td>{idx + 1}</td>
+                  <td>Mark Twain</td>
+                  <td>2022-09-12</td>
+                  <td>$124</td>
+                  <td>
+                    <i className={item}></i>
+                  </td>
+                  <td>
+                    <Link to="/user/order-details">go to order</Link>
+                  </td>
+                </tr>
+              )
+            )}
           </tbody>
         </Table>
       </Col>
