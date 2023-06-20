@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Container,
   Row,
@@ -10,19 +10,52 @@ import {
   Alert,
 } from "react-bootstrap";
 import { Rating } from "react-simple-star-rating";
+import ImageZoom from "js-image-zoom";
 import AddedToCartMessageComponent from "../components/AddedToCartMessageComponent";
 
 const ProductDetailsPage = () => {
+  let options = {
+    scale: 2,
+    offset: { vertical: 0, horizontal: 0 },
+    width: 400,
+    zoomWidth: 500,
+    fillContainer: true,
+    zoomPosition: "right"
+  };
+
+  useEffect(() => {
+    new ImageZoom(document.querySelector("#first"), options);
+    new ImageZoom(document.querySelector("#second"), options);
+    new ImageZoom(document.querySelector("#third"), options);
+    new ImageZoom(document.querySelector("#fourth"), options);
+  }, []);
+
   return (
     <Container>
       <AddedToCartMessageComponent />
       <Row className="mt-5">
-        <Col md={4}>
-          {/* fluid prop helps to fit the component nicely to the parent element */}
-          <Image fluid src="/images/games-category.png" />
-          <Image fluid src="/images/monitors-category.png" />
-          <Image fluid src="/images/tablets-category.png" />
-          <Image fluid src="/images/games-category.png" />
+        {/* zIndex needed for zooming in on the image */}
+        <Col md={4} style={{ zIndex: 1 }}>
+          <div id="first">
+            {/* fluid prop helps to fit the component nicely to the parent element */}
+            <Image fluid src="/images/games-category.png" />
+          </div>
+          <br />
+
+          <div id="second">
+            <Image fluid src="/images/monitors-category.png" />
+          </div>
+          <br />
+
+          <div id="third">
+            <Image fluid src="/images/tablets-category.png" />
+          </div>
+          <br />
+
+          <div id="fourth">
+            <Image fluid src="/images/games-category.png" />
+          </div>
+          <br />
         </Col>
         <Col md={8}>
           <Row>
@@ -100,7 +133,9 @@ const ProductDetailsPage = () => {
               <option value="2">2 (bad)</option>
               <option value="1">1 (awful)</option>
             </Form.Select>
-            <Button variant="primary" className="mb-3 mt-3">Submit</Button>
+            <Button variant="primary" className="mb-3 mt-3">
+              Submit
+            </Button>
           </Form>
         </Col>
       </Row>
