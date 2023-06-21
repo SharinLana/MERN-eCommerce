@@ -7,7 +7,7 @@ import {
   Button,
   CloseButton,
   Table,
-  Alert
+  Alert,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useState } from "react";
