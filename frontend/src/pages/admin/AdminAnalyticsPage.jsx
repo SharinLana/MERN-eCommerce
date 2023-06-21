@@ -15,48 +15,125 @@ import {
 const AdminAnalyticsPage = () => {
   const data = [
     {
-      name: "Page A",
-      uv: 4000,
-      pv: 2400,
-      amt: 2400,
+      name: "12:00 AM",
+      "2022 year": 4000,
+      "2021 year": 4100,
     },
     {
-      name: "Page B",
-      uv: 3000,
-      pv: 1398,
-      amt: 2210,
+      name: "1:00 AM",
+      "2022 year": 4200,
+      "2021 year": 4300,
     },
     {
-      name: "Page C",
-      uv: 2000,
-      pv: 9800,
-      amt: 2290,
+      name: "2:00 AM",
+      "2022 year": 4400,
+      "2021 year": 4500,
     },
     {
-      name: "Page D",
-      uv: 2780,
-      pv: 3908,
-      amt: 2000,
+      name: "3:00 AM",
+      "2022 year": 4600,
+      "2021 year": 4600,
     },
     {
-      name: "Page E",
-      uv: 1890,
-      pv: 4800,
-      amt: 2181,
+      name: "4:00 AM",
+      "2022 year": 4800,
+      "2021 year": 5000,
     },
     {
-      name: "Page F",
-      uv: 2390,
-      pv: 3800,
-      amt: 2500,
+      name: "5:00 AM",
+      "2022 year": 5000,
+      "2021 year": 5200,
     },
     {
-      name: "Page G",
-      uv: 3490,
-      pv: 4300,
-      amt: 2100,
+      name: "6:00 AM",
+      "2022 year": 5200,
+      "2021 year": 5400,
+    },
+    {
+      name: "7:00 AM",
+      "2022 year": 5600,
+      "2021 year": 6000,
+    },
+    {
+      name: "8:00 AM",
+      "2022 year": 6000,
+      "2021 year": 6300,
+    },
+    {
+      name: "9:00 AM",
+      "2022 year": 6400,
+      "2021 year": 7000,
+    },
+    {
+      name: "10:00 AM",
+      "2022 year": 6800,
+      "2021 year": 7200,
+    },
+    {
+      name: "11:00 AM",
+      "2022 year": 7000,
+      "2021 year": 7800,
+    },
+    {
+      name: "12:00 PM",
+      "2022 year": 7200,
+      "2021 year": 8200,
+    },
+    {
+      name: "1:00 PM",
+      "2022 year": 7500,
+      "2021 year": 8400,
+    },
+    {
+      name: "2:00 PM",
+      "2022 year": 7700,
+      "2021 year": 9000,
+    },
+    {
+      name: "3:00 PM",
+      "2022 year": 8000,
+      "2021 year": 9500,
+    },
+    {
+      name: "4:00 PM",
+      "2022 year": 8400,
+      "2021 year": 10000,
+    },
+    {
+      name: "5:00 PM",
+      "2022 year": 9000,
+      "2021 year": 12000,
+    },
+    {
+      name: "6:00 PM",
+      "2022 year": 10500,
+      "2021 year": 17000,
+    },
+    {
+      name: "7:00 PM",
+      "2022 year": 16000,
+      "2021 year": 20000,
+    },
+    {
+      name: "8:00 PM",
+      "2022 year": 17000,
+      "2021 year": 21000,
+    },
+    {
+      name: "9:00 PM",
+      "2022 year": 17400,
+      "2021 year": 22000,
+    },
+    {
+      name: "10:00 PM",
+      "2021 year": 23000,
+    },
+    {
+      name: "11:00 PM",
+      "2021 year": 23500,
     },
   ];
+  
   return (
     <Row className="m-5">
       <Col md={2}>
