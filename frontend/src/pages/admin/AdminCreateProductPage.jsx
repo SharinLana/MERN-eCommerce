@@ -6,6 +6,7 @@ import {
   Form,
   Button,
   CloseButton,
+  Table
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useState } from "react";
@@ -109,6 +110,56 @@ const AdminCreateProductPage = () => {
                   >
                     <option>Choose attribute value</option>
                   </Form.Select>
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Row>
+              <Table hover>
+                <thead>
+                  <tr>
+                    <th>Attribute</th>
+                    <th>Value</th>
+                    <th>Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>attr key</td>
+                    <td>attr value</td>
+                    <td>
+                      <CloseButton />
+                    </td>
+                  </tr>
+                </tbody>
+              </Table>
+            </Row>
+
+            <Row>
+              <Col md={6}>
+                <Form.Group className="mb-3" controlId="formBasicNewAttribute">
+                  <Form.Label>Create new attribute</Form.Label>
+                  <Form.Control
+                    disabled={false}
+                    placeholder="first choose or create category"
+                    name="newAttrValue"
+                    type="text"
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group
+                  className="mb-3"
+                  controlId="formBasicNewAttributeValue"
+                >
+                  <Form.Label>Attribute value</Form.Label>
+                  <Form.Control
+                    disabled={false}
+                    placeholder="first choose or create category"
+                    required={true}
+                    name="newAttrValue"
+                    type="text"
+                  />
                 </Form.Group>
               </Col>
             </Row>
