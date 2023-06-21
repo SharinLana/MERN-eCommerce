@@ -84,6 +84,35 @@ const AdminCreateProductPage = () => {
               <Form.Control name="newCategory" type="text" />
             </Form.Group>
 
+            <Row className="mt-5">
+              <Col md={6}>
+                <Form.Group className="mb-3" controlId="formBasicAttributes">
+                  <Form.Label>Choose atrribute </Form.Label>
+                  <Form.Select
+                    name="atrrKey"
+                    aria-label="Default select example"
+                  >
+                    <option>Choose attribute</option>
+                    <option value="red">color</option>
+                  </Form.Select>
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group
+                  className="mb-3"
+                  controlId="formBasicAttributeValue"
+                >
+                  <Form.Label>Attribute value</Form.Label>
+                  <Form.Select
+                    name="atrrVal"
+                    aria-label="Default select example"
+                  >
+                    <option>Choose attribute value</option>
+                  </Form.Select>
+                </Form.Group>
+              </Col>
+            </Row>
+
             <Form.Group controlId="formFileMultiple" className="mb-3 mt-3">
               <Form.Label>Images</Form.Label>
 
