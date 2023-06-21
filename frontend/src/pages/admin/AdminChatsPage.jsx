@@ -1,5 +1,6 @@
 import React from "react";
 import AdminLinksComponent from "../../components/AdminLinksComponent";
+import AdminChatRoomComponent from "../../components/AdminChatRoomComponent";
 import { Row, Col } from "react-bootstrap";
 
 const AdminChatsPage = () => {
@@ -10,7 +11,7 @@ const AdminChatsPage = () => {
       </Col>
       <Col md={10}>
         <Row>
-          
+          <AdminChatRoomComponent />
         </Row>
       </Col>
     </Row>
