@@ -76,6 +76,14 @@ const AdminCreateProductPage = () => {
                 <option value="3">Games</option>
               </Form.Select>
             </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formBasicNewCategory">
+              <Form.Label>
+                Or create a new category (e.g. Computers/Laptops/Intel){" "}
+              </Form.Label>
+              <Form.Control name="newCategory" type="text" />
+            </Form.Group>
+
             <Form.Group controlId="formFileMultiple" className="mb-3 mt-3">
               <Form.Label>Images</Form.Label>
 
