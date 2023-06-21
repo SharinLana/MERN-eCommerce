@@ -172,17 +172,33 @@ const AdminAnalyticsPage = () => {
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
+            <XAxis
+              dataKey="name"
+              label={{
+                value: "TIME",
+                offset: 50,
+                position: "insideBottomRight",
+              }}
+              allowDuplicatedCategory={false}
+            />
+            <YAxis
+              label={{ value: "REVENUE $", angle: -90, position: "insideLeft" }}
+            />
             <Tooltip />
-            <Legend />
+            <Legend verticalAlign="top" height={36} />
             <Line
               type="monotone"
-              dataKey="pv"
+              dataKey="2021 year"
               stroke="#8884d8"
               activeDot={{ r: 8 }}
+              strokeWidth={4}
             />
-            <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+            <Line
+              type="monotone"
+              dataKey="2022 year"
+              stroke="#82ca9d"
+              strokeWidth={4}
+            />
           </LineChart>
         </ResponsiveContainer>
       </Col>
