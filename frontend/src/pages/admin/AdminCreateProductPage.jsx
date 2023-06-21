@@ -6,7 +6,8 @@ import {
   Form,
   Button,
   CloseButton,
-  Table
+  Table,
+  Alert
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useState } from "react";
@@ -164,11 +165,16 @@ const AdminCreateProductPage = () => {
               </Col>
             </Row>
 
+            <Alert variant="primary">
+              After typing attribute key and value press enter on one of the
+              field
+            </Alert>
+
             <Form.Group controlId="formFileMultiple" className="mb-3 mt-3">
               <Form.Label>Images</Form.Label>
-
               <Form.Control required type="file" multiple />
             </Form.Group>
+
             <Button variant="primary" type="submit">
               Create
             </Button>
