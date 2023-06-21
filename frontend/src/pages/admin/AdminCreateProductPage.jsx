@@ -1,8 +1,21 @@
 import React from "react";
 import { Row, Col, Container, Form, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const AdminCreateProductPage = () => {
+  const [validated, setValidated] = useState(false);
+
+  const handleSubmit = (event) => {
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    setValidated(true);
+  };
+
   return (
     <Container>
       <Row className="justify-content-md-center mt-5">
@@ -14,7 +27,7 @@ const AdminCreateProductPage = () => {
         <Col md={6}>
           <h1>Create a new product</h1>
 
-          <Form noValidate>
+          <Form noValidate validated={validated} onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="formBasicName">
               <Form.Label>Name</Form.Label>
               <Form.Control name="name" required type="text" />
