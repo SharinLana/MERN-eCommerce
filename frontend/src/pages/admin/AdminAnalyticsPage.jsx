@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Form } from "react-bootstrap";
 import AdminLinksComponent from "../../components/AdminLinksComponent";
 import {
   LineChart,
@@ -133,14 +133,34 @@ const AdminAnalyticsPage = () => {
       "2021 year": 23500,
     },
   ];
-  
+
   return (
     <Row className="m-5">
       <Col md={2}>
         <AdminLinksComponent />
       </Col>
+
       <Col md={10} width="100%" height="100%">
         <h1>Black Friday Cumulative Revenue 11/26/2022 VS 11/27/2021</h1>
+
+        <Form.Group controlId="firstDateToCompare">
+          <Form.Label>Select First Date To Compare</Form.Label>
+          <Form.Control
+            type="date"
+            name="firstDateToCompare"
+            placeholder="First Date To Compare"
+          />
+        </Form.Group>
+        <br />
+        <Form.Group controlId="secondDateToCompare">
+          <Form.Label>Select Second Date To Compare</Form.Label>
+          <Form.Control
+            type="date"
+            name="secondDateToCompare"
+            placeholder="Second Date To Compare"
+          />
+        </Form.Group>
+
         <ResponsiveContainer width="100%" height={500}>
           <LineChart
             data={data}
