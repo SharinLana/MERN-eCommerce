@@ -1,5 +1,12 @@
 import React from "react";
-import { Row, Col, Container, Form, Button } from "react-bootstrap";
+import {
+  Row,
+  Col,
+  Container,
+  Form,
+  Button,
+  CloseButton,
+} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
@@ -54,7 +61,10 @@ const AdminCreateProductPage = () => {
               <Form.Control name="price" required type="text" />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicCategory">
-              <Form.Label>Category</Form.Label>
+              <Form.Label>
+                Category
+                <CloseButton />(<small>remove selected</small>)
+              </Form.Label>
               <Form.Select
                 required
                 name="category"
