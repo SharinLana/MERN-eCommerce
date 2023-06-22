@@ -17,5 +17,8 @@ const categorySchema = mongoose.Schema({
   attrs: [{ key: { type: String }, value: [{ type: String }] }],
 });
 
+// Compound index to speed up the search for a category in the DB:
+categorySchema.index({ description: 1 }); // categories sorted alphabetically in the DB (a - z)
+
 const Category = mongoose.model("Category", categorySchema);
 module.exports = Category;
