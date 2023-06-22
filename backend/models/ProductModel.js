@@ -1,4 +1,12 @@
 const mongoose = require("mongoose");
+const Review = require("./ReviewModel");
+
+const imageSchema = mongoose.Schema({
+  path: {
+    type: String,
+    required: [true, "Please provide a path to the image"],
+  },
+});
 
 const productSchema = mongoose.Schema(
   {
@@ -9,19 +17,19 @@ const productSchema = mongoose.Schema(
     },
     description: {
       type: String,
-      required: true,
+      required: [true, "Please provide a description for the product"],
     },
     category: {
       type: String,
-      required: true,
+      required: [true, "Please specify the product category"],
     },
     count: {
       type: Number,
-      required: true,
+      required: [true, "Please specify the product count"],
     },
     price: {
       type: Number,
-      required: true,
+      required: [true, "Please specify the product price"],
     },
     rating: {
       type: Number,
@@ -37,11 +45,16 @@ const productSchema = mongoose.Schema(
       { key: { type: String }, value: { type: String } },
       // [{ key: "color", value: "red" }, { key: "size", value: "1 TB" }]
     ],
-    images: [],
-    reviews: [],
+    images: [imageSchema],
+    reviews: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: Review,
+      },
+    ],
   },
   {
-    timestamps: true,
+    timestamps: true, //createdAt, deletedAt fields will be added automatically
   }
 );
 
