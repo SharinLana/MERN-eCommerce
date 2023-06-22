@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Review = require("./ReviewModel");
 
-const imageSchema = mongoose.Schema({
+const imageSchema = new mongoose.Schema({
   path: {
     type: String,
     required: [true, "Please provide a path to the image"],
