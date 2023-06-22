@@ -1,10 +1,12 @@
 require("dotenv").config();
+const mongoose = require("mongoose");
 const express = require("express");
-// Routes
 const apiRoutes = require("./routes/apiRoutes");
 
 const app = express();
+mongoose.set("strictQuery", true);
 
+// Port
 const port = process.env.PORT || 3000;
 
 // Routes middleware
@@ -19,9 +21,20 @@ app.use((error, req, res, next) => {
 });
 
 const start = async () => {
-  app.listen(port, () => {
-    console.log("Server listening on port " + port);
-  });
+  try {
+    await mongoose
+      .connect(process.env.MONGODB_URI)
+      .then(() => console.log("MONGODB connected!"))
+      .catch((err) => console.log(err));
+
+    app.listen(port, () => {
+      console.log(`Server running on port ${port}`);
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 start();
+
+
