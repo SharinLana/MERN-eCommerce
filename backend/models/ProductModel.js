@@ -58,7 +58,15 @@ const productSchema = mongoose.Schema(
   }
 );
 
-productSchema.index();
+// Compound indexes to speed up the product search via search bar:
+productSchema.index(
+  { name: "text", description: "text" }, // find products by name and description
+  { name: "TextIndex" } // find products only by name
+);
+// Sorting array elements in ascending order (a - z): find products by a specific key and sort them by value
+// For descending order, use - 1
+productSchema.index({ "attrs.key": 1, "attrs.value": 1 }); // attrs is an array, and we use numbers for arrays
+
 const Product = mongoose.model("Product", productSchema);
 
 module.exports = Product;
