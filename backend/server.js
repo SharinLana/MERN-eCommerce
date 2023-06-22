@@ -2,6 +2,7 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const express = require("express");
 const apiRoutes = require("./routes/apiRoutes");
+const connectDB = require("./db_config/db");
 
 const app = express();
 mongoose.set("strictQuery", true);
@@ -22,19 +23,13 @@ app.use((error, req, res, next) => {
 
 const start = async () => {
   try {
-    await mongoose
-      .connect(process.env.MONGODB_URI)
-      .then(() => console.log("MONGODB connected!"))
-      .catch((err) => console.log(err));
-
+    connectDB();
     app.listen(port, () => {
       console.log(`Server running on port ${port}`);
     });
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    console.log(err);
   }
 };
 
 start();
-
-
