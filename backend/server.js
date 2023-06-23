@@ -7,6 +7,10 @@ const connectDB = require("./db_config/db");
 const app = express();
 mongoose.set("strictQuery", true);
 
+// Parser
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 // Port
 const port = process.env.PORT || 3000;
 
