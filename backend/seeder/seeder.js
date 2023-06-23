@@ -19,8 +19,17 @@ const importData = async () => {
     await Review.collection.deleteMany({});
 
     await Category.insertMany(categoryData);
-    await Product.insertMany(productData);
-    await Review.insertMany(reviewData);
+
+    // fill the "reviews" property in the "products" DB collection 
+    // with the data from the "reviews" collection
+    const reviews = await Review.insertMany(reviewData);
+    const sampleProducts = productData.map((product) => {
+      reviews.map((review) => {
+        product.reviews.push(review._id);
+      });
+      return { ...product };
+    });
+    await Product.insertMany(sampleProducts);
 
     console.log("Seeder data proceeded successfully");
 
