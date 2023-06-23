@@ -30,4 +30,4 @@ const addCategory = async (req, res, next) => {
   }
 };
 
-module.exports = getCategories;
+module.exports = { getCategories, addCategory };
