@@ -14,8 +14,6 @@ const importData = async () => {
   try {
     await Category.collection.dropIndexes();
     await Product.collection.dropIndexes();
-    await Review.collection.dropIndexes();
-    await User.collection.dropIndexes();
 
     await Category.collection.deleteMany({});
     await Product.collection.deleteMany({});
