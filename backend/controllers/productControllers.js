@@ -1,8 +1,11 @@
 const Product = require("../models/ProductModel");
+const itemsPerPage = require("../utils/pagination");
 
 const getProducts = async (req, res, next) => {
   try {
-    const products = await Product.find({}).sort({ name: 1 });
+    const pageNum = Number(req.query.pageNum) || 1;
+
+    const products = await Product.find({}).skip(itemsPerPage * (pageNum - 1));
 
     res.status(200).json({
       status: "success",
