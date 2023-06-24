@@ -30,4 +30,21 @@ const addCategory = async (req, res, next) => {
   }
 };
 
-module.exports = { getCategories, addCategory };
+const deleteCategory = async (req, res, next) => {
+  try {
+    if (req.params.category !== "Choose category") {
+      await Category.findOneAndDelete({
+        name: decodeURIComponent(req.params.category), // decodeURIComponent needed to convert "Computers%2Laptops" into "Computers/Laptops"
+      }).orFail();
+
+      res.status(200).json({
+        status: "success",
+        message: "Category has been deleted",
+      });
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = { getCategories, addCategory, deleteCategory };
