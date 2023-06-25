@@ -48,12 +48,31 @@ const getProducts = async (req, res, next) => {
       categoryQueryCondition = { category: { $in: a } };
     }
 
+    // Filtering products by attributes (RAM, color, etc)
+    let attrsQueryCondition = [];
+    if (req.query.attrs) {
+      // attrs=RAM-1 TB-2 TB,color-blue-black => ["RAM-1 TB-2 TB", "color-blue-black", ""]
+      attrsQueryCondition = req.query.attrs.split(",").reduce((acc, item) => {
+        if (item) {
+          let a = item.split("-"); // ["RAM", "1 TB", "2 TB"], ["color", "blue", "black"]
+          let values = [...a]; // ["RAM", "1 TB", "2 TB"], ["color", "blue", "black"]
+          values.shift(); // remove the first item from each array
+          let a1 = {
+            attrs: { $elemMatch: { key: a[0], value: { $in: values } } }, // {key: "RAM", value: ["1 TB", "2 TB"]}, {key: "color", value: ["blue", "black"]}
+          };
+          acc.push(a1);
+          return acc;
+        } else return acc;
+      }, []);
+    }
+
     if (queryCondition) {
       query = {
         $and: [
           priceQueryCondition,
           ratingQueryCondition,
           categoryQueryCondition,
+          ...attrsQueryCondition,
         ],
       };
     }
