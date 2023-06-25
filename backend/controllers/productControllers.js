@@ -52,6 +52,7 @@ const getProducts = async (req, res, next) => {
     let attrsQueryCondition = [];
     if (req.query.attrs) {
       // attrs=RAM-1 TB-2 TB,color-blue-black => ["RAM-1 TB-2 TB", "color-blue-black", ""]
+
       attrsQueryCondition = req.query.attrs.split(",").reduce((acc, item) => {
         if (item) {
           let a = item.split("-"); // ["RAM", "1 TB", "2 TB"], ["color", "blue", "black"]
@@ -64,6 +65,8 @@ const getProducts = async (req, res, next) => {
           return acc;
         } else return acc;
       }, []);
+
+      queryCondition = true;
     }
 
     if (queryCondition) {
