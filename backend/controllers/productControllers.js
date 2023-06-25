@@ -69,17 +69,6 @@ const getProducts = async (req, res, next) => {
       queryCondition = true;
     }
 
-    if (queryCondition) {
-      query = {
-        $and: [
-          priceQueryCondition,
-          ratingQueryCondition,
-          categoryQueryCondition,
-          ...attrsQueryCondition,
-        ],
-      };
-    }
-
     // Pagination
     const pageNum = Number(req.query.pageNum) || 1;
 
@@ -92,8 +81,39 @@ const getProducts = async (req, res, next) => {
       sort = { [sortOpt[0]]: Number(sortOpt[1]) }; // (e.g.{ "price": 1}, or { "price": -1})
     }
 
+    // Searching (search bar):
+    const searchQuery = req.params.searchQuery || ""; // search/:searchQuery || ""
+    let searchQueryCondition = {};
+    let select = {}; // In general, which fields from DB I want to use for searching products
+
+    if (searchQuery) {
+      queryCondition = true;
+
+      searchQueryCondition = { $text: { $search: searchQuery } }; // now it searches by the first matched word
+      // if you need it to search by the PRECISE quote with spaces, use {$search: '"' + searchQuery + '"'}
+      select = {
+        score: { $meta: "textScore" }, // using "select", we can also add a new field to the DB.
+        // In this case: if searchQuery is true, add field "score" to the DB.
+        // The "score" field will reflect the RELEVANCE of the search
+      };
+      sort = { score: { $meta: "textScore" } }; // most relevant products will be displayed first.
+    }
+
+    if (queryCondition) {
+      query = {
+        $and: [
+          priceQueryCondition,
+          ratingQueryCondition,
+          categoryQueryCondition,
+          searchQueryCondition,
+          ...attrsQueryCondition,
+        ],
+      };
+    }
+
     const totalNumOfProducts = await Product.countDocuments(query);
     const products = await Product.find(query)
+      .select(select)
       .skip(itemsPerPage * (pageNum - 1))
       .sort(sort)
       .limit(itemsPerPage);
