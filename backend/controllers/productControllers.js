@@ -19,15 +19,33 @@ const getProducts = async (req, res, next) => {
       query = { rating: { $in: req.query.rating.split(",") } }; // input: rating: [3, 4, 5] (3 options marked ina row)
     }
 
+    // Filtering products by category using the "All" button near the searchbar:
     let categoryQueryCondition = {};
     let categoryName = req.params.categoryName || ""; // req.params.categoryName came from the rout path: "/category/:categoryName"
 
     if (categoryName) {
       queryCondition = true;
+
       let a = categoryName.replaceAll(",", "/"); // if the category has a slash(es) (Computers/Laptops) it will appear in the route path as http://localhost:3000/api/products/category/Computers,Laptops.
       // To make the search in the DB correct, we need to replace that comma with a slash
       let regEx = new RegExp("^" + a); // and then find the match in the DB
       categoryQueryCondition = { category: regEx };
+      // !To check the result in Postman, change the path from http://loalhost:3000/api/products
+      // ! to http://localhost:3000/api/products/category/Computers,Laptops
+    }
+
+    // Filtering products by category using a sidebar checkboxes:
+    if (req.query.category) {
+      queryCondition = true;
+
+      // If we select several categories using checkboxes,
+      //  we'll get an array of them, splitted by commas.
+      // So we need to map through this array to get each of the requested category from the DB
+      let a = req.query.category.split(",").map((item) => {
+        if (item) return new RegExp("^" + item);
+      });
+      // Overwrite the categoryQueryCondition
+      categoryQueryCondition = { category: { $in: a } };
     }
 
     if (queryCondition) {
