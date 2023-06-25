@@ -19,9 +19,24 @@ const getProducts = async (req, res, next) => {
       query = { rating: { $in: req.query.rating.split(",") } }; // input: rating: [3, 4, 5] (3 options marked ina row)
     }
 
+    let categoryQueryCondition = {};
+    let categoryName = req.params.categoryName || ""; // req.params.categoryName came from the rout path: "/category/:categoryName"
+
+    if (categoryName) {
+      queryCondition = true;
+      let a = categoryName.replaceAll(",", "/"); // if the category has a slash(es) (Computers/Laptops) it will appear in the route path as http://localhost:3000/api/products/category/Computers,Laptops.
+      // To make the search in the DB correct, we need to replace that comma with a slash
+      let regEx = new RegExp("^" + a); // and then find the match in the DB
+      categoryQueryCondition = { category: regEx };
+    }
+
     if (queryCondition) {
       query = {
-        $and: [priceQueryCondition, ratingQueryCondition],
+        $and: [
+          priceQueryCondition,
+          ratingQueryCondition,
+          categoryQueryCondition,
+        ],
       };
     }
 
