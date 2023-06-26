@@ -1,6 +1,7 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
 const express = require("express");
+const fileUpload = require("express-fileupload");
 const apiRoutes = require("./routes/apiRoutes");
 const connectDB = require("./db_config/db");
 
@@ -10,6 +11,7 @@ mongoose.set("strictQuery", true);
 // Parser
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(fileUpload);
 
 // Port
 const port = process.env.PORT || 3000;
