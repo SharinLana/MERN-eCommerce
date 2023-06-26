@@ -254,6 +254,18 @@ const adminUpdateProduct = async (req, res, next) => {
   }
 };
 
+const adminFileUpload = async (req, res, next) => {
+  try {
+    if (!req.files || !req.files.images) {
+      res.status(400).send("No files were uploaded")
+    }
+    // work with form-data in Postman: images => file => upload a file
+
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   getProducts,
   getProductById,
@@ -262,4 +274,5 @@ module.exports = {
   adminDeleteProduct,
   adminCreateProduct,
   adminUpdateProduct,
+  adminFileUpload,
 };
