@@ -192,10 +192,41 @@ const adminDeleteProduct = async (req, res, next) => {
   }
 };
 
+const adminCreateProduct = async (req, res, next) => {
+  try {
+    const product = new Product();
+
+    const { name, description, count, price, category, attributesArray } =
+      req.body;
+
+    product.name = name;
+    product.description = description;
+    product.count = count;
+    product.price = price;
+    product.category = category;
+
+    if (attributesArray.length > 0) {
+      attributesArray.map((item) => {
+        product.attrs.push(item);
+      });
+    }
+
+    await product.save();
+
+    res.status(201).json({
+      message: "Product was successfully created",
+      productId: product.id,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   getProducts,
   getProductById,
   getBestsellers,
   adminGetProducts,
   adminDeleteProduct,
+  adminCreateProduct,
 };
