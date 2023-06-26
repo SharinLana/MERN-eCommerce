@@ -222,6 +222,38 @@ const adminCreateProduct = async (req, res, next) => {
   }
 };
 
+const adminUpdateProduct = async (req, res, next) => {
+  try {
+    const product = await Product.findById(req.params.id).orFail();
+    const { name, description, count, price, category, attributesArray } =
+      req.body;
+
+    product.name = name || product.name;
+    product.description = description || product.description;
+    product.count = count || product.count;
+    product.price = price || product.price;
+    product.category = category || product.category;
+
+    if (attributesArray.length > 0) {
+      product.attrs = [];
+      attributesArray.map((item) => {
+        product.attrs.push(item);
+      });
+    } else {
+      product.attrs = [];
+    }
+
+    await product.save();
+
+    res.status(200).json({
+      message: "Product was successfully updated",
+      product,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   getProducts,
   getProductById,
@@ -229,4 +261,5 @@ module.exports = {
   adminGetProducts,
   adminDeleteProduct,
   adminCreateProduct,
+  adminUpdateProduct,
 };
