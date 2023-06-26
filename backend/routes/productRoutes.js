@@ -7,6 +7,7 @@ const {
   adminDeleteProduct,
   adminCreateProduct,
   adminUpdateProduct,
+  adminFileUpload,
 } = require("../controllers/productControllers");
 
 const router = express.Router();
@@ -22,6 +23,7 @@ router.get("/get-one/:id", getProductById);
 router.get("/admin", adminGetProducts);
 router.post("/admin", adminCreateProduct);
 router.put("/admin/:id", adminUpdateProduct);
+router.post("/admin/upload", adminFileUpload);
 router.delete("/admin/:id", adminDeleteProduct);
 
 module.exports = router;
