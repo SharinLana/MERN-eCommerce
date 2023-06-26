@@ -142,4 +142,26 @@ const getProductById = async (req, res, next) => {
   }
 };
 
-module.exports = { getProducts, getProductById };
+const getBestsellers = async (req, res, next) => {
+  try {
+    const bestsellers = await Product.aggregate([
+      { $sort: { category: 1, sales: -1 } }, // sort by category (ascendant) and sales (highest first)
+      {
+        $group: { _id: "$category", doc_with_max_sales: { $first: "$$ROOT" } },
+      },
+      // { $match: { sales: { $gt: 0 } } },
+      { $replaceWith: "$doc_with_max_sales" },
+      { $project: { _id: 1, name: 1, images: 1, category: 1, description: 1 } }, // display only these fields
+      { $limit: 3 }, // retrieve only 3 products
+    ]);
+
+    res.status(200).json({
+      numOfBestsellers: bestsellers.length,
+      bestsellers,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = { getProducts, getProductById, getBestsellers };
