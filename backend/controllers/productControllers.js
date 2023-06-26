@@ -164,4 +164,23 @@ const getBestsellers = async (req, res, next) => {
   }
 };
 
-module.exports = { getProducts, getProductById, getBestsellers };
+const adminGetProducts = async (req, res, next) => {
+  try {
+    const products = await Product.find({})
+      .sort({ category: 1 })
+      .select("name price category");
+
+    res.status(200).json({
+      products,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = {
+  getProducts,
+  getProductById,
+  getBestsellers,
+  adminGetProducts,
+};
