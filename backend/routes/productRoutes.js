@@ -12,6 +12,6 @@ router.get("/category/:categoryName", getProducts);
 router.get("/search/:searchQuery", getProducts);
 router.get("/", getProducts);
 router.get("/bestsellers", getBestsellers);
-router.get("/:id", getProductById);
+router.get("/get-one/:id", getProductById);
 
 module.exports = router;
