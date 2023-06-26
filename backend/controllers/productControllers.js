@@ -1,5 +1,6 @@
 const Product = require("../models/ProductModel");
 const itemsPerPage = require("../utils/pagination");
+const imageValidate = require("../utils/validateImages");
 
 const getProducts = async (req, res, next) => {
   try {
@@ -255,12 +256,23 @@ const adminUpdateProduct = async (req, res, next) => {
 };
 
 const adminFileUpload = async (req, res, next) => {
+  // work with form-data in Postman: images => file => upload a file
   try {
     if (!req.files || !req.files.images) {
-      res.status(400).send("No files were uploaded")
+      res.status(400).send("No files were uploaded");
     }
-    // work with form-data in Postman: images => file => upload a file
 
+    const validateResult = imageValidate(req.files.images);
+    if (validateResult.error) {
+      return res.status(400).send(validateResult.error);
+    }
+
+    // if 2 or more files were uploaded, then they will be saved as an array:
+    if (Array.isArray(req.files.images)) {
+      res.send("You sent " + req.files.images.length + " images");
+    } else {
+      res.send("You sent only one image");
+    }
   } catch (err) {
     next(err);
   }

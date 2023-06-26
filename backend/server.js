@@ -11,7 +11,7 @@ mongoose.set("strictQuery", true);
 // Parser
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(fileUpload);
+app.use(fileUpload());
 
 // Port
 const port = process.env.PORT || 3000;
