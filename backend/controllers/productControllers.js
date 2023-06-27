@@ -1,4 +1,5 @@
 const path = require("path");
+const fs = require("fs");
 const { v4: uuidv4 } = require("uuid");
 const Product = require("../models/ProductModel");
 const itemsPerPage = require("../utils/pagination");
@@ -278,7 +279,7 @@ const adminFileUpload = async (req, res, next) => {
       "images",
       "products"
     );
-    let product = await Product.findById(req.query.productId); // /products/admin/upload?productId=6494f07d53d2960298a777b3
+    let product = await Product.findById(req.query.productId).orFail(); // /products/admin/upload?productId=6494f07d53d2960298a777b3
 
     // if 2 or more files were uploaded, then they will be saved as an array:
     if (Array.isArray(req.files.images)) {
@@ -316,6 +317,30 @@ const adminFileUpload = async (req, res, next) => {
   }
 };
 
+const adminDeleteProductImage = async (req, res, next) => {
+  try {
+    const imagePath = decodeURIComponent(req.params.imagePath);
+    const finalPath = path.resolve("../frontend/public") + imagePath;
+
+    fs.unlink(finalPath, function (err) {
+      if (err) {
+        return res
+          .status(500)
+          .send("Internal server error: " + err.message + err);
+      }
+    });
+
+    await Product.findOneAndUpdate(
+      { _id: req.params.productId },
+      { $pull: { images: { path: imagePath } } }
+    ).orFail();
+
+    res.status(200).send("Image was deleted!");
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   getProducts,
   getProductById,
@@ -325,4 +350,5 @@ module.exports = {
   adminCreateProduct,
   adminUpdateProduct,
   adminFileUpload,
+  adminDeleteProductImage,
 };
