@@ -1,3 +1,5 @@
+const path = require("path");
+const { v4: uuidv4 } = require("uuid");
 const Product = require("../models/ProductModel");
 const itemsPerPage = require("../utils/pagination");
 const imageValidate = require("../utils/validateImages");
@@ -262,17 +264,46 @@ const adminFileUpload = async (req, res, next) => {
       res.status(400).send("No files were uploaded");
     }
 
-    const validateResult = imageValidate(req.files.images);
+    const validateResult = imageValidate(req.files.images); // helper function
     if (validateResult.error) {
       return res.status(400).send(validateResult.error);
     }
 
+    let imagesArray = [];
+    // store the uploaded images on frontend:
+    let uploadDirectory = path.resolve(
+      __dirname,
+      "../../frontend/",
+      "public",
+      "images",
+      "products"
+    );
+
     // if 2 or more files were uploaded, then they will be saved as an array:
     if (Array.isArray(req.files.images)) {
-      res.send("You sent " + req.files.images.length + " images");
+      imagesArray = req.files.images;
     } else {
-      res.send("You sent only one image");
+      imagesArray.push(req.files.images);
     }
+
+    // change the names of the uploaded files to avoid receiving any damaging code inside of them.
+    // for this purpose, use a uuid package generating random strings
+    for (let image of imagesArray) {
+      // console.log(path.extname(image.name)); // .png (or .jpg, or .jpeg)
+      // console.log(uuidv4()); // random string
+      let uploadPath =
+        uploadDirectory + "/" + uuidv4() + path.extname(image.name);
+      // move the uploaded image to the uploadPath using the mv() method of the express-fileupload package:
+      image.mv(uploadPath, function (err) {
+        if (err) {
+          return res
+            .status(500)
+            .send("Internal server error: " + err.message + err);
+        }
+      });
+    }
+
+    return res.send("Files uploaded successfully!");
   } catch (err) {
     next(err);
   }
