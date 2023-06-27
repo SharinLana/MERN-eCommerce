@@ -278,6 +278,7 @@ const adminFileUpload = async (req, res, next) => {
       "images",
       "products"
     );
+    let product = await Product.findById(req.query.productId);
 
     // if 2 or more files were uploaded, then they will be saved as an array:
     if (Array.isArray(req.files.images)) {
@@ -291,8 +292,12 @@ const adminFileUpload = async (req, res, next) => {
     for (let image of imagesArray) {
       // console.log(path.extname(image.name)); // .png (or .jpg, or .jpeg)
       // console.log(uuidv4()); // random string
-      let uploadPath =
-        uploadDirectory + "/" + uuidv4() + path.extname(image.name);
+      let fileName = uuidv4() + path.extname(image.name);
+      let uploadPath = uploadDirectory + "/" + fileName;
+
+      // save the image path to the Product collection in the DB
+      product.images.push({ path: "/images/products" + fileName });
+
       // move the uploaded image to the uploadPath using the mv() method of the express-fileupload package:
       image.mv(uploadPath, function (err) {
         if (err) {
@@ -303,6 +308,8 @@ const adminFileUpload = async (req, res, next) => {
       });
     }
 
+    await product.save();
+    
     return res.send("Files uploaded successfully!");
   } catch (err) {
     next(err);
