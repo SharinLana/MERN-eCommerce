@@ -26,6 +26,6 @@ router.post("/admin", adminCreateProduct);
 router.put("/admin/:id", adminUpdateProduct);
 router.post("/admin/upload", adminFileUpload);
 router.delete("/admin/:id", adminDeleteProduct);
-router.delete("admin/image/:imagePath/:productId", adminDeleteProductImage);
+router.delete("/admin/image/:imagePath/:productId", adminDeleteProductImage);
 
 module.exports = router;
