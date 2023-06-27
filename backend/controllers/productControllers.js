@@ -278,7 +278,7 @@ const adminFileUpload = async (req, res, next) => {
       "images",
       "products"
     );
-    let product = await Product.findById(req.query.productId);
+    let product = await Product.findById(req.query.productId); // /products/admin/upload?productId=6494f07d53d2960298a777b3
 
     // if 2 or more files were uploaded, then they will be saved as an array:
     if (Array.isArray(req.files.images)) {
@@ -309,7 +309,7 @@ const adminFileUpload = async (req, res, next) => {
     }
 
     await product.save();
-    
+
     return res.send("Files uploaded successfully!");
   } catch (err) {
     next(err);
