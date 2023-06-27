@@ -299,7 +299,8 @@ const adminFileUpload = async (req, res, next) => {
       // save the image path to the Product collection in the DB
       product.images.push({ path: "/images/products" + fileName });
 
-      // move the uploaded image to the uploadPath using the mv() method of the express-fileupload package:
+      // move the uploaded image to the uploadPath
+      // using the mv() method of the express-fileupload package:
       image.mv(uploadPath, function (err) {
         if (err) {
           return res
@@ -308,7 +309,6 @@ const adminFileUpload = async (req, res, next) => {
         }
       });
     }
-
     await product.save();
 
     return res.send("Files uploaded successfully!");
@@ -318,7 +318,10 @@ const adminFileUpload = async (req, res, next) => {
 };
 
 const adminDeleteProductImage = async (req, res, next) => {
+  // full path in Postman:
+  // {{URL_eCommerce}}/products/admin/image/%2Fimages%2Fproducts%2F675a6eb7-c4e5-499c-8234-911cec22ab0a.jpg/6494f07d53d2960298a777b3
   try {
+    // the path is encoded on the frontend as e.g. %2Fimages%2Fproducts%2F675a6eb7-c4e5-499c-8234-911cec22ab0a.jpg
     const imagePath = decodeURIComponent(req.params.imagePath);
     const finalPath = path.resolve("../frontend/public") + imagePath;
 
