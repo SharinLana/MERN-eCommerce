@@ -1,5 +1,5 @@
 const User = require("../models/UserModel");
-const { hashPassword } = require("../utils/hashPassword");
+const { hashPassword, comparePasswords } = require("../utils/hashPassword");
 const { generateAuthToken } = require("../utils/generateAuthToken");
 
 const getUsers = async (req, res, next) => {
@@ -79,8 +79,7 @@ const loginUser = async (req, res, next) => {
     }
 
     const user = await User.findOne({ email });
-    if (user) {
-      // * to do: compare passwords
+    if (user && comparePasswords(password, user.password)) {
       let cookieCredentials = {
         httpOnly: true, //for security reasons
         secure: process.env.NODE_ENV === "production", // effective after hosting on Versel or Render.com
@@ -97,9 +96,9 @@ const loginUser = async (req, res, next) => {
         // * in this case, the token will look like this:
         // access token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
         // .eyJfaWQiOiI2NDljOTBjNzc0NzNmOWQ5NzhkNTQ3MGEiLCJuYW1lIjoiTWFyaWEiLCJsYXN0TmFtZSI6IlNoYXJpbiIsImVtYWlsIjoibWFyaWFAZ21haWwuY29tIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTY4Nzk4NTIzOCwiZXhwIjoxNjg4MDEwNDM4fQ
-        // .mW28pmYDWM3IDMfwKf2eHpAbpHksFg1zwgnCw6M7waY; Max-Age=604800; 
-        // Path=/; 
-        // ! Expires=Wed, 05 Jul 2023 20:47:18 GMT; 
+        // .mW28pmYDWM3IDMfwKf2eHpAbpHksFg1zwgnCw6M7waY; Max-Age=604800;
+        // Path=/;
+        // ! Expires=Wed, 05 Jul 2023 20:47:18 GMT;
         // HttpOnly; SameSite=Strict
       }
 
