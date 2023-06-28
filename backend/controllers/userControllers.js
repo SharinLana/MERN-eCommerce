@@ -22,9 +22,9 @@ const registerUser = async (req, res, next) => {
     const userExists = await User.findOne({ email }); // do not use .orFail() here!
 
     if (userExists) {
-      res.status(400).json({
-        error: `User with the email ${userExists.email} already exists`,
-      });
+      res
+        .status(400)
+        .send(`User with the email ${userExists.email} already exists`);
     } else {
       const hashedPassword = hashPassword(password);
       const newUser = await User.create({
@@ -36,7 +36,14 @@ const registerUser = async (req, res, next) => {
 
       res.status(201).json({
         message: "User has been created!",
-        newUser,
+        // Exclude the password from the response data
+        newUser: {
+          _id: newUser._id,
+          name: newUser.name,
+          lastName: newUser.lastName,
+          email: newUser.email,
+          isAdmin: newUser.isAdmin,
+        },
       });
     }
   } catch (err) {
