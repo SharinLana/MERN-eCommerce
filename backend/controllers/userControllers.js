@@ -21,6 +21,11 @@ const registerUser = async (req, res, next) => {
     }
 
     const userExists = await User.findOne({ email }); // do not use .orFail() here!
+    const cookieCredentials = {
+      httpOnly: true, //for security reasons
+      secure: process.env.NODE_ENV === "production", // effective after hosting on Versel or Render.com
+      sameSite: "strict", // cookies won't be available for reaching from other websites
+    };
 
     if (userExists) {
       res
@@ -45,11 +50,7 @@ const registerUser = async (req, res, next) => {
             newUser.email,
             newUser.isAdmin
           ),
-          {
-            httpOnly: true, //for security reasons
-            secure: process.env.NODE_ENV === "production", // effective after hosting on Versel or Render.com
-            sameSite: "strict", // cookies won't be available for reaching from other websites
-          }
+          cookieCredentials
         )
         .status(201)
         .json({
