@@ -34,17 +34,24 @@ const registerUser = async (req, res, next) => {
         password: hashedPassword,
       });
 
-      res.status(201).json({
-        message: "User has been created!",
-        // Exclude the password from the response data
-        newUser: {
-          _id: newUser._id,
-          name: newUser.name,
-          lastName: newUser.lastName,
-          email: newUser.email,
-          isAdmin: newUser.isAdmin,
-        },
-      });
+      res
+        .cookie("access token", "fake access token", {
+          httpOnly: true, //for security reasons
+          secure: process.env.NODE_ENV === "production", // effective after hosting on Versel or Render.com
+          sameSite: "strict", // cookies won't be available for reaching from other websites
+        })
+        .status(201)
+        .json({
+          message: "User has been created!",
+          // Exclude the password from the response data
+          newUser: {
+            _id: newUser._id,
+            name: newUser.name,
+            lastName: newUser.lastName,
+            email: newUser.email,
+            isAdmin: newUser.isAdmin,
+          },
+        });
     }
   } catch (err) {
     next(err);
