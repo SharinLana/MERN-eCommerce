@@ -42,7 +42,7 @@ const registerUser = async (req, res, next) => {
 
       res
         .cookie(
-          "access token",
+          "access_token",
           generateAuthToken(
             newUser._id,
             newUser.name,
@@ -104,7 +104,7 @@ const loginUser = async (req, res, next) => {
 
       return res
         .cookie(
-          "access token",
+          "access_token",
           generateAuthToken(
             user._id,
             user.name,
