@@ -9,4 +9,7 @@ const generateAuthToken = (_id, name, lastName, email, isAdmin) => {
   );
 };
 
+// The result that includes the encoded user data (_id, name, lastName, email, isAdmin) + secret key + expiration date:
+// access token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDljOTBjNzc0NzNmOWQ5NzhkNTQ3MGEiLCJuYW1lIjoiTWFyaWEiLCJsYXN0TmFtZSI6IlNoYXJpbiIsImVtYWlsIjoibWFyaWFAZ21haWwuY29tIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTY4Nzk4MjI3OSwiZXhwIjoxNjg4MDA3NDc5fQ.Bh4DHC5KVozkaGSBgXh5zvBRfGHM9gmHioYxhZX6Wsg;
+
 module.exports = { generateAuthToken };
