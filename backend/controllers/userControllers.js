@@ -1,5 +1,6 @@
 const User = require("../models/UserModel");
 const { hashPassword } = require("../utils/hashPassword");
+const { generateAuthToken } = require("../utils/generateAuthToken");
 
 const getUsers = async (req, res, next) => {
   try {
@@ -35,11 +36,21 @@ const registerUser = async (req, res, next) => {
       });
 
       res
-        .cookie("access token", "fake access token", {
-          httpOnly: true, //for security reasons
-          secure: process.env.NODE_ENV === "production", // effective after hosting on Versel or Render.com
-          sameSite: "strict", // cookies won't be available for reaching from other websites
-        })
+        .cookie(
+          "access token",
+          generateAuthToken(
+            newUser._id,
+            newUser.name,
+            newUser.lastName,
+            newUser.email,
+            newUser.isAdmin
+          ),
+          {
+            httpOnly: true, //for security reasons
+            secure: process.env.NODE_ENV === "production", // effective after hosting on Versel or Render.com
+            sameSite: "strict", // cookies won't be available for reaching from other websites
+          }
+        )
         .status(201)
         .json({
           message: "User has been created!",
