@@ -10,6 +10,7 @@ const {
   adminFileUpload,
   adminDeleteProductImage,
 } = require("../controllers/productControllers");
+const { verifyIsLoggedIn } = require("../middleware/verifyAuthToken");
 
 const router = express.Router();
 
@@ -21,6 +22,7 @@ router.get("/bestsellers", getBestsellers);
 router.get("/get-one/:id", getProductById);
 
 // Admin routes
+router.use(verifyIsLoggedIn); // checking cookies: if it exists or not
 router.get("/admin", adminGetProducts);
 router.post("/admin", adminCreateProduct);
 router.put("/admin/:id", adminUpdateProduct);
