@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-const verifyIsLoggedIn = (req, res, next) => {
+const verifyIsLoggedIn = async (req, res, next) => {
   try {
     const token = req.cookies.access_token;
     // console.log(token)
@@ -21,4 +21,12 @@ const verifyIsLoggedIn = (req, res, next) => {
   }
 };
 
-module.exports = { verifyIsLoggedIn };
+const verifyIsAdmin = (req, res, next) => {
+  if (req.user && req.user.isAdmin) {
+    next();
+  } else {
+    res.status(401).send("Unauthorized. Not an admin");
+  }
+};
+
+module.exports = { verifyIsLoggedIn, verifyIsAdmin };
