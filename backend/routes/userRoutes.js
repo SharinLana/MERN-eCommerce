@@ -4,6 +4,7 @@ const {
   registerUser,
   loginUser,
   updateUserProfile,
+  getUserProfileData,
 } = require("../controllers/userControllers");
 const {
   verifyIsLoggedIn,
@@ -20,8 +21,8 @@ router.post("/login", loginUser);
 // Logged in user routes
 router.use(verifyIsLoggedIn);
 
-router.post("/profile", updateUserProfile)
-
+router.post("/profile", updateUserProfile);
+router.get("/profile/:id", getUserProfileData);
 
 // Admin routes
 router.use(verifyIsAdmin);
