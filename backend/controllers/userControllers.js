@@ -134,4 +134,43 @@ const loginUser = async (req, res, next) => {
   }
 };
 
-module.exports = { getUsers, registerUser, loginUser };
+const updateUserProfile = async (req, res, next) => {
+  try {
+    // find the logged in user in the DB
+    const user = await User.findById(req.user._id).orFail();
+
+    user.name = req.body.name || user.name;
+    user.lastName = req.body.lastName || user.lastName;
+    user.email = req.body.email || user.email;
+    user.phoneNumber = req.body.phoneNumber;
+    user.address = req.body.address;
+    user.country = req.body.country;
+    user.zipCode = req.body.zipCode;
+    user.city = req.body.city;
+    user.state = req.body.state;
+
+    // Changing the password (the password is required as a req.body.password in all cases)
+    if (req.body.password !== user.password) {
+      user.password = hashPassword(req.body.password);
+      // after changing the password, user won't be able lo access restricted routes.
+      // And will need to log in again with the new password
+    }
+
+    await user.save();
+
+    res.status(200).json({
+      success: "The profile has been updated",
+      userUpdated: {
+        _id: user._id,
+        name: user.name,
+        lastName: user.lastName,
+        email: user.email,
+        isAdmin: user.isAdmin,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = { getUsers, registerUser, loginUser, updateUserProfile };
