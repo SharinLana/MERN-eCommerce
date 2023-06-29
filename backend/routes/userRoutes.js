@@ -5,6 +5,7 @@ const {
   loginUser,
   updateUserProfile,
   getUserProfileData,
+  writeReview,
 } = require("../controllers/userControllers");
 const {
   verifyIsLoggedIn,
@@ -23,6 +24,7 @@ router.use(verifyIsLoggedIn);
 
 router.post("/profile", updateUserProfile);
 router.get("/profile/:id", getUserProfileData);
+router.post("/review/:productId", writeReview);
 
 // Admin routes
 router.use(verifyIsAdmin);
