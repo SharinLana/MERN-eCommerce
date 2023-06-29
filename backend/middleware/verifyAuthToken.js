@@ -5,7 +5,9 @@ const verifyIsLoggedIn = async (req, res, next) => {
     const token = req.cookies.access_token;
     // console.log(token)
     if (!token) {
-      res.status(403).send("Access token is required for authentication");
+      res
+        .status(403)
+        .send("Access token is required for authentication. Please log in");
     }
 
     try {
