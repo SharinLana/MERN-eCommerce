@@ -1,4 +1,5 @@
 const User = require("../models/UserModel");
+const Review = require("../models/ReviewModel");
 const { hashPassword, comparePasswords } = require("../utils/hashPassword");
 const { generateAuthToken } = require("../utils/generateAuthToken");
 
@@ -183,10 +184,42 @@ const getUserProfileData = async (req, res, next) => {
   }
 };
 
+const writeReview = async (req, res, next) => {
+  try {
+    const { comment, rating } = req.body;
+    if (!(comment && rating)) {
+      res
+        .status(400)
+        .send("Please provide a comment and rating for the product");
+    }
+
+    // Create review id manually as we need it for saving in the Product collection
+    const ObjectId = require("mongodb").ObjectId;
+    let reviewId = new ObjectId();
+
+    await Review.create([
+      {
+        _id: reviewId,
+        comment: comment,
+        rating: Number(rating),
+        user: {
+          _id: req.user._id,
+          name: req.user.name + " " + req.user.lastName,
+        },
+      },
+    ]);
+
+    res.status(201).send("Review created successfully");
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   getUsers,
   registerUser,
   loginUser,
   updateUserProfile,
   getUserProfileData,
+  writeReview,
 };
