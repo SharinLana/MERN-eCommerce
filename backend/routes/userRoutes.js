@@ -6,6 +6,7 @@ const {
   updateUserProfile,
   getUserProfileData,
   writeReview,
+  getSingleUser,
 } = require("../controllers/userControllers");
 const {
   verifyIsLoggedIn,
@@ -15,7 +16,6 @@ const {
 const router = express.Router();
 
 // Public routes
-router.get("/", getUsers);
 router.post("/register", registerUser);
 router.post("/login", loginUser);
 
@@ -28,5 +28,8 @@ router.post("/review/:productId", writeReview);
 
 // Admin routes
 router.use(verifyIsAdmin);
+
+router.get("/", getUsers);
+router.get("/:id", getSingleUser);
 
 module.exports = router;
