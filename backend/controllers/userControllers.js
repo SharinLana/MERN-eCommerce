@@ -263,6 +263,18 @@ const writeReview = async (req, res, next) => {
   }
 };
 
+const getSingleUser = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.id)
+      .select("name lastName email isAdmin")
+      .orFail();
+
+    res.status(200).json(user);
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   getUsers,
   registerUser,
@@ -270,4 +282,5 @@ module.exports = {
   updateUserProfile,
   getUserProfileData,
   writeReview,
+  getSingleUser,
 };
