@@ -187,6 +187,12 @@ const getUserProfileData = async (req, res, next) => {
 
 const writeReview = async (req, res, next) => {
   try {
+    // Make sure that both collections (Reviews and Products) are successfully saved in the DB
+    // or, in case of error, none of them
+    // (as we don't want only Reviews collection to be saved without the Product collection, or vice versa).
+    // For this, use session transaction from MongoDB
+    const session = await Review.startSession(); // ! Session transaction
+
     const { comment, rating } = req.body;
     if (!(comment && rating)) {
       res
@@ -198,28 +204,35 @@ const writeReview = async (req, res, next) => {
     const ObjectId = require("mongodb").ObjectId;
     let reviewId = new ObjectId();
 
-    await Review.create([
-      {
-        _id: reviewId,
-        comment: comment,
-        rating: Number(rating),
-        user: {
-          _id: req.user._id,
-          name: req.user.name + " " + req.user.lastName,
+    session.startTransaction(); // ! Session transaction
+
+    await Review.create(
+      [
+        {
+          _id: reviewId,
+          comment: comment,
+          rating: Number(rating),
+          user: {
+            _id: req.user._id,
+            name: req.user.name + " " + req.user.lastName,
+          },
         },
-      },
-    ]);
+      ],
+      { session: session }
+    ); // ! Session transaction
 
     // Adding the review id to the Product collection
-    const product = await Product.findById(req.params.productId).populate(
-      "reviews"
-    );
+    const product = await Product.findById(req.params.productId)
+      .populate("reviews")
+      .session(session); // ! Session transaction
 
     // Allow the user create only one review per product
     const alreadyReviewed = product.reviews.find(
       (review) => review.user._id.toString() === req.user._id.toString()
     );
     if (alreadyReviewed) {
+      await session.abortTransaction(); // ! Session transaction
+      session.endSession(); // ! Session transaction
       res.status(400).send("Product already reviewed");
     }
 
@@ -238,10 +251,14 @@ const writeReview = async (req, res, next) => {
           .map((item) => Number(item.rating))
           .reduce((sum, item) => (sum += item), 0) / product.reviews.length;
     }
+
     await product.save();
 
+    await session.commitTransaction(); // ! Session transaction
+    session.endSession(); // ! Session transaction
     res.status(201).send("Review created successfully");
   } catch (err) {
+    await session.abortTransaction(); // ! Session transaction
     next(err);
   }
 };
