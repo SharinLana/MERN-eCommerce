@@ -1,5 +1,6 @@
 const User = require("../models/UserModel");
 const Review = require("../models/ReviewModel");
+const Product = require("../models/ProductModel");
 const { hashPassword, comparePasswords } = require("../utils/hashPassword");
 const { generateAuthToken } = require("../utils/generateAuthToken");
 
@@ -193,7 +194,7 @@ const writeReview = async (req, res, next) => {
         .send("Please provide a comment and rating for the product");
     }
 
-    // Create review id manually as we need it for saving in the Product collection
+    // Create review id manually as we need it for saving in the Review collection
     const ObjectId = require("mongodb").ObjectId;
     let reviewId = new ObjectId();
 
@@ -208,6 +209,28 @@ const writeReview = async (req, res, next) => {
         },
       },
     ]);
+
+    // Adding the review id to the Product collection
+    const product = await Product.findById(req.params.productId).populate(
+      "reviews"
+    );
+
+    let prc = [...product.reviews];
+    prc.push({ rating: rating });
+    product.reviews.push(reviewId);
+
+    // Calculating the average rating of the product
+    if (product.reviews.length === 1) {
+      product.rating = Number(rating);
+      product.reviewsNumber = 1;
+    } else {
+      product.reviewsNumber = product.reviews.length;
+      product.rating =
+        prc
+          .map((item) => Number(item.rating))
+          .reduce((sum, item) => (sum += item), 0) / product.reviews.length;
+    }
+    await product.save();
 
     res.status(201).send("Review created successfully");
   } catch (err) {
