@@ -8,6 +8,7 @@ const {
   writeReview,
   getSingleUser,
   updateSingleUser,
+  deleteUser,
 } = require("../controllers/userControllers");
 const {
   verifyIsLoggedIn,
@@ -33,7 +34,6 @@ router.use(verifyIsAdmin);
 router.get("/", getUsers);
 router.get("/:id", getSingleUser);
 router.put("/:id", updateSingleUser);
-
-
+router.delete("/:id", deleteUser);
 
 module.exports = router;

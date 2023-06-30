@@ -275,6 +275,27 @@ const getSingleUser = async (req, res, next) => {
   }
 };
 
+const updateSingleUser = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.id).orFail();
+
+    // On the frontend, Admin needs only the following fields to update the user:
+    user.name = req.body.name || user.name;
+    user.lastName = req.body.lastName || user.lastName;
+    user.email = req.body.email || user.email;
+    user.isAdmin = req.body.isAdmin || user.isAdmin;
+
+    await user.save();
+
+    res.status(200).json({
+      message: "user updated!",
+      user,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   getUsers,
   registerUser,
@@ -283,4 +304,5 @@ module.exports = {
   getUserProfileData,
   writeReview,
   getSingleUser,
+  updateSingleUser,
 };
