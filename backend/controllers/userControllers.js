@@ -215,6 +215,14 @@ const writeReview = async (req, res, next) => {
       "reviews"
     );
 
+    // Allow the user create only one review per product
+    const alreadyReviewed = product.reviews.find(
+      (review) => review.user._id.toString() === req.user._id.toString()
+    );
+    if (alreadyReviewed) {
+      res.status(400).send("Product already reviewed");
+    }
+
     let prc = [...product.reviews];
     prc.push({ rating: rating });
     product.reviews.push(reviewId);
