@@ -296,6 +296,18 @@ const updateSingleUser = async (req, res, next) => {
   }
 };
 
+const deleteUser = async (req, res, next) => {
+  try {
+    await User.findOneAndDelete({ _id: req.params.id }).orFail();
+
+    res.status(200).json({
+      message: "user has been deleted",
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   getUsers,
   registerUser,
@@ -305,4 +317,5 @@ module.exports = {
   writeReview,
   getSingleUser,
   updateSingleUser,
+  deleteUser,
 };
