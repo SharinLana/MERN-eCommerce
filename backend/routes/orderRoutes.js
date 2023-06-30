@@ -6,6 +6,7 @@ const {
 const {
   getUserOrders,
   getOrderDetails,
+  createOrder,
 } = require("../controllers/orderControllers");
 
 const router = express.Router();
@@ -13,7 +14,8 @@ const router = express.Router();
 // user routes
 router.use(verifyIsLoggedIn);
 router.get("/", getUserOrders);
-router.get("/user/:orderId", getOrderDetails)
+router.get("/user/:orderId", getOrderDetails);
+router.post("/", createOrder);
 
 // Admin routes
 router.use(verifyIsAdmin);
