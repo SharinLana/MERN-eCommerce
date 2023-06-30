@@ -11,4 +11,16 @@ const getUserOrders = async (req, res, next) => {
   }
 };
 
-module.exports = { getUserOrders };
+const getOrderDetails = async (req, res, next) => {
+  try {
+    const order = await Order.findById(req.params.orderId)
+      .populate("user", "-password -isAdmin -_id -__v -createdAt -updatedAt")
+      .orFail();
+
+    res.status(200).json(order);
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = { getUserOrders, getOrderDetails };
