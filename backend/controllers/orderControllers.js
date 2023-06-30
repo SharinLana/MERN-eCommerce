@@ -94,10 +94,24 @@ const updateOrderToBeDelivered = async (req, res, next) => {
   }
 };
 
+const adminGetAllOrders = async (req, res, next) => {
+  try {
+    const orders = await Order.find({})
+      .populate("user", "-password")
+      .sort({ paymentMethod: "desc" })
+      .orFail();
+
+    res.status(200).json(orders);
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   getUserOrders,
   getOrderDetails,
   createOrder,
   updateOrderToPaid,
   updateOrderToBeDelivered,
+  adminGetAllOrders,
 };
