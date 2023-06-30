@@ -7,6 +7,7 @@ const {
   getUserProfileData,
   writeReview,
   getSingleUser,
+  updateSingleUser,
 } = require("../controllers/userControllers");
 const {
   verifyIsLoggedIn,
@@ -31,5 +32,8 @@ router.use(verifyIsAdmin);
 
 router.get("/", getUsers);
 router.get("/:id", getSingleUser);
+router.put("/:id", updateSingleUser);
+
+
 
 module.exports = router;
