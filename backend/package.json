@@ -5,9 +5,10 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js",
-    "prod": "node server.js",
-    "client": "npm start --prefix ../frontend"
+    "server-prod": "node server.js",
+    "server-dev": "npx nodemon server.js",
+    "client": "npm start --prefix ../frontend",
+    "dev": "concurrently --kill-others-on-fail \"npm run server-dev\" \"npm run client\""
   },
   "keywords": [],
   "author": "",
@@ -22,5 +23,8 @@
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.3.1",
     "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0"
   }
 }
