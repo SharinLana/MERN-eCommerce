@@ -107,6 +107,27 @@ const adminGetAllOrders = async (req, res, next) => {
   }
 };
 
+const getOrderForAnalysis = async (req, res, next) => {
+  try {
+    const start = new Date(req.params.date); // /orders/analysis/2022-03-20
+    start.setHours(0, 0, 0, 0); // starting the day from 00:00:00 AM
+
+    const end = new Date(req.params.date); // /orders/analysis/2022-03-20
+    end.setHours(23, 59, 59, 999); // ending the day at 23:59:59 PM
+
+    const order = await Order.find({
+      createdAt: {
+        $gte: start,
+        $lte: end,
+      },
+    }).sort({ createdAt: "asc" });
+
+    res.status(200).json(order);
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   getUserOrders,
   getOrderDetails,
@@ -114,4 +135,5 @@ module.exports = {
   updateOrderToPaid,
   updateOrderToBeDelivered,
   adminGetAllOrders,
+  getOrderForAnalysis,
 };
