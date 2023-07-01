@@ -16,7 +16,7 @@ app.use(cookieParser());
 app.use(fileUpload());
 
 // Port
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 
 // Routes middleware
 app.use("/api", apiRoutes);
