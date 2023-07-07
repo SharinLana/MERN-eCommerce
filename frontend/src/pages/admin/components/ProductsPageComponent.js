@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Row, Col, Table, Button } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import AdminLinksComponent from "../../../components/AdminLinksComponent";
 
-const ProductsPageComponent = () => {
+const ProductsPageComponent = ({ fetchProducts }) => {
+  const [products, setProducts] = useState([]);
+
   const deleteHandler = () => {
     if (window.confirm("Are you sure?")) alert("Product deleted!");
   };
+
+  useEffect(() => {
+    const abortController = new AbortController();
+    
+    fetchProducts().then((res) => setProducts(res));
+    return abortController.abort(); 
+  }, [])
 
   return (
     <Row className="m-5">
@@ -33,11 +42,7 @@ const ProductsPageComponent = () => {
             </tr>
           </thead>
           <tbody>
-            {[
-              { name: "Panasonic", price: "$250", category: "TV" },
-              { name: "Lenovo", price: "$1000", category: "Laptops" },
-              { name: "GTA 10", price: "$345", category: "Games" },
-            ].map((item, idx) => (
+            {products.map((item, idx) => (
               <tr key={idx}>
                 <td>{idx + 1}</td>
                 <td>{item.name}</td>
