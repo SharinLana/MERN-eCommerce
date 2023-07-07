@@ -7,8 +7,18 @@ const fetchProducts = async () => {
   return data;
 };
 
+const deleteProduct = async (productId) => {
+  const { data } = await axios.delete(`/api/products/admin/${productId}`);
+  return data;
+};
+
 const AdminProductsPage = () => {
-  return <ProductsPageComponent fetchProducts={fetchProducts} />;
+  return (
+    <ProductsPageComponent
+      fetchProducts={fetchProducts}
+      deleteProduct={deleteProduct}
+    />
+  );
 };
 
 export default AdminProductsPage;

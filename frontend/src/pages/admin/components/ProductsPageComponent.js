@@ -3,19 +3,26 @@ import { Row, Col, Table, Button } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import AdminLinksComponent from "../../../components/AdminLinksComponent";
 
-const ProductsPageComponent = ({ fetchProducts }) => {
+const ProductsPageComponent = ({ fetchProducts, deleteProduct }) => {
   const [products, setProducts] = useState([]);
+  const [productDeleted, setProductDeleted] = useState(false);
 
-  const deleteHandler = () => {
-    if (window.confirm("Are you sure?")) alert("Product deleted!");
+  const deleteHandler = async (productId) => {
+    if (window.confirm("Are you sure?")) {
+      const data = await deleteProduct(productId);
+
+      if (data.message === "product deleted") {
+        setProductDeleted(!productDeleted);
+      }
+    }
   };
 
   useEffect(() => {
     const abortController = new AbortController();
-    
+
     fetchProducts().then((res) => setProducts(res));
-    return abortController.abort(); 
-  }, [])
+    return abortController.abort();
+  }, [productDeleted]);
 
   return (
     <Row className="m-5">
@@ -58,7 +65,7 @@ const ProductsPageComponent = ({ fetchProducts }) => {
                   <Button
                     variant="danger"
                     className="btn-sm"
-                    onClick={deleteHandler}
+                    onClick={() => deleteHandler(item._id)}
                   >
                     <i className="bi bi-x-circle"></i>
                   </Button>
