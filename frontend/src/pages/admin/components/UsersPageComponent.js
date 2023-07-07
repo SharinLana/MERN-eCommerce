@@ -3,18 +3,25 @@ import { Row, Col, Table, Button } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import AdminLinksComponent from "../../../components/AdminLinksComponent";
 
-const UsersPageComponent = ({ fetchUsers }) => {
+const UsersPageComponent = ({ fetchUsers, deleteUser }) => {
   const [users, setUsers] = useState([]);
+  const [deletedUser, setDeletedUser] = useState(false);
 
-  const deleteHandler = () => {
-    if (window.confirm("Are you sure?")) alert("User deleted!");
+  const deleteHandler = async (userId) => {
+    if (window.confirm("Are you sure?")) {
+      const result = await deleteUser(userId);
+
+      if (result === "user deleted") {
+        setDeletedUser(!deletedUser);
+      }
+    }
   };
 
   useEffect(() => {
     const abortController = new AbortController();
     fetchUsers().then((res) => setUsers(res));
     return abortController.abort(); // break the connection to the DB if the user left the page
-  }, []);
+  }, [deletedUser]);
 
   return (
     <Row className="m-5">
@@ -58,7 +65,7 @@ const UsersPageComponent = ({ fetchUsers }) => {
                   <Button
                     variant="danger"
                     className="btn-sm"
-                    onClick={deleteHandler}
+                    onClick={() => deleteHandler(user._id)}
                   >
                     <i className="bi bi-x-circle"></i>
                   </Button>
