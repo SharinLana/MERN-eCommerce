@@ -301,7 +301,7 @@ const deleteUser = async (req, res, next) => {
     await User.findOneAndDelete({ _id: req.params.id }).orFail();
 
     res.status(200).json({
-      message: "user has been deleted",
+      message: "user deleted",
     });
   } catch (err) {
     next(err);

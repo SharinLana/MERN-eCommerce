@@ -8,8 +8,8 @@ const fetchUsers = async () => {
 };
 
 const deleteUser = async (userId) => {
-  await axios.delete(`/api/users/${userId}`);
-  return "user deleted";
+  const data = await axios.delete(`/api/users/${userId}`);
+  return data;
 };
 
 const AdminUsersPage = () => {
