@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import { Row, Col, Container, ListGroup, Button } from "react-bootstrap";
 import ProductCardComponent from "../components/ProductCardComponent";
 import SortingComponent from "../components/SortingComponent";
@@ -10,7 +9,6 @@ import PriceFilterComponent from "../components/filteringOptions/PriceFilterComp
 import RatingFilterComponent from "../components/filteringOptions/RatingFilterComponent";
 
 const ProductListPage = () => {
-  axios.get("/api/products").then((res) => console.log(res));
   
   return (
     <div>
