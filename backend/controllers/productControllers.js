@@ -187,7 +187,7 @@ const adminDeleteProduct = async (req, res, next) => {
     }).orFail();
 
     res.status(200).json({
-      message: "Product was successfully deleted",
+      message: "product deleted",
     });
   } catch (err) {
     next(err);
