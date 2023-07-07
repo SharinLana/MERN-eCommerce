@@ -174,9 +174,7 @@ const adminGetProducts = async (req, res, next) => {
       .sort({ category: 1 })
       .select("name price category");
 
-    res.status(200).json({
-      products,
-    });
+    res.status(200).json(products);
   } catch (err) {
     next(err);
   }
