@@ -2,10 +2,13 @@ import React from "react";
 import axios from "axios";
 import UsersPageComponent from "./components/UsersPageComponent";
 
-const AdminUsersPage = () => {
-  const { data } = axios.get("/api/users");
+const fetchUsers = async () => {
+  const { data } = await axios.get("/api/users");
+  return data;
+};
 
-  return <UsersPageComponent users={data} />;
+const AdminUsersPage = () => {
+  return <UsersPageComponent fetchUsers={fetchUsers} />;
 };
 
 export default AdminUsersPage;
