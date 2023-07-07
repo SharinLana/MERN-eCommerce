@@ -3,7 +3,7 @@ import { Row, Col, Table, Button } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import AdminLinksComponent from "../../../components/AdminLinksComponent";
 
-const ProductPageComponent = () => {
+const ProductsPageComponent = () => {
   const deleteHandler = () => {
     if (window.confirm("Are you sure?")) alert("Product deleted!");
   };
@@ -67,4 +67,4 @@ const ProductPageComponent = () => {
   );
 };
 
-export default ProductPageComponent;
+export default ProductsPageComponent;
