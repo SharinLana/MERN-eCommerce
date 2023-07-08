@@ -21,6 +21,7 @@ const OrderDetailsComponent = ({ getOrderDetails }) => {
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [orderButtonMessage, setOrderButtonMessage] =
     useState("Mark as delivered");
+  const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
     getOrderDetails(id).then((order) => {
@@ -36,6 +37,7 @@ const OrderDetailsComponent = ({ getOrderDetails }) => {
         setOrderButtonMessage("Order has been delivered!");
         setButtonDisabled(true);
       }
+      setCartItems(order.cartItems);
     });
   }, [isDelivered, id]);
 
@@ -85,8 +87,8 @@ const OrderDetailsComponent = ({ getOrderDetails }) => {
           <br />
           <h2>Order items</h2>
           <ListGroup variant="flush">
-            {Array.from({ length: 3 }).map((item, idx) => (
-              <CartItemComponent key={idx} />
+            {cartItems.map((item, idx) => (
+              <CartItemComponent key={idx} item={item} orderCreated={true} />
             ))}
           </ListGroup>
         </Col>
