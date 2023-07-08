@@ -19,8 +19,16 @@ const UsersPageComponent = ({ fetchUsers, deleteUser }) => {
 
   useEffect(() => {
     const abortController = new AbortController();
-    fetchUsers().then((res) => setUsers(res));
-    return abortController.abort(); // break the connection to the DB if the user left the page
+    fetchUsers(abortController)
+      .then((res) => setUsers(res))
+      .catch((er) =>
+        setUsers([
+          {
+            name: er.message ? er.message : er.data,
+          },
+        ])
+      );
+    return () => abortController.abort(); // break the connection to the DB if the speed is slow or if the  user left the page
   }, [deletedUser]);
 
   return (

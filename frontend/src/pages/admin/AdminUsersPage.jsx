@@ -2,8 +2,10 @@ import React from "react";
 import axios from "axios";
 import UsersPageComponent from "./components/UsersPageComponent";
 
-const fetchUsers = async () => {
-  const { data } = await axios.get("/api/users");
+const fetchUsers = async (abortController) => {
+  const { data } = await axios.get("/api/users", {
+    signal: abortController.signal,
+  });
   return data;
 };
 
