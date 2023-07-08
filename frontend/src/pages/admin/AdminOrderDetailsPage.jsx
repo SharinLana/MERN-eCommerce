@@ -8,7 +8,7 @@ const getOrderDetails = async (orderId) => {
 };
 
 const markOrderAsDelivered = async (orderId) => {
-  const { data } = await axios.get(`/api/orders/delivered/${orderId}`);
+  const { data } = await axios.put(`/api/orders/delivered/${orderId}`);
 
   if (data) {
     return data;

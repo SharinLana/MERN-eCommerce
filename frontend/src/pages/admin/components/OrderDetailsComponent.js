@@ -11,7 +11,7 @@ import {
 } from "react-bootstrap";
 import CartItemComponent from "../../../components/CartItemComponent";
 
-const OrderDetailsComponent = ({ getOrderDetails }) => {
+const OrderDetailsComponent = ({ getOrderDetails, markOrderAsDelivered }) => {
   const { id } = useParams();
   const [userInfo, setUserInfo] = useState([]);
   const [paymentMethod, setPaymentMethod] = useState("");
@@ -28,8 +28,8 @@ const OrderDetailsComponent = ({ getOrderDetails }) => {
       setUserInfo(order.user);
       setPaymentMethod(order.paymentMethod);
       order.isPaid ? setIsPaid(order.paidAt) : setIsPaid(false);
-      order.idsDelivered
-        ? setIsDelivered(order.deliveredAt)
+      order.isDelivered
+        ? setIsDelivered(order.deliveredAt.substring(0, 10))
         : setIsDelivered(false);
       setCartSubtotal(order.orderTotal.cartSubtotal);
 
@@ -40,6 +40,20 @@ const OrderDetailsComponent = ({ getOrderDetails }) => {
       setCartItems(order.cartItems);
     });
   }, [isDelivered, id]);
+
+  const deliveredBtnHandler = () => {
+    markOrderAsDelivered(id)
+      .then((res) => {
+        if (res) {
+          setIsDelivered(true);
+        }
+      })
+      .catch((er) =>
+        console.log(
+          er.response.data.message ? er.response.data.message : er.response.data
+        )
+      );
+  };
 
   return (
     <Container fluid>
@@ -64,6 +78,7 @@ const OrderDetailsComponent = ({ getOrderDetails }) => {
                 </option>
               </Form.Select>
             </Col>
+
             <Row>
               <Col>
                 <Alert
@@ -117,6 +132,7 @@ const OrderDetailsComponent = ({ getOrderDetails }) => {
                   disabled={buttonDisabled}
                   variant="danger"
                   type="button"
+                  onClick={deliveredBtnHandler}
                 >
                   {orderButtonMessage}
                 </Button>
