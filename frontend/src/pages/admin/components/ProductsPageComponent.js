@@ -19,10 +19,19 @@ const ProductsPageComponent = ({ fetchProducts, deleteProduct }) => {
 
   useEffect(() => {
     const abortController = new AbortController();
-
-    fetchProducts().then((res) => setProducts(res));
-    return abortController.abort();
+    fetchProducts(abortController)
+      .then((res) => setProducts(res))
+      .catch((er) =>
+        setProducts([
+          {
+            name: er.message ? er.message : er.data,
+          },
+        ])
+      );
+    return () => abortController.abort();
   }, [productDeleted]);
+
+  
 
   return (
     <Row className="m-5">
