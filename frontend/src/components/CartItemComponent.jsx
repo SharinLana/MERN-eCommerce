@@ -12,8 +12,8 @@ const CartItemComponent = ({ item, orderCreated = false }) => {
             will not be correctly fetched from the external server */}
             <Image
               fluid
-              crossorigin="anonymous"
-              src={item.image ? item.image.path !== null : null}
+              crossOrigin="anonymous"
+              src={item.image ? item.image.path ?? null : null}
             />
           </Col>
 
