@@ -13,14 +13,24 @@ import { Rating } from "react-simple-star-rating";
 import ImageZoom from "js-image-zoom";
 import AddedToCartMessageComponent from "../components/AddedToCartMessageComponent";
 
+import { useDispatch } from "react-redux";
+import { addToCart } from "../redux/dispatchers/cartDispatcher";
+
 const ProductDetailsPage = () => {
+  const dispatch = useDispatch();
+
+  const addToCartHandler = () => {
+    dispatch(addToCart());
+  };
+
+  // To zoom in on the images
   let options = {
     scale: 2,
     offset: { vertical: 0, horizontal: 0 },
     width: 400,
     zoomWidth: 500,
     fillContainer: true,
-    zoomPosition: "right"
+    zoomPosition: "right",
   };
 
   useEffect(() => {
@@ -91,7 +101,9 @@ const ProductDetailsPage = () => {
                   </Form.Select>
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  <Button variant="danger">Add to cart</Button>
+                  <Button variant="danger" onClick={addToCartHandler}>
+                    Add to cart
+                  </Button>
                 </ListGroup.Item>
               </ListGroup>
             </Col>
