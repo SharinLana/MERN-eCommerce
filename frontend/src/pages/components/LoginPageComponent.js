@@ -3,16 +3,22 @@ import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Spinner from "react-bootstrap/Spinner";
 
-const LoginPageComponent = () => {
+const LoginPageComponent = ({ loginUserApiRequest }) => {
   const [validated, setValidated] = useState(false);
 
-  const handleSubmit = (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
 
+    const email = e.currentTarget.email.value;
+    const password = e.currentTarget.password.value;
+    const doNotLogout = e.currentTarget.doNotLogout.checked;
+
+    if (e.currentTarget.checkValidity() === true && email && password) {
+      loginUserApiRequest(email, password, doNotLogout)
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err.message ? err.message : err.data));
+    }
     setValidated(true);
   };
 
@@ -21,6 +27,7 @@ const LoginPageComponent = () => {
       <Row className="mt-5 justify-content-md-center">
         <Col md={6}>
           <h1>Login</h1>
+
           <Form noValidate validated={validated} onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
