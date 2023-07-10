@@ -5,6 +5,11 @@ import Spinner from "react-bootstrap/Spinner";
 
 const LoginPageComponent = ({ loginUserApiRequest }) => {
   const [validated, setValidated] = useState(false);
+  const [loginUserResponseState, setLoginUserResponseState] = useState({
+    success: "",
+    error: "",
+    loading: false,
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -69,16 +74,28 @@ const LoginPageComponent = ({ loginUserApiRequest }) => {
             </Row>
 
             <Button variant="primary" type="submit">
-              <Spinner
-                as="span"
-                animation="border"
-                size="sm"
-                role="status"
-                aria-hidden="true"
-              />
+              {loginUserResponseState &&
+              loginUserResponseState.loading === "true" ? (
+                <Spinner
+                  as="span"
+                  animation="border"
+                  size="sm"
+                  role="status"
+                  aria-hidden="true"
+                />
+              ) : (
+                ""
+              )}
               Login
             </Button>
-            <Alert show={true} variant="danger">
+
+            <Alert
+              show={
+                loginUserResponseState &&
+                loginUserResponseState.error === "Wrong credentials"
+              }
+              variant="danger"
+            >
               Wrong credentials
             </Alert>
           </Form>
