@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import LoginPageComponent from "./components/LoginPageComponent";
-import { setReduxUserState } from "../redux/dispatchers/userDispatchers";
+import { setReduxUserState } from "../redux/actions/userActions";
 
 const loginUserApiRequest = async (email, password, doNotLogout) => {
   const { data } = await axios.post("/api/users/login", {
