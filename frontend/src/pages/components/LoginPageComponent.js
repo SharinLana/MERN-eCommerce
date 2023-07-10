@@ -35,12 +35,14 @@ const LoginPageComponent = ({ loginUserApiRequest }) => {
             res.success === "User logged in successfully" &&
             !res.userLoggedIn.isAdmin
           ) {
-            navigate("/user", { replace: true });
+            navigate("/user", { replace: true }); // { replace: true } is needed to remove the login page from the browser history
+            // if the user hits the "back" icon in the browser, he won't be able to get to the login page
           } else if (
             res.success === "User logged in successfully" &&
             res.userLoggedIn.isAdmin
           ) {
-            navigate("/admin/orders", { replace: true });
+            navigate("/admin/orders", { replace: true }); // { replace: true } is needed to remove the login page from the browser history
+            // if the user hits the "back" icon in the browser, he won't be able to get to the login page
           }
         })
         .catch((err) =>
