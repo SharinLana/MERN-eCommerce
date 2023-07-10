@@ -20,16 +20,25 @@ const LoginPageComponent = ({ loginUserApiRequest }) => {
     const doNotLogout = e.currentTarget.doNotLogout.checked;
 
     if (e.currentTarget.checkValidity() === true && email && password) {
+      setLoginUserResponseState({ loading: true });
+
       loginUserApiRequest(email, password, doNotLogout)
-        .then((res) => console.log(res))
+        .then((res) =>
+          setLoginUserResponseState({
+            success: res.success,
+            error: "",
+            loading: false,
+          })
+        )
         .catch((err) =>
-          console.log(
-            err.response.data.message
+          setLoginUserResponseState({
+            error: err.response.data.message
               ? err.response.data.message
-              : err.response.data
-          )
+              : err.response.data,
+          })
         );
     }
+
     setValidated(true);
   };
 
