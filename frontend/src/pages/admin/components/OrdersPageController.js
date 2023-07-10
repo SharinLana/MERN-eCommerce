@@ -9,7 +9,6 @@ const OrdersPageController = ({ fetchOrders }) => {
   useEffect(() => {
     fetchOrders().then((res) => setOrders(res));
   }, []);
-  console.log(orders);
 
   return (
     <Row className="m-5">
