@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Spinner from "react-bootstrap/Spinner";
 
 const LoginPageComponent = ({ loginUserApiRequest }) => {
+  const navigate = useNavigate();
   const [validated, setValidated] = useState(false);
   const [loginUserResponseState, setLoginUserResponseState] = useState({
     success: "",
@@ -23,13 +24,25 @@ const LoginPageComponent = ({ loginUserApiRequest }) => {
       setLoginUserResponseState({ loading: true });
 
       loginUserApiRequest(email, password, doNotLogout)
-        .then((res) =>
+        .then((res) => {
           setLoginUserResponseState({
             success: res.success,
             error: "",
             loading: false,
-          })
-        )
+          });
+
+          if (
+            res.success === "User logged in successfully" &&
+            !res.userLoggedIn.isAdmin
+          ) {
+            navigate("/user", { replace: true });
+          } else if (
+            res.success === "User logged in successfully" &&
+            res.userLoggedIn.isAdmin
+          ) {
+            navigate("/admin/orders", { replace: true });
+          }
+        })
         .catch((err) =>
           setLoginUserResponseState({
             error: err.response.data.message
