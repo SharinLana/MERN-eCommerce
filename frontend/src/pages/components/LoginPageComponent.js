@@ -104,6 +104,7 @@ const LoginPageComponent = ({ loginUserApiRequest }) => {
                 loginUserResponseState.error === "Wrong credentials"
               }
               variant="danger"
+              className="mt-2"
             >
               Wrong credentials
             </Alert>
