@@ -17,7 +17,13 @@ const LoginPageComponent = ({ loginUserApiRequest }) => {
     if (e.currentTarget.checkValidity() === true && email && password) {
       loginUserApiRequest(email, password, doNotLogout)
         .then((res) => console.log(res))
-        .catch((err) => console.log(err.message ? err.message : err.data));
+        .catch((err) =>
+          console.log(
+            err.response.data.message
+              ? err.response.data.message
+              : err.response.data
+          )
+        );
     }
     setValidated(true);
   };
