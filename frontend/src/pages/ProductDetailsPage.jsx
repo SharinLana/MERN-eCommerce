@@ -14,7 +14,7 @@ import ImageZoom from "js-image-zoom";
 import AddedToCartMessageComponent from "../components/AddedToCartMessageComponent";
 
 import { useDispatch } from "react-redux";
-import { addToCart } from "../redux/dispatchers/cartDispatcher";
+import { addToCart } from "../redux/actions/cartActions";
 
 const ProductDetailsPage = () => {
   const dispatch = useDispatch();
