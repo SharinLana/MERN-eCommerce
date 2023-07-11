@@ -3,7 +3,11 @@ import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import Spinner from "react-bootstrap/Spinner";
 
-const LoginPageComponent = ({ loginUserApiRequest }) => {
+const LoginPageComponent = ({
+  loginUserApiRequest,
+  dispatch,
+  setReduxUserState,
+}) => {
   const navigate = useNavigate();
   const [validated, setValidated] = useState(false);
   const [loginUserResponseState, setLoginUserResponseState] = useState({
@@ -30,6 +34,11 @@ const LoginPageComponent = ({ loginUserApiRequest }) => {
             error: "",
             loading: false,
           });
+
+          // Save the logged in user data globally with Redux
+          if (res.userLoggedIn) {
+            dispatch(setReduxUserState(res.userLoggedIn));
+          }
 
           if (
             res.success === "User logged in successfully" &&
