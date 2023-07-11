@@ -18,7 +18,7 @@ const ProtectedRoutesComponent = ({ adminRoute }) => {
         return isAuth;
       })
       .catch((err) => {
-        if (err.response.data === "Unauthorized. Invalid Token") {
+        if (err.response.data === "Unauthorized. Please log in") {
           setIsAuth();
           return isAuth;
         }
@@ -49,7 +49,7 @@ const ProtectedRoutesComponent = ({ adminRoute }) => {
         <Outlet />
       </>
     );
-    
+
   // other cases
   else
     return (

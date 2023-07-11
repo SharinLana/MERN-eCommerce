@@ -7,6 +7,11 @@ const orderRoutes = require("./orderRoutes");
 
 const jwt = require("jsonwebtoken");
 
+app.get("/logout", (req, res) => {
+  return res.clearCookie("access_token").send("access token cleared");
+});
+
+
 // Getting the user's name and role from cookies
 app.get("/get-token", (req, res) => {
   try {
