@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Navbar,
   Nav,
@@ -16,10 +16,20 @@ import { LinkContainer } from "react-router-bootstrap";
 import { Link } from "react-router-dom";
 
 import { logout } from "../redux/actions/userActions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const HeaderComponent = () => {
   const dispatch = useDispatch();
+  const { _id } = useSelector((state) => state.userRegisterLogin.userInfo);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    if (_id === undefined) {
+      setIsLoggedIn(false);
+    } else {
+      setIsLoggedIn(true);
+    }
+  }, [_id]);
 
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -67,7 +77,11 @@ const HeaderComponent = () => {
             </NavDropdown>
 
             <LinkContainer to="/login">
-              <Nav.Link>Login</Nav.Link>
+              {isLoggedIn === false ? (
+                <Nav.Link>Login</Nav.Link>
+              ) : (
+                <Nav.Link onClick={() => dispatch(logout())}>Logout</Nav.Link>
+              )}
             </LinkContainer>
             <LinkContainer to="/register">
               <Nav.Link>Register</Nav.Link>

@@ -11,9 +11,9 @@ export const userRegisterLoginReducer = (state = {}, action) => {
       };
 
     case LOGOUT_USER:
-      return {};
-      
+      return { };
+
     default:
       return state;
   }
-}
+};
