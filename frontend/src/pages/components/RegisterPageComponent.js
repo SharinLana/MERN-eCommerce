@@ -14,15 +14,18 @@ const RegisterPageComponent = ({
     error: "",
     loading: false,
   });
+  const [passwordMatchState, setPasswordMatchState] = useState(true);
 
   const onChange = () => {
     const password = document.querySelector("input[name=password");
-    const confirm = document.querySelector("input[name=confirmPassword");
+    const confirmPassword = document.querySelector(
+      "input[name=confirmPassword"
+    );
 
-    if (confirm.value === password.value) {
-      confirm.setCustomValidity("");
+    if (confirmPassword.value === password.value) {
+      setPasswordMatchState(true);
     } else {
-      confirm.setCustomValidity("Passwords do not match");
+      setPasswordMatchState(false);
     }
   };
 
@@ -116,6 +119,7 @@ const RegisterPageComponent = ({
                 placeholder="Password"
                 minLength={6}
                 onChange={onChange}
+                isInvalid={!passwordMatchState} // if passwords do not match, show error message
               />
               <Form.Control.Feedback type="invalid">
                 Please enter a valid password
@@ -133,6 +137,7 @@ const RegisterPageComponent = ({
                 placeholder="Repeat Password"
                 minLength={6}
                 onChange={onChange}
+                isInvalid={!passwordMatchState} // if passwords do not match, show error message
               />
               <Form.Control.Feedback type="invalid">
                 Both passwords should match
