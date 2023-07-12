@@ -52,11 +52,6 @@ const RegisterPageComponent = ({
           });
 
           dispatch(setReduxUserState(data.newUser)); // came from the userControllers response
-          sessionStorage.setItem("userInfo", JSON.stringify(data.newUser));
-
-          // redirect the user to the /user page
-          if (data.message === "User has been created!")
-            window.location.href = "/user";
         })
         .catch((err) =>
           setRegisterUserResponseState({
