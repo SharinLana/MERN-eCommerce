@@ -30,9 +30,7 @@ const registerUser = async (req, res, next) => {
     };
 
     if (userExists) {
-      res
-        .status(400)
-        .send(`User with the email ${userExists.email} already exists`);
+      res.status(400).send("user exists");
     } else {
       const hashedPassword = hashPassword(password);
       const newUser = await User.create({
