@@ -3,7 +3,11 @@ import { Row, Col, Table, Button } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import AdminLinksComponent from "../../../components/AdminLinksComponent";
 
+import { logout } from "../../../redux/actions/userActions";
+import { useDispatch } from "react-redux";
+
 const UsersPageComponent = ({ fetchUsers, deleteUser }) => {
+  const dispatch = useDispatch();
   const [users, setUsers] = useState([]);
   const [deletedUser, setDeletedUser] = useState(false);
 
@@ -21,13 +25,9 @@ const UsersPageComponent = ({ fetchUsers, deleteUser }) => {
     const abortController = new AbortController();
     fetchUsers(abortController)
       .then((res) => setUsers(res))
-      .catch((er) =>
-        setUsers([
-          {
-            name: er.message ? er.message : er.data,
-          },
-        ])
-      );
+      .catch((er) => {
+        if (er) dispatch(logout());
+      });
     return () => abortController.abort(); // break the connection to the DB if the speed is slow or if the  user left the page
   }, [deletedUser]);
 
