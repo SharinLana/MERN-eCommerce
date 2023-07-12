@@ -1,15 +1,12 @@
-import {
-  LOGIN_USER,
-  LOGOUT_USER,
-} from "../actionTypes/user";
+import { LOGIN_USER, LOGOUT_USER } from "../actionTypes/user";
 import axios from "axios";
 
 export const setReduxUserState = (userCreated) => (dispatch) => {
-  dispatch({
-    type: LOGIN_USER,
-    payload: userCreated
-  })
-}
+    dispatch({
+      type: LOGIN_USER,
+      payload: userCreated,
+    });
+};
 
 export const logout = () => (dispatch) => {
   document.location.href = "/login";
@@ -17,8 +14,7 @@ export const logout = () => (dispatch) => {
   localStorage.removeItem("userInfo");
   sessionStorage.removeItem("userInfo");
   localStorage.removeItem("cart");
-  dispatch({ 
-    type: LOGOUT_USER 
-  });
+    dispatch({
+      type: LOGOUT_USER,
+    });
 };
-

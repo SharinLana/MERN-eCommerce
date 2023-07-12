@@ -11,7 +11,6 @@ export const userRegisterLoginReducer = (state = {}, action) => {
       return {
         ...state,
         userInfo: action.payload,
-        isLoggedIn: true
       };
 
     case LOGOUT_USER:

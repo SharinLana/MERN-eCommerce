@@ -16,6 +16,7 @@ const userInfoInLocalStorage = localStorage.getItem("userInfo")
   ? JSON.parse(sessionStorage.getItem("userInfo"))
   : {};
 
+
 const INITIAL_STATE = {
   cart: { value: 0 },
   userRegisterLogin: {
