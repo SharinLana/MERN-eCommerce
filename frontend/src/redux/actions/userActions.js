@@ -1,4 +1,7 @@
-import { LOGIN_USER, LOGOUT_USER } from "../actionTypes/user";
+import {
+  LOGIN_USER,
+  LOGOUT_USER,
+} from "../actionTypes/user";
 import axios from "axios";
 
 export const setReduxUserState = (userCreated) => (dispatch) => {
@@ -18,3 +21,4 @@ export const logout = () => (dispatch) => {
     type: LOGOUT_USER 
   });
 };
+
