@@ -3,11 +3,19 @@ import { Row, Col, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import AdminLinksComponent from "../../../components/AdminLinksComponent";
 
+import { logout } from "../../../redux/actions/userActions";
+import { useDispatch } from "react-redux";
+
 const OrdersPageController = ({ fetchOrders }) => {
+  const dispatch = useDispatch();
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    fetchOrders().then((res) => setOrders(res));
+    fetchOrders()
+      .then((res) => setOrders(res))
+      .catch((err) => {
+        if (err) dispatch(logout());
+      });
   }, []);
 
   return (
