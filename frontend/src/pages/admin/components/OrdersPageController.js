@@ -6,7 +6,7 @@ import AdminLinksComponent from "../../../components/AdminLinksComponent";
 import { logout } from "../../../redux/actions/userActions";
 import { useDispatch } from "react-redux";
 
-const OrdersPageController = ({ fetchOrders }) => {
+const OrdersPageComponent = ({ fetchOrders }) => {
   const dispatch = useDispatch();
   const [orders, setOrders] = useState([]);
 
@@ -73,4 +73,4 @@ const OrdersPageController = ({ fetchOrders }) => {
   );
 };
 
-export default OrdersPageController;
+export default OrdersPageComponent;
