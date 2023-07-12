@@ -1,4 +1,4 @@
-import { LOGIN_USER } from "../actionTypes/user";
+import { LOGIN_USER, LOGOUT_USER } from "../actionTypes/user";
 
 export const userRegisterLoginReducer = (state = {}, action) => {
   // "action" comes from the userDispatchers.js, setReduxUserState => payload
@@ -9,6 +9,10 @@ export const userRegisterLoginReducer = (state = {}, action) => {
         ...state,
         userInfo: action.payload,
       };
+
+    case LOGOUT_USER:
+      return {};
+      
     default:
       return state;
   }
