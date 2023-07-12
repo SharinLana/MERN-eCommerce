@@ -11,7 +11,11 @@ import {
 } from "react-bootstrap";
 import CartItemComponent from "../../../components/CartItemComponent";
 
+import { logout } from "../../../redux/actions/userActions";
+import { useDispatch } from "react-redux";
+
 const OrderDetailsComponent = ({ getOrderDetails, markOrderAsDelivered }) => {
+  const dispatch = useDispatch();
   const { id } = useParams();
   const [userInfo, setUserInfo] = useState([]);
   const [paymentMethod, setPaymentMethod] = useState("");
@@ -24,21 +28,25 @@ const OrderDetailsComponent = ({ getOrderDetails, markOrderAsDelivered }) => {
   const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
-    getOrderDetails(id).then((order) => {
-      setUserInfo(order.user);
-      setPaymentMethod(order.paymentMethod);
-      order.isPaid ? setIsPaid(order.paidAt) : setIsPaid(false);
-      order.isDelivered
-        ? setIsDelivered(order.deliveredAt.substring(0, 10))
-        : setIsDelivered(false);
-      setCartSubtotal(order.orderTotal.cartSubtotal);
+    getOrderDetails(id)
+      .then((order) => {
+        setUserInfo(order.user);
+        setPaymentMethod(order.paymentMethod);
+        order.isPaid ? setIsPaid(order.paidAt) : setIsPaid(false);
+        order.isDelivered
+          ? setIsDelivered(order.deliveredAt.substring(0, 10))
+          : setIsDelivered(false);
+        setCartSubtotal(order.orderTotal.cartSubtotal);
 
-      if (order.isDelivered) {
-        setOrderButtonMessage("Order has been delivered!");
-        setButtonDisabled(true);
-      }
-      setCartItems(order.cartItems);
-    });
+        if (order.isDelivered) {
+          setOrderButtonMessage("Order has been delivered!");
+          setButtonDisabled(true);
+        }
+        setCartItems(order.cartItems);
+      })
+      .catch((err) => {
+        if (err) dispatch(logout());
+      });
   }, [isDelivered, id]);
 
   const deliveredBtnHandler = () => {
