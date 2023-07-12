@@ -3,7 +3,7 @@ import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Spinner from "react-bootstrap/Spinner";
 
-const RegisterPageComponent = () => {
+const RegisterPageComponent = ({ registerUserApiRequest }) => {
   const [validated, setValidated] = useState(false);
 
   const onChange = () => {
@@ -17,11 +17,31 @@ const RegisterPageComponent = () => {
     }
   };
 
-  const handleSubmit = (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const email = e.currentTarget.email.value;
+    const password = e.currentTarget.password.value;
+    const name = e.currentTarget.name.value;
+    const lastName = e.currentTarget.lastName.value;
+
+    if (
+      e.currentTarget.checkValidity() === true &&
+      email &&
+      password &&
+      name &&
+      lastName
+    ) {
+      registerUserApiRequest(name, lastName, email, password)
+        .then((res) => console.log(res))
+        .catch((err) =>
+          console.log({
+            error: err.response.data.message
+              ? err.response.data.message
+              : err.response.data,
+          })
+        );
     }
 
     setValidated(true);
