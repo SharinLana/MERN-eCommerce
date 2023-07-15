@@ -12,17 +12,14 @@ const registerUserApiRequest = async (name, lastName, email, password) => {
     email,
     password,
   });
-
   sessionStorage.setItem("userInfo", JSON.stringify(data.newUser));
   // redirect the user to the /user page
   if (data.message === "User has been created!") window.location.href = "/user";
-
   return data;
 };
 
 const RegisterPage = () => {
   const dispatch = useDispatch();
-
   return (
     <RegisterPageComponent
       registerUserApiRequest={registerUserApiRequest}
@@ -33,3 +30,5 @@ const RegisterPage = () => {
 };
 
 export default RegisterPage;
+
+

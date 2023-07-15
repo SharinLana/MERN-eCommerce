@@ -16,6 +16,8 @@ const LoginPageComponent = ({
     loading: false,
   });
 
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -30,13 +32,12 @@ const LoginPageComponent = ({
       loginUserApiRequest(email, password, doNotLogout)
         .then((res) => {
           setLoginUserResponseState({
-            success: res.success,
+            success: res.success, // success came from the userControllers.js
             error: "",
             loading: false,
           });
-
           // Save the logged in user data globally with Redux
-          if (res.userLoggedIn) {
+          if (res.userLoggedIn) { // userLoggedIn came from the userControllers.js
             dispatch(setReduxUserState(res.userLoggedIn));
           }
 
@@ -47,7 +48,7 @@ const LoginPageComponent = ({
             navigate("/user", { replace: true }); // { replace: true } is needed to remove the login page from the browser history
             // if the user hits the "back" icon in the browser, he won't be able to get to the login page
           } else if (
-            res.success === "User logged in successfully" &&
+            res.success === "User logged in successfully" && 
             res.userLoggedIn.isAdmin
           ) {
             navigate("/admin/orders", { replace: true }); // { replace: true } is needed to remove the login page from the browser history
@@ -62,9 +63,11 @@ const LoginPageComponent = ({
           })
         );
     }
-
     setValidated(true);
   };
+
+
+  
 
   return (
     <Container>

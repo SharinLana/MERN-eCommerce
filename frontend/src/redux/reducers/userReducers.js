@@ -4,7 +4,7 @@ import {
 } from "../actionTypes/user";
 
 export const userRegisterLoginReducer = (state = {}, action) => {
-  // "action" comes from the userDispatchers.js, setReduxUserState => payload
+  // "action" comes from the userActions.js, setReduxUserState => payload
   switch (action.type) {
     case LOGIN_USER:
       // if the LOGIN_USER action occurs, change the user state below and return the result
@@ -20,3 +20,5 @@ export const userRegisterLoginReducer = (state = {}, action) => {
       return state;
   }
 };
+
+

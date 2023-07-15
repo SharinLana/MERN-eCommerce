@@ -5,11 +5,7 @@ import LoginPageComponent from "./components/LoginPageComponent";
 import { setReduxUserState } from "../redux/actions/userActions";
 
 const loginUserApiRequest = async (email, password, doNotLogout) => {
-  const { data } = await axios.post("/api/users/login", {
-    email,
-    password,
-    doNotLogout,
-  });
+  const { data } = await axios.post("/api/users/login", {email, password, doNotLogout});
 
   // Store the logged in user info in the local storage if the "Do Not Logout" box was checked
   if (data.userLoggedIn.doNotLogout) {
@@ -36,3 +32,5 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
+

@@ -17,6 +17,7 @@ import { useDispatch } from "react-redux";
 const OrderDetailsComponent = ({ getOrderDetails, markOrderAsDelivered }) => {
   const dispatch = useDispatch();
   const { id } = useParams();
+
   const [userInfo, setUserInfo] = useState([]);
   const [paymentMethod, setPaymentMethod] = useState("");
   const [isPaid, setIsPaid] = useState(false);
@@ -39,7 +40,7 @@ const OrderDetailsComponent = ({ getOrderDetails, markOrderAsDelivered }) => {
         setCartSubtotal(order.orderTotal.cartSubtotal);
 
         if (order.isDelivered) {
-          setOrderButtonMessage("Order has been delivered!");
+          setOrderButtonMessage("Order has been delivere d!");
           setButtonDisabled(true);
         }
         setCartItems(order.cartItems);

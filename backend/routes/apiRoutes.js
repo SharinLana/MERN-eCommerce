@@ -11,8 +11,8 @@ app.get("/logout", (req, res) => {
   return res.clearCookie("access_token").send("access token cleared");
 });
 
-
 // Getting the user's name and role from cookies
+// to allow or deny access to the protected routes
 app.get("/get-token", (req, res) => {
   try {
     const accessToken = req.cookies["access_token"];
@@ -30,3 +30,6 @@ app.use("/users", userRoutes);
 app.use("/orders", orderRoutes);
 
 module.exports = app;
+
+
+
