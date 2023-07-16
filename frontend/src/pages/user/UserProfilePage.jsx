@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { useSelector } from "react-redux";
 import UserProfilePageComponent from "./components/UserProfilePageComponent";
 
 const updateUserProfileApiRequest = async (
@@ -28,11 +29,19 @@ const updateUserProfileApiRequest = async (
   return data;
 };
 
+const fetchUserProfileData = async (user_id) => {
+  const { data } = await axios.get(`/api/users/profile/${user_id}`); // the user_id will be fetched from the Redux state userInfo: _id
+  return data;
+};
+
 const UserProfilePage = () => {
+  const { userInfo } = useSelector((state) => state.userRegisterLogin);
 
   return (
     <UserProfilePageComponent
       updateUserProfileApiRequest={updateUserProfileApiRequest}
+      fetchUserProfileData={fetchUserProfileData}
+      userInfo={userInfo}
     />
   );
 };
