@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
+import User from "../../../../../backend/models/UserModel";
 
 const UserProfilePageComponent = ({ updateUserProfileApiRequest }) => {
   const [validated, setValidated] = useState(false);
@@ -20,7 +21,6 @@ const UserProfilePageComponent = ({ updateUserProfileApiRequest }) => {
 
     const name = e.currentTarget.name.value;
     const lastName = e.currentTarget.lastName.value;
-    const email = e.currentTarget.email.value;
     const phoneNumber = e.currentTarget.phoneNumber.value;
     const address = e.currentTarget.address.value;
     const country = e.currentTarget.country.value;
@@ -28,9 +28,30 @@ const UserProfilePageComponent = ({ updateUserProfileApiRequest }) => {
     const city = e.currentTarget.city.value;
     const state = e.currentTarget.state.value;
     const password = e.currentTarget.password.value;
-    const confirmPassword = e.currentTarget.confirmPassword.value;
 
-    if (form.checkValidity() === false) {
+    if (
+      e.currentTarget.checkValidity() === true &&
+      e.currentTarget.password.value === e.currentTarget.confirmPassword.value
+    ) {
+      updateUserProfileApiRequest(
+        name,
+        lastName,
+        phoneNumber,
+        address,
+        country,
+        zipCode,
+        city,
+        state,
+        password
+      )
+        .then((data) => console.log(data))
+        .catch((err) =>
+          console.log(
+            err.response.data.message
+              ? err.response.data.message
+              : err.response.data
+          )
+        );
     }
 
     setValidated(true);
