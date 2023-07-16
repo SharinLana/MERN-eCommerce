@@ -70,8 +70,27 @@ const UserProfilePageComponent = ({
         password
       )
         .then((data) => {
-          console.log(data);
           setUpdateUserResponseState({ success: data.success, error: "" }); //success came from the backend (updateUserProfile controller response in the userControllers.js)
+          
+          // Storing the new values in Redux to make them available globally
+          dispatch(
+            setReduxUserState({
+              doNotLogout: userInfoFromRedux.doNotLogout,
+              ...data.userUpdated,
+            })
+          );
+
+          if (userInfoFromRedux.doNotLogout) {
+            localStorage.setItem(
+              "userInfo",
+              JSON.stringify({ doNotLogout: true, ...data.userUpdated })
+            );
+          } else {
+            sessionStorage.setItem(
+              "userInfo",
+              JSON.stringify({ doNotLogout: false, ...data.userUpdated })
+            );
+          }
         })
         .catch((err) =>
           setUpdateUserResponseState({
