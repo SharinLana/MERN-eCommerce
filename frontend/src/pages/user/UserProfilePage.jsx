@@ -1,7 +1,8 @@
 import React from "react";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import UserProfilePageComponent from "./components/UserProfilePageComponent";
+import { setReduxUserState } from "../../redux/actions/userActions";
 
 const updateUserProfileApiRequest = async (
   name,
@@ -38,12 +39,17 @@ const UserProfilePage = () => {
   // fetch it here and not in side of the UserProfilePageComponent
   // because it will make the testing easier (you will be able to replace it in the testing function)
   const { userInfo } = useSelector((state) => state.userRegisterLogin);
+  const dispatch = useDispatch();
 
   return (
     <UserProfilePageComponent
       updateUserProfileApiRequest={updateUserProfileApiRequest}
       fetchUserProfileData={fetchUserProfileData}
-      userInfo={userInfo}
+      userInfoFromRedux={userInfo}
+      dispatch={dispatch}
+      setReduxUserState={setReduxUserState}
+      localStorage={window.localStorage}
+      sessionStorage={window.sessionStorage}
     />
   );
 };
