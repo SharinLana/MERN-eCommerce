@@ -4,7 +4,11 @@ import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
 const UserProfilePageComponent = ({
   updateUserProfileApiRequest,
   fetchUserProfileData,
-  userInfo,
+  userInfoFromRedux,
+  setReduxUserState,
+  dispatch,
+  sessionStorage,
+  localStorage,
 }) => {
   const [validated, setValidated] = useState(false);
   const [updateUserResponseState, setUpdateUserResponseState] = useState({
@@ -16,10 +20,10 @@ const UserProfilePageComponent = ({
 
   // fetching the user profile data to fill out the form fields
   useEffect(() => {
-    fetchUserProfileData(userInfo._id)
+    fetchUserProfileData(userInfoFromRedux._id)
       .then((data) => setUser(data))
       .catch((err) => console.log(err));
-  }, [userInfo._id]);
+  }, [userInfoFromRedux._id]);
 
   // Comparing password and confirmPassword fields
   const onChange = () => {
@@ -224,7 +228,6 @@ const UserProfilePageComponent = ({
             ) : (
               ""
             )}
-            
           </Form>
         </Col>
       </Row>
