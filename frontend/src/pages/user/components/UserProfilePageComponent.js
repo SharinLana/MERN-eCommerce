@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
-import User from "../../../../../backend/models/UserModel";
 
 const UserProfilePageComponent = ({ updateUserProfileApiRequest }) => {
   const [validated, setValidated] = useState(false);
