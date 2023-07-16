@@ -141,7 +141,6 @@ const updateUserProfile = async (req, res, next) => {
 
     user.name = req.body.name || user.name;
     user.lastName = req.body.lastName || user.lastName;
-    user.email = req.body.email || user.email;
     user.phoneNumber = req.body.phoneNumber;
     user.address = req.body.address;
     user.country = req.body.country;
