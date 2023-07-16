@@ -12,9 +12,9 @@ const ProductListPageComponent = ({ getAllProducts }) => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    getAllProducts().then((data) =>
-      setProducts(data.products).catch((err) => console.log(err))
-    );
+    getAllProducts()
+      .then((data) => setProducts(data.products))
+      .catch((err) => console.log(err));
   }, []);
 
   return (
