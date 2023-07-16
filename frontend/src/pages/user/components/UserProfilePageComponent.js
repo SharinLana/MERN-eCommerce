@@ -71,7 +71,7 @@ const UserProfilePageComponent = ({
       )
         .then((data) => {
           console.log(data);
-          setUpdateUserResponseState({ success: data.success }); //success came from the backend (updateUserProfile controller response in the userControllers.js)
+          setUpdateUserResponseState({ success: data.success, error: "" }); //success came from the backend (updateUserProfile controller response in the userControllers.js)
         })
         .catch((err) =>
           setUpdateUserResponseState({
