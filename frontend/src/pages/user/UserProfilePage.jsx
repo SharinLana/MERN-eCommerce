@@ -2,8 +2,18 @@ import React from "react";
 import axios from "axios";
 import UserProfilePageComponent from "./components/UserProfilePageComponent";
 
-const UserProfilePage = () => {
-  const updateUserProfileApiRequest = async (
+const updateUserProfileApiRequest = async (
+  name,
+  lastName,
+  phoneNumber,
+  address,
+  country,
+  zipCode,
+  city,
+  state,
+  password
+) => {
+  const { data } = await axios.post("/api/users/profile", {
     name,
     lastName,
     phoneNumber,
@@ -12,22 +22,14 @@ const UserProfilePage = () => {
     zipCode,
     city,
     state,
-    password
-  ) => {
-    const { data } = await axios.post("/api/users/profile", {
-      name,
-      lastName,
-      phoneNumber,
-      address,
-      country,
-      zipCode,
-      city,
-      state,
-      password,
-    });
+    password,
+  });
 
-    return data;
-  };
+  return data;
+};
+
+const UserProfilePage = () => {
+
   return (
     <UserProfilePageComponent
       updateUserProfileApiRequest={updateUserProfileApiRequest}
