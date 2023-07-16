@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Row, Col, Container, ListGroup, Button } from "react-bootstrap";
 import ProductCardComponent from "../../components/ProductCardComponent";
 import SortingComponent from "../../components/SortingComponent";
@@ -9,9 +9,13 @@ import PriceFilterComponent from "../../components/filteringOptions/PriceFilterC
 import RatingFilterComponent from "../../components/filteringOptions/RatingFilterComponent";
 
 const ProductListPageComponent = ({ getAllProducts }) => {
+  const [products, setProducts] = useState([]);
+
   useEffect(() => {
-    getAllProducts().then(data => console.log(data));
-  }, [])
+    getAllProducts().then((data) =>
+      setProducts(data.products).catch((err) => console.log(err))
+    );
+  }, []);
 
   return (
     <div>
@@ -42,11 +46,16 @@ const ProductListPageComponent = ({ getAllProducts }) => {
             </ListGroup>
           </Col>
           <Col md={9}>
-            {Array.from({ length: 5 }).map((_, idx) => (
+            {products.map((product) => (
               <ProductCardComponent
-                key={idx}
-                images={["games", "monitors", "tablets", "games", "monitors"]}
-                idx={idx}
+                key={product._id}
+                images={product.images}
+                name={product.name}
+                description={product.description}
+                price={product.price}
+                rating={product.rating}
+                reviewsNumber={product.reviewsNumber}
+                productId={product._id}
               />
             ))}
             <PaginationComponent />
