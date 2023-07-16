@@ -35,6 +35,8 @@ const fetchUserProfileData = async (user_id) => {
 };
 
 const UserProfilePage = () => {
+  // fetch it here and not in side of the UserProfilePageComponent
+  // because it will make the testing easier (you will be able to replace it in the testing function)
   const { userInfo } = useSelector((state) => state.userRegisterLogin);
 
   return (
