@@ -44,7 +44,7 @@ const HeaderComponent = () => {
             </InputGroup>
           </Nav>
           <Nav>
-            {userInfo && userInfo.isAdmin ? (
+            {userInfo.isAdmin ? (
               <LinkContainer to="/admin/orders">
                 <Nav.Link>
                   Admin

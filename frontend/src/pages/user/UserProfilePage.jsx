@@ -14,7 +14,7 @@ const UserProfilePage = () => {
     state,
     password
   ) => {
-    const { data } = await axios("/api/users/profile", {
+    const { data } = await axios.post("/api/users/profile", {
       name,
       lastName,
       phoneNumber,
