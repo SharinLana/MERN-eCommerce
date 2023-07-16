@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Row, Col, Container, ListGroup, Button } from "react-bootstrap";
 import ProductCardComponent from "../../components/ProductCardComponent";
 import SortingComponent from "../../components/SortingComponent";
@@ -8,7 +8,11 @@ import CategoryFilterComponent from "../../components/filteringOptions/CategoryF
 import PriceFilterComponent from "../../components/filteringOptions/PriceFilterComponent";
 import RatingFilterComponent from "../../components/filteringOptions/RatingFilterComponent";
 
-const ProductListPageComponent = () => {
+const ProductListPageComponent = ({ getAllProducts }) => {
+  useEffect(() => {
+    getAllProducts().then(data => console.log(data));
+  }, [])
+
   return (
     <div>
       <Container fluid>
