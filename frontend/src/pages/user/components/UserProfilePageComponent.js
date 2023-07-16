@@ -1,14 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
 
-const UserProfilePageComponent = ({ updateUserProfileApiRequest }) => {
+const UserProfilePageComponent = ({
+  updateUserProfileApiRequest,
+  fetchUserProfileData,
+  userInfo,
+}) => {
   const [validated, setValidated] = useState(false);
   const [updateUserResponseState, setUpdateUserResponseState] = useState({
     success: "",
     error: "",
   });
   const [passwordMatchState, setPasswordMatchState] = useState(true);
+  const [user, setUser] = useState({});
 
+  // fetching the user profile data to fill out the form fields
+  useEffect(() => {
+    fetchUserProfileData(userInfo._id)
+      .then((data) => setUser(data))
+      .catch((err) => console.log(err));
+  }, [userInfo._id]);
+
+  // Comparing password and confirmPassword fields
   const onChange = () => {
     const password = document.querySelector("input[name=password");
     const confirmPassword = document.querySelector(
@@ -22,6 +35,7 @@ const UserProfilePageComponent = ({ updateUserProfileApiRequest }) => {
     }
   };
 
+  // Form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -77,7 +91,7 @@ const UserProfilePageComponent = ({ updateUserProfileApiRequest }) => {
               <Form.Control
                 required
                 type="text"
-                defaultValue="John"
+                defaultValue={user.name}
                 name="name"
               />
               <Form.Control.Feedback type="invalid">
@@ -89,7 +103,7 @@ const UserProfilePageComponent = ({ updateUserProfileApiRequest }) => {
               <Form.Control
                 required
                 type="text"
-                defaultValue="Doe"
+                defaultValue={user.lastName}
                 name="lastName"
               />
               <Form.Control.Feedback type="invalid">
@@ -100,7 +114,7 @@ const UserProfilePageComponent = ({ updateUserProfileApiRequest }) => {
               <Form.Label>Email address</Form.Label>
               <Form.Control
                 disabled
-                value="john@doe.com   if you want to change email, remove account and create new one with new email address"
+                value={`${user.email} if you want to change email, remove account and create new one with new email address`}
                 name="email"
               />
             </Form.Group>
@@ -109,7 +123,7 @@ const UserProfilePageComponent = ({ updateUserProfileApiRequest }) => {
               <Form.Control
                 type="text"
                 placeholder="Enter your phone number"
-                defaultValue=""
+                defaultValue={user.phoneNumber}
                 name="phoneNumber"
               />
             </Form.Group>
@@ -118,7 +132,7 @@ const UserProfilePageComponent = ({ updateUserProfileApiRequest }) => {
               <Form.Control
                 type="text"
                 placeholder="Enter your street name and house number"
-                defaultValue=""
+                defaultValue={user.address}
                 name="address"
               />
             </Form.Group>
@@ -127,7 +141,7 @@ const UserProfilePageComponent = ({ updateUserProfileApiRequest }) => {
               <Form.Control
                 type="text"
                 placeholder="Enter your country"
-                defaultValue=""
+                defaultValue={user.country}
                 name="country"
               />
             </Form.Group>
@@ -136,7 +150,7 @@ const UserProfilePageComponent = ({ updateUserProfileApiRequest }) => {
               <Form.Control
                 type="text"
                 placeholder="Enter your Zip code"
-                defaultValue=""
+                defaultValue={user.zipCode}
                 name="zipCode"
               />
             </Form.Group>
@@ -145,7 +159,7 @@ const UserProfilePageComponent = ({ updateUserProfileApiRequest }) => {
               <Form.Control
                 type="text"
                 placeholder="Enter your city"
-                defaultValue=""
+                defaultValue={user.city}
                 name="city"
               />
             </Form.Group>
@@ -154,7 +168,7 @@ const UserProfilePageComponent = ({ updateUserProfileApiRequest }) => {
               <Form.Control
                 type="text"
                 placeholder="Enter your state"
-                defaultValue=""
+                defaultValue={user.state}
                 name="state"
               />
             </Form.Group>
@@ -196,24 +210,21 @@ const UserProfilePageComponent = ({ updateUserProfileApiRequest }) => {
               Update
             </Button>
 
-            <Alert
-              show={
-                updateUserResponseState && updateUserResponseState.error !== ""
-              }
-              variant="danger"
-            >
-              Something went wrong
-            </Alert>
-            <Alert
-              show={
-                updateUserResponseState &&
-                updateUserResponseState.success ===
-                  "The profile has been updated"
-              }
-              variant="info"
-            >
-              User updated
-            </Alert>
+            {updateUserResponseState &&
+            updateUserResponseState.success ===
+              "The profile has been updated" ? (
+              <Alert variant="info" className="mt-2">
+                User updated
+              </Alert>
+            ) : updateUserResponseState &&
+              updateUserResponseState.error !== "" ? (
+              <Alert variant="danger" className="mt-2">
+                Something went wrong
+              </Alert>
+            ) : (
+              ""
+            )}
+            
           </Form>
         </Col>
       </Row>
