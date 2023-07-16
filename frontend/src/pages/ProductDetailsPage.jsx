@@ -9,6 +9,7 @@ import {
   Button,
   Alert,
 } from "react-bootstrap";
+import { useParams } from "react-router-dom";
 import { Rating } from "react-simple-star-rating";
 import ImageZoom from "js-image-zoom";
 import AddedToCartMessageComponent from "../components/AddedToCartMessageComponent";
@@ -18,6 +19,8 @@ import { addToCart } from "../redux/actions/cartActions";
 
 const ProductDetailsPage = () => {
   const dispatch = useDispatch();
+
+  const { id } = useParams(); // the product id extracted from the route
 
   const addToCartHandler = () => {
     dispatch(addToCart());
