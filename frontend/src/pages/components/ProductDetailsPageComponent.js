@@ -14,10 +14,13 @@ import { Rating } from "react-simple-star-rating";
 import ImageZoom from "js-image-zoom";
 import AddedToCartMessageComponent from "../../components/AddedToCartMessageComponent";
 
-const ProductDetailsPageComponent = ({ addToCartHandler, dispatch }) => {
+const ProductDetailsPageComponent = ({ addToCartReduxAction, dispatch }) => {
   const { id } = useParams(); // the product id extracted from the route
   const [productQuantity, setProductQuantity] = useState(1);
-  console.log(id, addToCartHandler, dispatch);
+
+  const addToCartHandler = () => {
+    dispatch(addToCartReduxAction(id, productQuantity));
+  };
 
   // To zoom in on the images
   let options = {
@@ -91,9 +94,10 @@ const ProductDetailsPageComponent = ({ addToCartHandler, dispatch }) => {
                 <ListGroup.Item>
                   <Form.Select
                     value={productQuantity}
-                    onChange={e=> setProductQuantity(e.target.value)}
-                    size="lg"
+                    onChange={(e) => setProductQuantity(e.currentTarget.value)}
+                    size="sm"
                     aria-label="Default select example"
+                    style={{ zIndex: 2000 }}
                   >
                     <option>Choose:</option>
                     <option value="1">1</option>

@@ -7,13 +7,9 @@ import { addToCart } from "../redux/actions/cartActions";
 const ProductDetailsPage = () => {
   const dispatch = useDispatch();
 
-  const addToCartHandler = () => {
-    dispatch(addToCart());
-  };
-
   return (
     <ProductDetailsPageComponent
-      addToCartHandler={addToCartHandler}
+      addToCartReduxAction={addToCart}
       dispatch={dispatch}
     />
   );
