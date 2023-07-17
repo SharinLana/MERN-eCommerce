@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Row,
@@ -14,9 +14,10 @@ import { Rating } from "react-simple-star-rating";
 import ImageZoom from "js-image-zoom";
 import AddedToCartMessageComponent from "../../components/AddedToCartMessageComponent";
 
-const ProductDetailsPageComponent = ({ addToCart, products }) => {
+const ProductDetailsPageComponent = ({ addToCartHandler, dispatch }) => {
   const { id } = useParams(); // the product id extracted from the route
-  console.log(id, addToCart, products);
+  const [productQuantity, setProductQuantity] = useState(1);
+  console.log(id, addToCartHandler, dispatch);
 
   // To zoom in on the images
   let options = {
@@ -88,15 +89,20 @@ const ProductDetailsPageComponent = ({ addToCart, products }) => {
                   Price: <span className="fw-bold">$345</span>
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  <Form.Select size="lg" aria-label="Default select example">
-                    <option>Quantity:</option>
+                  <Form.Select
+                    value={productQuantity}
+                    onChange={e=> setProductQuantity(e.target.value)}
+                    size="lg"
+                    aria-label="Default select example"
+                  >
+                    <option>Choose:</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
                   </Form.Select>
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  <Button variant="danger" onClick={addToCart}>
+                  <Button variant="danger" onClick={addToCartHandler}>
                     Add to cart
                   </Button>
                 </ListGroup.Item>
