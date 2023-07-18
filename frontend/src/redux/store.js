@@ -16,11 +16,25 @@ const userInfoInLocalStorage = localStorage.getItem("userInfo")
   ? JSON.parse(sessionStorage.getItem("userInfo"))
   : {};
 
+const cartItemsInLocalStorage = localStorage.getItem("cart")
+  ? JSON.parse(localStorage.getItem("cart"))
+  : [];
+
 const INITIAL_STATE = {
   cart: {
-    cartItems: [],
-    itemsCount: 0,
-    cartSubtotal: 0,
+    cartItems: cartItemsInLocalStorage,
+    itemsCount: cartItemsInLocalStorage
+      ? cartItemsInLocalStorage.reduce(
+          (quantity, item) => quantity + Number(item.quantity),
+          0
+        )
+      : 0,
+    cartSubtotal: cartItemsInLocalStorage
+      ? cartItemsInLocalStorage.reduce(
+          (price, item) => price + item.price * item.quantity,
+          0
+        )
+      : 0,
   },
   userRegisterLogin: {
     userInfo: userInfoInLocalStorage,
