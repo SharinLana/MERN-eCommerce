@@ -20,7 +20,7 @@ const CartItemComponent = ({ item, orderCreated = false, changeQuantity=false })
           <Col md={2}>{item.name}</Col>
 
           <Col md={2}>
-            <b>${item.price}</b>
+            <b>${item.price * item.quantity}</b>
           </Col>
 
           <Col md={3}>
