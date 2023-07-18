@@ -17,9 +17,11 @@ import AddedToCartMessageComponent from "../../components/AddedToCartMessageComp
 const ProductDetailsPageComponent = ({ addToCartReduxAction, dispatch }) => {
   const { id } = useParams(); // the product id extracted from the route
   const [productQuantity, setProductQuantity] = useState(1);
+  const [showCartMessage, setShowCartMessage] = useState(false);
 
   const addToCartHandler = () => {
     dispatch(addToCartReduxAction(id, productQuantity));
+    setShowCartMessage(true);
   };
 
   // To zoom in on the images
@@ -41,7 +43,10 @@ const ProductDetailsPageComponent = ({ addToCartReduxAction, dispatch }) => {
 
   return (
     <Container>
-      <AddedToCartMessageComponent />
+      <AddedToCartMessageComponent
+        showCartMessage={showCartMessage}
+        setShowCartMessage={setShowCartMessage}
+      />
       <Row className="mt-5">
         {/* zIndex needed for zooming in on the image */}
         <Col md={4} style={{ zIndex: 1 }}>
