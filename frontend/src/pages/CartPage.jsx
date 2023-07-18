@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addToCart } from "../redux/actions/cartActions";
+import { addToCart, removeFromCart } from "../redux/actions/cartActions";
 import CartPageComponent from "./components/CartPageComponent";
 
 const CartPage = () => {
@@ -11,6 +11,7 @@ const CartPage = () => {
   return (
     <CartPageComponent
       addToCart={addToCart}
+      removeFromCart={removeFromCart}
       cartItems={cartItems}
       cartSubtotal={cartSubtotal}
       dispatch={dispatch}
