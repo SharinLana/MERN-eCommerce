@@ -13,6 +13,14 @@ const CartPageComponent = ({
     dispatch(addToCart(productId, quantity));
   };
 
+  const removeFromCartHandler = (productId, quantity, price) => {
+    if (window.confirm("Are you sure?")) {
+      console.log(productId);
+      console.log(quantity);
+      console.log(price);
+    }
+  };
+
   return (
     <Container fluid>
       <Row className="mt-4">
@@ -27,6 +35,7 @@ const CartPageComponent = ({
                   key={idx}
                   item={item}
                   changeQuantity={changeQuantity}
+                  removeFromCartHandler={removeFromCartHandler}
                 />
               ))}
             </ListGroup>
