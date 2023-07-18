@@ -21,6 +21,7 @@ import { useDispatch, useSelector } from "react-redux";
 const HeaderComponent = () => {
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.userRegisterLogin);
+  const itemsCount = useSelector((state) => state.cart.itemsCount);
 
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -53,7 +54,10 @@ const HeaderComponent = () => {
               </LinkContainer>
             ) : userInfo.name && !userInfo.isAdmin ? (
               <>
-                <NavDropdown title={`${userInfo.name} ${userInfo.lastName}`} id="collasible-nav-dropdown">
+                <NavDropdown
+                  title={`${userInfo.name} ${userInfo.lastName}`}
+                  id="collasible-nav-dropdown"
+                >
                   <NavDropdown.Item
                     eventKey="/user/my-orders"
                     as={Link}
@@ -83,7 +87,7 @@ const HeaderComponent = () => {
             <LinkContainer to="/cart">
               <Nav.Link>
                 <Badge pill bg="danger">
-                  2
+                  {itemsCount === 0 ? "" : itemsCount}
                 </Badge>
                 <i className="bi bi-cart-dash"></i>
                 <span className="ms-1">CART</span>
