@@ -25,13 +25,13 @@ const INITIAL_STATE = {
     cartItems: cartItemsInLocalStorage,
     itemsCount: cartItemsInLocalStorage
       ? cartItemsInLocalStorage.reduce(
-          (quantity, item) => quantity + Number(item.quantity),
+          (quantity, item) => (quantity += Number(item.quantity)),
           0
         )
       : 0,
     cartSubtotal: cartItemsInLocalStorage
       ? cartItemsInLocalStorage.reduce(
-          (price, item) => price + item.price * item.quantity,
+          (price, item) => (price += item.price * item.quantity),
           0
         )
       : 0,
