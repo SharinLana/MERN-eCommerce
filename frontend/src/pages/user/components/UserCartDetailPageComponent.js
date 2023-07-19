@@ -21,6 +21,8 @@ const UserCartDetailsPageComponent = ({
   userInfo,
 }) => {
   const [buttonDisabled, setButtonDisabled] = useState(false);
+  const [userShippingAddress, setUserShippingAddress] = useState(false);
+  const [missingShippingAddress, setMissingShippingAddress] = useState("");
 
   const changeCount = (productId, count) => {
     dispatch(addToCart(productId, count));
@@ -46,6 +48,19 @@ const UserCartDetailsPageComponent = ({
           !data.phoneNumber
         ) {
           setButtonDisabled(true);
+          setMissingShippingAddress(
+            "To make order, please fill out your profile with correct address, city etc."
+          );
+        } else {
+          setUserShippingAddress({
+            address: data.address,
+            city: data.city,
+            country: data.country,
+            zipCode: data.zipCode,
+            state: data.state,
+            phoneNumber: data.phoneNumber,
+          });
+          setMissingShippingAddress(false);
         }
       })
       .catch((err) =>
@@ -67,8 +82,10 @@ const UserCartDetailsPageComponent = ({
             <Col md={6}>
               <h2>Shipping</h2>
               <b>Name</b>: {userInfo.name} {userInfo.lastName} <br />
-              <b>Address</b>: {userInfo.address} <br />
-              <b>Phone</b>: {userInfo.phoneNumber} <br />
+              <b>Address</b>: {userShippingAddress.address}{" "}
+              {userShippingAddress.city} {userShippingAddress.state}{" "}
+              {userShippingAddress.zipCode} <br />
+              <b>Phone</b>: {userShippingAddress.phoneNumber} <br />
             </Col>
             <Col md={6}>
               <h2>Payment method</h2>
@@ -82,8 +99,8 @@ const UserCartDetailsPageComponent = ({
             <Row>
               <Col>
                 <Alert className="mt-3" variant="danger">
-                  Not delivered. In order to make order, fill out your profile
-                  with correct address, city etc.
+                  Not delivered.
+                  {missingShippingAddress}
                 </Alert>
               </Col>
               <Col>
