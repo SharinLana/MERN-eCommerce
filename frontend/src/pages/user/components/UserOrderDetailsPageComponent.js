@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Container,
   Row,
@@ -10,7 +10,24 @@ import {
 } from "react-bootstrap";
 import CartItemComponent from "../../../components/CartItemComponent";
 
-const UserOrderDetailsPageComponent = ({ userInfo }) => {
+const UserOrderDetailsPageComponent = ({ userInfo, getUser }) => {
+  const [userAddress, setUserAddress] = useState({});
+
+  useEffect(() => {
+    getUser()
+      .then((data) => {
+        setUserAddress({
+          address: data.address,
+          city: data.city,
+          country: data.country,
+          zipCode: data.zipCode,
+          state: data.state,
+          phoneNumber: data.phoneNumber,
+        });
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
     <Container fluid>
       <Row className="mt-4">
@@ -22,8 +39,9 @@ const UserOrderDetailsPageComponent = ({ userInfo }) => {
             <Col md={6}>
               <h2>Shipping</h2>
               <b>Name</b>: {userInfo.name} {userInfo.lastName} <br />
-              <b>Address</b>: 8739 Mayflower St. Los Angeles, CA 90063 <br />
-              <b>Phone</b>: 888 777 666
+              <b>Address</b>: {userAddress.address} {userAddress.city}{" "}
+              {userAddress.state} {userAddress.zipCode} <br />
+              <b>Phone</b>: {userAddress.phoneNumber}
             </Col>
 
             <Col md={6}>
