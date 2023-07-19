@@ -12,11 +12,12 @@ import CartItemComponent from "../../../components/CartItemComponent";
 
 const UserCartDetailsPageComponent = ({
   cartItems,
-  itemsCount,
+  // itemsCount,
   cartSubtotal,
   dispatch,
   addToCart,
   removeFromCart,
+  getUser,
 }) => {
   const changeCount = (productId, count) => {
     dispatch(addToCart(productId, count));
@@ -27,6 +28,8 @@ const UserCartDetailsPageComponent = ({
       dispatch(removeFromCart(productId, quantity, price));
     }
   };
+
+  getUser().then((res) => console.log(res));
 
   return (
     <Container fluid>
