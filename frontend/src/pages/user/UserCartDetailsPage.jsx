@@ -26,6 +26,7 @@ const UserCartDetailsPage = () => {
       addToCart={addToCart}
       removeFromCart={removeFromCart}
       getUser={getUser}
+      userInfo={userInfo}
     />
   );
 };
