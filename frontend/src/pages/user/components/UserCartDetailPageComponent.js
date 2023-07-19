@@ -10,7 +10,11 @@ import {
 } from "react-bootstrap";
 import CartItemComponent from "../../../components/CartItemComponent";
 
-const UserCartDetailsPageComponent = () => {
+const UserCartDetailsPageComponent = ({
+  cartItems,
+  itemsCount,
+  cartSubtotal,
+}) => {
   return (
     <Container fluid>
       <Row className="mt-4">
@@ -26,7 +30,7 @@ const UserCartDetailsPageComponent = () => {
             </Col>
             <Col md={6}>
               <h2>Payment method</h2>
-              <Form.Select>
+              <Form.Select >
                 <option value="pp">PayPal</option>
                 <option value="cod">
                   Cash On Delivery (delivery may be delayed)
@@ -50,17 +54,8 @@ const UserCartDetailsPageComponent = () => {
           <br />
           <h2>Order items</h2>
           <ListGroup variant="flush">
-            {Array.from({ length: 3 }).map((item, idx) => (
-              <CartItemComponent
-                key={idx}
-                item={{
-                  image: { path: "/images/tablets-category.png" },
-                  name: "Product name",
-                  price: 10,
-                  count: 10,
-                  quantity: 10,
-                }}
-              />
+            {cartItems.map((item, idx) => (
+              <CartItemComponent key={idx} item={item} />
             ))}
           </ListGroup>
         </Col>
@@ -70,7 +65,8 @@ const UserCartDetailsPageComponent = () => {
               <h3>Order summary</h3>
             </ListGroup.Item>
             <ListGroup.Item>
-              Items price (after tax): <span className="fw-bold">$892</span>
+              Items price (after tax):{" "}
+              <span className="fw-bold">${cartSubtotal}</span>
             </ListGroup.Item>
             <ListGroup.Item>
               Shipping: <span className="fw-bold">included</span>
@@ -79,7 +75,7 @@ const UserCartDetailsPageComponent = () => {
               Tax: <span className="fw-bold">included</span>
             </ListGroup.Item>
             <ListGroup.Item className="text-danger">
-              Total price: <span className="fw-bold">$904</span>
+              Total price: <span className="fw-bold">${cartSubtotal}</span>
             </ListGroup.Item>
             <ListGroup.Item>
               <div className="d-grid gap-2">
