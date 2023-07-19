@@ -8,6 +8,7 @@ import {
   ListGroup,
   Button,
 } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import CartItemComponent from "../../../components/CartItemComponent";
 
 const UserCartDetailsPageComponent = ({
@@ -19,11 +20,14 @@ const UserCartDetailsPageComponent = ({
   removeFromCart,
   getUser,
   userInfo,
+  createOrder,
 }) => {
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [userShippingAddress, setUserShippingAddress] = useState(false);
   const [missingShippingAddress, setMissingShippingAddress] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("pp");
+
+  const navigate = useNavigate();
 
   const changeQuantity = (productId, count) => {
     dispatch(addToCart(productId, count));
@@ -90,7 +94,14 @@ const UserCartDetailsPageComponent = ({
       }),
       paymentMethod: paymentMethod,
     };
-    console.log(orderData);
+
+    createOrder(orderData)
+      .then((data) => {
+        if (data) {
+          navigate("/user/order-details/" + data._id);
+        }
+      })
+      .catch((err) => console.log(err));
   };
 
   const choosePayment = (e) => {
