@@ -10,7 +10,7 @@ import {
 } from "react-bootstrap";
 import CartItemComponent from "../../../components/CartItemComponent";
 
-const UserOrderDetailsPageComponent = () => {
+const UserOrderDetailsPageComponent = ({ userInfo }) => {
   return (
     <Container fluid>
       <Row className="mt-4">
