@@ -60,7 +60,7 @@ export const cartReducer = (state = CART_INITIAL_STATE, action) => {
       return {
         ...state,
         cartItems: state.cartItems.filter(
-          (x) => x.productID !== action.payload.productID
+          (x) => x.productId !== action.payload.productId
         ),
         itemsCount: state.itemsCount - action.payload.quantity,
         cartSubtotal:

@@ -5,6 +5,7 @@ import CartItemComponent from "../../components/CartItemComponent";
 
 const CartPageComponent = ({
   addToCart,
+  removeFromCart,
   cartItems,
   cartSubtotal,
   dispatch,
@@ -15,9 +16,7 @@ const CartPageComponent = ({
 
   const removeFromCartHandler = (productId, quantity, price) => {
     if (window.confirm("Are you sure?")) {
-      console.log(productId);
-      console.log(quantity);
-      console.log(price);
+      dispatch(removeFromCart(productId, quantity, price));
     }
   };
 

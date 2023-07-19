@@ -50,7 +50,7 @@ const CartItemComponent = ({
           <Col md={3}>
             <RemoveFromCartComponent
               orderCreated={orderCreated}
-              productID={item.productId}
+              productId={item.productId}
               quantity={item.quantity}
               price={item.price}
               removeFromCartHandler={
