@@ -25,7 +25,7 @@ const UserCartDetailsPageComponent = ({
   const [missingShippingAddress, setMissingShippingAddress] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("pp");
 
-  const changeCount = (productId, count) => {
+  const changeQuantity = (productId, count) => {
     dispatch(addToCart(productId, count));
   };
 
@@ -39,7 +39,6 @@ const UserCartDetailsPageComponent = ({
   useEffect(() => {
     getUser()
       .then((data) => {
-        console.log(data);
         if (
           !data.address ||
           !data.city ||
@@ -144,7 +143,7 @@ const UserCartDetailsPageComponent = ({
                 item={item}
                 key={idx}
                 removeFromCartHandler={removeFromCartHandler}
-                changeCount={changeCount}
+                changeQuantity={changeQuantity}
               />
             ))}
           </ListGroup>
