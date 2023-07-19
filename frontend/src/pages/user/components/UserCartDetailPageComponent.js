@@ -12,7 +12,7 @@ import CartItemComponent from "../../../components/CartItemComponent";
 
 const UserCartDetailsPageComponent = ({
   cartItems,
-  // itemsCount,
+  itemsCount,
   cartSubtotal,
   dispatch,
   addToCart,
@@ -23,6 +23,7 @@ const UserCartDetailsPageComponent = ({
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [userShippingAddress, setUserShippingAddress] = useState(false);
   const [missingShippingAddress, setMissingShippingAddress] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("pp");
 
   const changeCount = (productId, count) => {
     dispatch(addToCart(productId, count));
@@ -72,6 +73,31 @@ const UserCartDetailsPageComponent = ({
       );
   }, [userInfo._id]);
 
+  const orderHandler = () => {
+    const orderData = {
+      orderTotal: {
+        itemsCount: itemsCount,
+        cartSubtotal: cartSubtotal,
+      },
+      cartItems: cartItems.map((item) => {
+        return {
+          productId: item.productId,
+          name: item.name,
+          price: item.price,
+          image: { path: item.image ? item.image.path ?? null : null },
+          quantity: item.quantity,
+          count: item.count,
+        };
+      }),
+      paymentMethod: paymentMethod,
+    };
+    console.log(orderData);
+  };
+
+  const choosePayment = (e) => {
+    setPaymentMethod(e.target.value);
+  };
+
   return (
     <Container fluid>
       <Row className="mt-4">
@@ -89,7 +115,7 @@ const UserCartDetailsPageComponent = ({
             </Col>
             <Col md={6}>
               <h2>Payment method</h2>
-              <Form.Select>
+              <Form.Select value={paymentMethod} onChange={choosePayment}>
                 <option value="pp">PayPal</option>
                 <option value="cod">
                   Cash On Delivery (delivery may be delayed)
@@ -148,6 +174,7 @@ const UserCartDetailsPageComponent = ({
                   variant="danger"
                   type="button"
                   disabled={buttonDisabled}
+                  onClick={orderHandler}
                 >
                   Pay for the order
                 </Button>
