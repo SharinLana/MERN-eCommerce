@@ -14,7 +14,20 @@ const UserCartDetailsPageComponent = ({
   cartItems,
   itemsCount,
   cartSubtotal,
+  dispatch,
+  addToCart,
+  removeFromCart,
 }) => {
+  const changeCount = (productId, count) => {
+    dispatch(addToCart(productId, count));
+  };
+
+  const removeFromCartHandler = (productId, quantity, price) => {
+    if (window.confirm("Are you sure?")) {
+      dispatch(removeFromCart(productId, quantity, price));
+    }
+  };
+
   return (
     <Container fluid>
       <Row className="mt-4">
@@ -30,7 +43,7 @@ const UserCartDetailsPageComponent = ({
             </Col>
             <Col md={6}>
               <h2>Payment method</h2>
-              <Form.Select >
+              <Form.Select>
                 <option value="pp">PayPal</option>
                 <option value="cod">
                   Cash On Delivery (delivery may be delayed)
@@ -55,7 +68,12 @@ const UserCartDetailsPageComponent = ({
           <h2>Order items</h2>
           <ListGroup variant="flush">
             {cartItems.map((item, idx) => (
-              <CartItemComponent key={idx} item={item} />
+              <CartItemComponent
+                item={item}
+                key={idx}
+                removeFromCartHandler={removeFromCartHandler}
+                changeCount={changeCount}
+              />
             ))}
           </ListGroup>
         </Col>
