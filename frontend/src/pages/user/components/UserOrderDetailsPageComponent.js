@@ -21,7 +21,7 @@ const UserOrderDetailsPageComponent = ({ userInfo }) => {
           <Row>
             <Col md={6}>
               <h2>Shipping</h2>
-              <b>Name</b>: John Doe <br />
+              <b>Name</b>: {userInfo.name} {userInfo.lastName} <br />
               <b>Address</b>: 8739 Mayflower St. Los Angeles, CA 90063 <br />
               <b>Phone</b>: 888 777 666
             </Col>
