@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Row,
@@ -18,7 +18,10 @@ const UserCartDetailsPageComponent = ({
   addToCart,
   removeFromCart,
   getUser,
+  userInfo,
 }) => {
+  const [buttonDisabled, setButtonDisabled] = useState(false);
+
   const changeCount = (productId, count) => {
     dispatch(addToCart(productId, count));
   };
@@ -29,7 +32,30 @@ const UserCartDetailsPageComponent = ({
     }
   };
 
-  getUser().then((res) => console.log(res));
+  // To disable the Pay For The Order button
+  useEffect(() => {
+    getUser()
+      .then((data) => {
+        console.log(data);
+        if (
+          !data.address ||
+          !data.city ||
+          !data.country ||
+          !data.zipCode ||
+          !data.state ||
+          !data.phoneNumber
+        ) {
+          setButtonDisabled(true);
+        }
+      })
+      .catch((err) =>
+        console.log(
+          err.response.data.message
+            ? err.response.data.message
+            : err.response.data
+        )
+      );
+  }, [userInfo._id]);
 
   return (
     <Container fluid>
@@ -40,9 +66,9 @@ const UserCartDetailsPageComponent = ({
           <Row>
             <Col md={6}>
               <h2>Shipping</h2>
-              <b>Name</b>: John Doe <br />
-              <b>Address</b>: 8739 Mayflower St. Los Angeles, CA 90063 <br />
-              <b>Phone</b>: 888 777 666
+              <b>Name</b>: {userInfo.name} {userInfo.lastName} <br />
+              <b>Address</b>: {userInfo.address} <br />
+              <b>Phone</b>: {userInfo.phoneNumber} <br />
             </Col>
             <Col md={6}>
               <h2>Payment method</h2>
@@ -100,7 +126,12 @@ const UserCartDetailsPageComponent = ({
             </ListGroup.Item>
             <ListGroup.Item>
               <div className="d-grid gap-2">
-                <Button size="lg" variant="danger" type="button">
+                <Button
+                  size="lg"
+                  variant="danger"
+                  type="button"
+                  disabled={buttonDisabled}
+                >
                   Pay for the order
                 </Button>
               </div>
