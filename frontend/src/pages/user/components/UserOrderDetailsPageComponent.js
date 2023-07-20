@@ -8,10 +8,12 @@ import {
   ListGroup,
   Button,
 } from "react-bootstrap";
+import { useParams } from "react-router-dom";
 import CartItemComponent from "../../../components/CartItemComponent";
 
-const UserOrderDetailsPageComponent = ({ userInfo, getUser }) => {
+const UserOrderDetailsPageComponent = ({ userInfo, getUser, getOrder }) => {
   const [userAddress, setUserAddress] = useState({});
+  const { id } = useParams();
 
   useEffect(() => {
     getUser()
@@ -24,6 +26,14 @@ const UserOrderDetailsPageComponent = ({ userInfo, getUser }) => {
           state: data.state,
           phoneNumber: data.phoneNumber,
         });
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  useEffect(() => {
+    getOrder(id)
+      .then((data) => {
+        console.log(data);
       })
       .catch((err) => console.log(err));
   }, []);
