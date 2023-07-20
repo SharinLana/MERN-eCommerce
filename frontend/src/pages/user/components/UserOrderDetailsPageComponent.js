@@ -113,10 +113,7 @@ const UserOrderDetailsPageComponent = ({ userInfo, getUser, getOrder }) => {
           <h2>Order items</h2>
           <ListGroup variant="flush">
             {cartItems.map((item, idx) => (
-              <CartItemComponent
-                key={idx}
-                item={item}
-              />
+              <CartItemComponent key={idx} item={item} orderCreated={true} />
             ))}
           </ListGroup>
         </Col>
