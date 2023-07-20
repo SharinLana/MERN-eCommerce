@@ -62,6 +62,20 @@ const UserOrderDetailsPageComponent = ({ userInfo, getUser, getOrder }) => {
       .catch((err) => console.log(err));
   }, []);
 
+  const orderHandler = () => {
+    setButtonDisabled(true);
+    if (paymentMethod === "pp") {
+      setOrderButtonMessage(
+        "To pay for your order click one of the buttons below"
+      );
+      if (!isPaid) {
+        // to do: load PayPal script and do actions
+      }
+    } else {
+      setOrderButtonMessage("Your order was placed. Thank you");
+    }
+  };
+
   return (
     <Container fluid>
       <Row className="mt-4">
@@ -80,7 +94,11 @@ const UserOrderDetailsPageComponent = ({ userInfo, getUser, getOrder }) => {
 
             <Col md={6}>
               <h2>Payment method</h2>
-              <Form.Select disabled={false} value={paymentMethod}>
+              <Form.Select
+                disabled={false}
+                value={paymentMethod}
+                onChange={(e) => setPaymentMethod(e.target.value)}
+              >
                 <option value="pp">PayPal</option>
                 <option value="cod">
                   Cash On Delivery (delivery may be delayed)
@@ -142,6 +160,7 @@ const UserOrderDetailsPageComponent = ({ userInfo, getUser, getOrder }) => {
                   variant="danger"
                   type="button"
                   disabled={buttonDisabled}
+                  onClick={orderHandler}
                 >
                   {orderButtonMessage}
                 </Button>
