@@ -139,7 +139,11 @@ const UserOrderDetailsPageComponent = ({
               </Col>
               <Col>
                 <Alert className="mt-3" variant={isPaid ? "success" : "danger"}>
-                  {isPaid ? <>Paid on {isPaid}</> : <>Not paid yet</>}
+                  {isPaid ? (
+                    <>Paid on {isPaid.substring(0, 10)}</>
+                  ) : (
+                    <>Not paid yet</>
+                  )}
                 </Alert>
               </Col>
             </Row>
