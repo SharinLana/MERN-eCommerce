@@ -34,6 +34,7 @@ const UserOrderDetailsPage = () => {
   };
 
   const buttons = (cartSubtotal, cartItems) => {
+    // return several functions:
     return {
       createOrder: function (data, actions) {
         return actions.order.create({
@@ -63,18 +64,31 @@ const UserOrderDetailsPage = () => {
           ],
         });
       }, // providing order data to PayPal
+
       onCancel: onCancelHandler,
-      onApprove: onApproveHandler,
+
+      onApprove: function (data, actions) {
+        return actions.order.capture().then(function (orderData) {
+          let transaction = orderData.purchase_units[0].payments.captures[0];
+    
+          if (
+            transaction.status === "COMPLETED" &&
+            Number(transaction.amount.value) === Number(cartSubtotal)
+          ) {
+            // update the order payment status in the DB (isPaid: true)
+            console.log("update order payment status in the database");
+          } else {
+            console.log("smth went wrong");
+          }
+        });
+      },
+
       onError: onErrorHandler,
     };
   };
 
   const onCancelHandler = () => {
     console.log("cancel");
-  };
-
-  const onApproveHandler = () => {
-    console.log("approve");
   };
 
   const onErrorHandler = () => {
