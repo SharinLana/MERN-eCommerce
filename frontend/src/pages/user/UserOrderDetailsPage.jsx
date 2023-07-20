@@ -17,7 +17,7 @@ const UserOrderDetailsPage = () => {
     return data;
   };
 
-  const loadPayPalScript = () => {
+  const loadPayPalScript = (cartSubtotal, cartItems) => {
     loadScript({
       "client-id":
         "Abf4b19XpbIsGXjbzV4dAu9wNNMXuugazAsDWgLVF-cGx-rcqBUOJ5XzgX2H2ysMo1dugs0ovwd1Aq0n",
@@ -25,12 +25,7 @@ const UserOrderDetailsPage = () => {
       .then((paypal) => {
         // console.log(paypal);
         paypal
-          .Buttons({
-            createOrder: createPayPalOrderHandler, // providing order data to PayPal
-            onCancel: onCancelHandler,
-            onApprove: onApproveHandler,
-            onError: onErrorHandler,
-          })
+          .Buttons(buttons(cartSubtotal, cartItems))
           .render("#paypal-container-element"); // the button elements is in the UserOrderDetailsPageComponent.js
       })
       .catch((err) =>
@@ -38,8 +33,40 @@ const UserOrderDetailsPage = () => {
       );
   };
 
-  const createPayPalOrderHandler = () => {
-    console.log("create order");
+  const buttons = (cartSubtotal, cartItems) => {
+    return {
+      createOrder: function (data, actions) {
+        return actions.order.create({
+          // following the PayPal documentation:
+          purchase_units: [
+            {
+              amount: {
+                value: cartSubtotal,
+                breakdown: {
+                  item_total: {
+                    currency_code: "USD",
+                    value: cartSubtotal,
+                  },
+                },
+              },
+              items: cartItems.map((product) => {
+                return {
+                  name: product.name,
+                  unit_amount: {
+                    currency_code: "USD",
+                    value: product.price,
+                  },
+                  quantity: product.quantity,
+                };
+              }),
+            },
+          ],
+        });
+      }, // providing order data to PayPal
+      onCancel: onCancelHandler,
+      onApprove: onApproveHandler,
+      onError: onErrorHandler,
+    };
   };
 
   const onCancelHandler = () => {
