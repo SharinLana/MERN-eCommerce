@@ -15,7 +15,7 @@ const UserOrderDetailsPageComponent = ({
   userInfo,
   getUser,
   getOrder,
-  loadScript,
+  loadPayPalScript,
 }) => {
   const [userAddress, setUserAddress] = useState({});
   const [paymentMethod, setPaymentMethod] = useState("");
@@ -26,8 +26,8 @@ const UserOrderDetailsPageComponent = ({
   const [isDelivered, setIsDelivered] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const { id } = useParams();
-  const paypalContainer = useRef()
-  console.log(paypalContainer)
+  const paypalContainer = useRef();
+  console.log(paypalContainer);
 
   useEffect(() => {
     getUser()
@@ -76,15 +76,7 @@ const UserOrderDetailsPageComponent = ({
         "To pay for your order click one of the buttons below"
       );
       if (!isPaid) {
-        loadScript({
-          "client-id":
-            "Abf4b19XpbIsGXjbzV4dAu9wNNMXuugazAsDWgLVF-cGx-rcqBUOJ5XzgX2H2ysMo1dugs0ovwd1Aq0n",
-        })
-          .then((paypal) => {
-            // console.log(paypal);
-            paypal.Buttons({}).render("#paypal-container-element");
-          })
-          .catch((err) => console.log(err));
+        loadPayPalScript();
       }
     } else {
       setOrderButtonMessage("Your order was placed. Thank you");
@@ -182,7 +174,9 @@ const UserOrderDetailsPageComponent = ({
               </div>
 
               {/* PayPal Buttons */}
-              <div style={{ position: "relative", zIndex: 1, marginTop: "20px" }}>
+              <div
+                style={{ position: "relative", zIndex: 1, marginTop: "20px" }}
+              >
                 <div ref={paypalContainer} id="paypal-container-element"></div>
               </div>
             </ListGroup.Item>
