@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Container,
   Row,
@@ -11,7 +11,12 @@ import {
 import { useParams } from "react-router-dom";
 import CartItemComponent from "../../../components/CartItemComponent";
 
-const UserOrderDetailsPageComponent = ({ userInfo, getUser, getOrder }) => {
+const UserOrderDetailsPageComponent = ({
+  userInfo,
+  getUser,
+  getOrder,
+  loadScript,
+}) => {
   const [userAddress, setUserAddress] = useState({});
   const [paymentMethod, setPaymentMethod] = useState("");
   const [isPaid, setIsPaid] = useState(false);
@@ -21,6 +26,8 @@ const UserOrderDetailsPageComponent = ({ userInfo, getUser, getOrder }) => {
   const [isDelivered, setIsDelivered] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const { id } = useParams();
+  const paypalContainer = useRef()
+  console.log(paypalContainer)
 
   useEffect(() => {
     getUser()
@@ -69,7 +76,15 @@ const UserOrderDetailsPageComponent = ({ userInfo, getUser, getOrder }) => {
         "To pay for your order click one of the buttons below"
       );
       if (!isPaid) {
-        // to do: load PayPal script and do actions
+        loadScript({
+          "client-id":
+            "Abf4b19XpbIsGXjbzV4dAu9wNNMXuugazAsDWgLVF-cGx-rcqBUOJ5XzgX2H2ysMo1dugs0ovwd1Aq0n",
+        })
+          .then((paypal) => {
+            // console.log(paypal);
+            paypal.Buttons({}).render("#paypal-container-element");
+          })
+          .catch((err) => console.log(err));
       }
     } else {
       setOrderButtonMessage("Your order was placed. Thank you");
@@ -164,6 +179,11 @@ const UserOrderDetailsPageComponent = ({ userInfo, getUser, getOrder }) => {
                 >
                   {orderButtonMessage}
                 </Button>
+              </div>
+
+              {/* PayPal Buttons */}
+              <div style={{ position: "relative", zIndex: 1, marginTop: "20px" }}>
+                <div ref={paypalContainer} id="paypal-container-element"></div>
               </div>
             </ListGroup.Item>
           </ListGroup>
