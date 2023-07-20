@@ -75,11 +75,23 @@ const UserOrderDetailsPageComponent = ({
         "To pay for your order click one of the buttons below"
       );
       if (!isPaid) {
-        loadPayPalScript(cartSubtotal, cartItems);
+        loadPayPalScript(
+          cartSubtotal,
+          cartItems,
+          updateStateAfterMakingPayment,
+          id
+        );
       }
     } else {
       setOrderButtonMessage("Your order was placed. Thank you");
     }
+  };
+
+  const updateStateAfterMakingPayment = (paidAt) => {
+    setOrderButtonMessage("Thank you for your payment!");
+    setIsPaid(paidAt);
+    setButtonDisabled(true);
+    paypalContainer.current.style = "display: none"; // hiding the paypal buttons
   };
 
   return (

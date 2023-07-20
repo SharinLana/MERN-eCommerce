@@ -17,7 +17,12 @@ const UserOrderDetailsPage = () => {
     return data;
   };
 
-  const loadPayPalScript = (cartSubtotal, cartItems) => {
+  const loadPayPalScript = (
+    cartSubtotal,
+    cartItems,
+    updateStateAfterMakingPayment,
+    orderId
+  ) => {
     loadScript({
       "client-id":
         "Abf4b19XpbIsGXjbzV4dAu9wNNMXuugazAsDWgLVF-cGx-rcqBUOJ5XzgX2H2ysMo1dugs0ovwd1Aq0n",
@@ -25,7 +30,14 @@ const UserOrderDetailsPage = () => {
       .then((paypal) => {
         // console.log(paypal);
         paypal
-          .Buttons(buttons(cartSubtotal, cartItems))
+          .Buttons(
+            buttons(
+              cartSubtotal,
+              cartItems,
+              updateStateAfterMakingPayment,
+              orderId
+            )
+          )
           .render("#paypal-container-element"); // the button elements is in the UserOrderDetailsPageComponent.js
       })
       .catch((err) =>
@@ -33,7 +45,12 @@ const UserOrderDetailsPage = () => {
       );
   };
 
-  const buttons = (cartSubtotal, cartItems) => {
+  const buttons = (
+    cartSubtotal,
+    cartItems,
+    updateStateAfterMakingPayment,
+    orderId
+  ) => {
     // return several functions:
     return {
       createOrder: function (data, actions) {
@@ -70,15 +87,19 @@ const UserOrderDetailsPage = () => {
       onApprove: function (data, actions) {
         return actions.order.capture().then(function (orderData) {
           let transaction = orderData.purchase_units[0].payments.captures[0];
-    
+
           if (
             transaction.status === "COMPLETED" &&
             Number(transaction.amount.value) === Number(cartSubtotal)
           ) {
             // update the order payment status in the DB (isPaid: true)
-            console.log("update order payment status in the database");
+            updateOrder(orderId).then((data) => {
+              if (data.isPaid) {
+                updateStateAfterMakingPayment(data.paidAt);
+              }
+            }).catch((err) => console.log(err));
           } else {
-            console.log("smth went wrong");
+            console.log("something went wrong");
           }
         });
       },
@@ -93,6 +114,11 @@ const UserOrderDetailsPage = () => {
 
   const onErrorHandler = () => {
     console.log("error");
+  };
+
+  const updateOrder = async (orderId) => {
+    const { data } = await axios.put(`/api/orders/paid/${orderId}`);
+    return data;
   };
 
   return (
