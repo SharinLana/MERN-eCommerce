@@ -8,6 +8,11 @@ const fetchProduct = async (productId) => {
   return data;
 };
 
+const updateProductApiRequest = (productId, formInputs) => {
+  console.log(productId);
+  console.log(formInputs);
+};
+
 const AdminEditProductPage = () => {
   const { categories } = useSelector((state) => state.getCategories);
 
@@ -15,6 +20,7 @@ const AdminEditProductPage = () => {
     <EditProductPageComponent
       categories={categories}
       fetchProduct={fetchProduct}
+      updateProductApiRequest={updateProductApiRequest}
     />
   );
 };
