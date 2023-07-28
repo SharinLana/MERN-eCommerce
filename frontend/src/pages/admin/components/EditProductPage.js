@@ -21,7 +21,11 @@ const onHover = {
   transform: "scale(2.7)",
 };
 
-const EditProductPageComponent = ({ categories, fetchProduct }) => {
+const EditProductPageComponent = ({
+  categories,
+  fetchProduct,
+  updateProductApiRequest,
+}) => {
   const [validated, setValidated] = useState(false);
   const [product, setProduct] = useState({});
   const { id } = useParams();
@@ -32,11 +36,20 @@ const EditProductPageComponent = ({ categories, fetchProduct }) => {
       .catch((err) => console.log(err));
   }, [id]);
 
-  const handleSubmit = (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const formInputs = {
+      name: e.currentTarget.name.value,
+      description: e.currentTarget.description.value,
+      count: e.currentTarget.count.value,
+      price: e.currentTarget.price.value,
+      category: e.currentTarget.category.value,
+    };
+
+    if (e.currentTarget.checkValidity() === true) {
+      updateProductApiRequest(id, formInputs);
     }
 
     setValidated(true);
