@@ -12,6 +12,7 @@ const ProtectedRoutesComponent = ({ adminRoute }) => {
     axios
       .get("/api/get-token")
       .then(function (data) {
+        console.log(data);
         if (data.data.token) {
           setIsAuth(data.data.token);
         }
@@ -26,22 +27,27 @@ const ProtectedRoutesComponent = ({ adminRoute }) => {
   }, [isAuth]);
 
   // if the user is not logged in
-  if (isAuth === undefined) return <LoginPage />;
+  if (isAuth === undefined) {
+    return <LoginPage />;
+  }
 
   // if the user is logged in, NOT and admin and trying to access admin's routes
-  else if (isAuth && adminRoute && isAuth !== "admin")
+  else if (isAuth && adminRoute && isAuth !== "admin") {
     return (
       <>
         <Navigate to="/login" />
         <LoginPage />
       </>
     );
+  }
 
   // if the user is logged in, is admin and trying to access admin's routes
-  else if (isAuth && adminRoute) return <Outlet />;
+  else if (isAuth && adminRoute) {
+    return <Outlet />;
+  }
 
   // if the user is logged in, is admin and trying to access user's protected routes
-  else if (isAuth && !adminRoute)
+  else if (isAuth && !adminRoute) {
     return (
       <>
         <UserChatComponent />
@@ -49,15 +55,16 @@ const ProtectedRoutesComponent = ({ adminRoute }) => {
         <Outlet />
       </>
     );
-
+  }
   // other cases
-  else
+  else {
     return (
       <>
         <Navigate to="/login" />
         <LoginPage />
       </>
     );
+  }
 };
 
 export default ProtectedRoutesComponent;
