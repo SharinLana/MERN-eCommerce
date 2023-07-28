@@ -23,13 +23,14 @@ const onHover = {
 
 const EditProductPageComponent = ({ categories, fetchProduct }) => {
   const [validated, setValidated] = useState(false);
+  const [product, setProduct] = useState({});
   const { id } = useParams();
 
   useEffect(() => {
     fetchProduct(id)
-      .then((product) => console.log(product))
+      .then((product) => setProduct(product))
       .catch((err) => console.log(err));
-  }, []);
+  }, [id]);
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
@@ -58,7 +59,7 @@ const EditProductPageComponent = ({ categories, fetchProduct }) => {
                 name="name"
                 required
                 type="text"
-                defaultValue="Panasonic"
+                defaultValue={product.name}
               />
             </Form.Group>
 
@@ -72,7 +73,7 @@ const EditProductPageComponent = ({ categories, fetchProduct }) => {
                 required
                 as="textarea"
                 rows={3}
-                defaultValue="Product description"
+                defaultValue={product.description}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicCount">
@@ -81,7 +82,7 @@ const EditProductPageComponent = ({ categories, fetchProduct }) => {
                 name="count"
                 required
                 type="number"
-                defaultValue="2"
+                defaultValue={product.count}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPrice">
@@ -90,7 +91,7 @@ const EditProductPageComponent = ({ categories, fetchProduct }) => {
                 name="price"
                 required
                 type="text"
-                defaultValue="$210"
+                defaultValue={product.price}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicCategory">
@@ -189,21 +190,24 @@ const EditProductPageComponent = ({ categories, fetchProduct }) => {
             </Row>
 
             <Alert variant="primary">
-              After typing attribute key and value press enterr on one of the
+              After typing attribute key and value press enter on one of the
               field
             </Alert>
 
             <Form.Group controlId="formFileMultiple" className="mb-3 mt-3">
               <Form.Label>Images</Form.Label>
               <Row>
-                <Col style={{ position: "relative" }} xs={3}>
-                  <Image src="/images/monitors-category.png" fluid />
-                  <i style={onHover} className="bi bi-x text-danger"></i>
-                </Col>
-                <Col style={{ position: "relative" }} xs={3}>
-                  <Image src="/images/monitors-category.png" fluid />
-                  <i style={onHover} className="bi bi-x text-danger"></i>
-                </Col>
+                {product.images &&
+                  product.images.map((image, idx) => (
+                    <Col key={idx} style={{ position: "relative" }} xs={3}>
+                      <Image
+                        crossOrigin="anonymous"
+                        src={image.path ?? null}
+                        fluid
+                      />
+                      <i style={onHover} className="bi bi-x text-danger"></i>
+                    </Col>
+                  ))}
               </Row>
               <Form.Control required type="file" multiple />
             </Form.Group>
