@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Row,
   Col,
@@ -11,6 +11,7 @@ import {
   Image,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const onHover = {
   cursor: "pointer",
@@ -20,8 +21,15 @@ const onHover = {
   transform: "scale(2.7)",
 };
 
-const EditProductPageComponent = ({ categories }) => {
+const EditProductPageComponent = ({ categories, fetchProduct }) => {
   const [validated, setValidated] = useState(false);
+  const { id } = useParams();
+
+  useEffect(() => {
+    fetchProduct(id)
+      .then((product) => console.log(product))
+      .catch((err) => console.log(err));
+  }, []);
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
@@ -32,6 +40,7 @@ const EditProductPageComponent = ({ categories }) => {
 
     setValidated(true);
   };
+
   return (
     <Container>
       <Row className="justify-content-md-center mt-5">
