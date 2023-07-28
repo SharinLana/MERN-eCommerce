@@ -45,12 +45,7 @@ const UserOrderDetailsPage = () => {
       );
   };
 
-  const buttons = (
-    cartSubtotal,
-    cartItems,
-    updateStateAfterMakingPayment,
-    orderId
-  ) => {
+  const buttons = (cartSubtotal, cartItems, updateStateAfterMakingPayment, orderId) => {
     // return several functions:
     return {
       createOrder: function (data, actions) {
@@ -82,8 +77,6 @@ const UserOrderDetailsPage = () => {
         });
       }, // providing order data to PayPal
 
-      onCancel: onCancelHandler,
-
       onApprove: function (data, actions) {
         return actions.order.capture().then(function (orderData) {
           let transaction = orderData.purchase_units[0].payments.captures[0];
@@ -93,11 +86,13 @@ const UserOrderDetailsPage = () => {
             Number(transaction.amount.value) === Number(cartSubtotal)
           ) {
             // update the order payment status in the DB (isPaid: true)
-            updateOrder(orderId).then((data) => {
-              if (data.isPaid) {
-                updateStateAfterMakingPayment(data.paidAt);
-              }
-            }).catch((err) => console.log(err));
+            updateOrder(orderId)
+              .then((data) => {
+                if (data.isPaid) {
+                  updateStateAfterMakingPayment(data.paidAt);
+                }
+              })
+              .catch((err) => console.log(err));
           } else {
             console.log("something went wrong");
           }
@@ -105,6 +100,7 @@ const UserOrderDetailsPage = () => {
       },
 
       onError: onErrorHandler,
+      onCancel: onCancelHandler,
     };
   };
 
