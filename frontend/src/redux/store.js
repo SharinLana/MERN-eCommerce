@@ -42,7 +42,6 @@ const INITIAL_STATE = {
     userInfo: userInfoInLocalStorage,
   },
 };
-console.log(INITIAL_STATE.userRegisterLogin.userInfo);
 
 const middleware = [thunk];
 const store = createStore(

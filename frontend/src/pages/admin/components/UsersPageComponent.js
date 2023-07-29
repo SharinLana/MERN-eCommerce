@@ -20,7 +20,6 @@ const UsersPageComponent = ({ fetchUsers, deleteUser }) => {
       }
     }
   };
-  console.log(users)
 
   useEffect(() => {
     const abortController = new AbortController();
