@@ -11,7 +11,7 @@ import {
   Image,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 const onHover = {
   cursor: "pointer",
@@ -28,7 +28,12 @@ const EditProductPageComponent = ({
 }) => {
   const [validated, setValidated] = useState(false);
   const [product, setProduct] = useState({});
+  const [updateProductResponseState, setUpdateProductResponseState] = useState({
+    message: "",
+    error: "",
+  });
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchProduct(id)
@@ -48,8 +53,19 @@ const EditProductPageComponent = ({
       category: e.currentTarget.category.value,
     };
 
-    if (e.currentTarget.checkValidity() === true) {
-      updateProductApiRequest(id, formInputs);
+    if (event.currentTarget.checkValidity() === true) {
+      updateProductApiRequest(id, formInputs)
+        .then((data) => {
+          if (data.message === "Product was successfully updated")
+            navigate("/admin/products");
+        })
+        .catch((er) =>
+          setUpdateProductResponseState({
+            error: er.response.data.message
+              ? er.response.data.message
+              : er.response.data,
+          })
+        );
     }
 
     setValidated(true);
@@ -227,6 +243,7 @@ const EditProductPageComponent = ({
             <Button variant="primary" type="submit">
               UPDATE
             </Button>
+            {updateProductResponseState.error ?? ""}
           </Form>
         </Col>
       </Row>
