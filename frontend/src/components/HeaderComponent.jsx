@@ -23,6 +23,7 @@ const HeaderComponent = () => {
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.userRegisterLogin);
   const itemsCount = useSelector((state) => state.cart.itemsCount);
+  console.log(userInfo)
 
   useEffect(() => {
     dispatch(getCategories());

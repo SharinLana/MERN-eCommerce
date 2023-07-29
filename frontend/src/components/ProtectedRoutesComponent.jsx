@@ -6,13 +6,12 @@ import React, { useEffect, useState } from "react";
 import LoginPage from "../pages/LoginPage";
 
 const ProtectedRoutesComponent = ({ adminRoute }) => {
-  const [isAuth, setIsAuth] = useState();
+  const [isAuth, setIsAuth] = useState("admin");
 
   useEffect(() => {
     axios
       .get("/api/get-token")
       .then(function (data) {
-        console.log(data);
         if (data.data.token) {
           setIsAuth(data.data.token);
         }
