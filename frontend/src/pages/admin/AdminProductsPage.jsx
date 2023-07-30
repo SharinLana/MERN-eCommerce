@@ -2,10 +2,8 @@ import React from "react";
 import axios from "axios";
 import ProductsPageComponent from "./components/ProductsPageComponent";
 
-const fetchProducts = async (abortController) => {
-  const { data } = await axios.get(`/api/products/admin`, {
-    signal: abortController.signal,
-  });
+const fetchProducts = async () => {
+  const { data } = await axios.get(`/api/products/admin`);
   return data;
 };
 

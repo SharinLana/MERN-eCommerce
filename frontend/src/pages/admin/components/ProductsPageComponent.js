@@ -21,17 +21,30 @@ const ProductsPageComponent = ({ fetchProducts, deleteProduct }) => {
     }
   };
 
+  // useEffect(() => {
+  //   const abortController = new AbortController();
+  //   fetchProducts(abortController)
+  //     .then((res) => setProducts(res))
+  //     .catch((er) => {
+  //       if (er) {
+  //         console.log(er)
+  //         // dispatch(logout());
+  //       }
+  //     });
+  //   return () => abortController.abort();
+  // }, [productDeleted]);
+
   useEffect(() => {
-    const abortController = new AbortController();
-    fetchProducts(abortController)
+    
+    fetchProducts()
       .then((res) => setProducts(res))
       .catch((er) => {
         if (er) {
-          console.log(er)
+          console.log(er);
           // dispatch(logout());
         }
       });
-    return () => abortController.abort();
+    
   }, [productDeleted]);
 
   return (
@@ -66,7 +79,7 @@ const ProductsPageComponent = ({ fetchProducts, deleteProduct }) => {
                 <td>{item.price}</td>
                 <td>{item.category}</td>
                 <td>
-                  <LinkContainer to="/admin/edit-product">
+                  <LinkContainer to={`/admin/edit-product/${item._id}`}>
                     <Button className="btn-sm">
                       <i className="bi bi-pencil-square"></i>
                     </Button>
