@@ -38,6 +38,7 @@ const EditProductPageComponent = ({
 
   const [attributesFromDb, setAttributesFromDb] = useState([]); // for select lists
   const [attributesTable, setAttributesTable] = useState([]); // for html table
+  const [categoryChosen, setCategoryChosen] = useState("Choose category");
 
   const attrVal = useRef(null);
   const attrKey = useRef(null);
@@ -119,6 +120,7 @@ const EditProductPageComponent = ({
         setAttributesFromDb(mainCategoryOfEditedProductAllData.attrs);
       }
     }
+     setCategoryChosen(product.category);
     setAttributesTable(product.attrs);
   }, [product]);
 
@@ -132,6 +134,7 @@ const EditProductPageComponent = ({
     } else {
       setAttributesFromDb([]);
     }
+ setCategoryChosen(e.target.value);
   };
 
   const attributeValueSelected = (e) => {
@@ -246,8 +249,9 @@ const EditProductPageComponent = ({
               <Row className="mt-5">
                 <Col md={6}>
                   <Form.Group className="mb-3" controlId="formBasicAttributes">
-                    <Form.Label>Choose atrribute and set value</Form.Label>
+                    <Form.Label>Choose attribute and set value</Form.Label>
                     <Form.Select
+                     disabled={categoryChosen === "Choose category"}
                       name="attrKey"
                       aria-label="Default select example"
                       ref={attrKey}
@@ -269,6 +273,7 @@ const EditProductPageComponent = ({
                   >
                     <Form.Label>Attribute value</Form.Label>
                     <Form.Select
+                     disabled={categoryChosen === "Choose category"}
                       name="attrVal"
                       aria-label="Default select example"
                       ref={attrVal}
@@ -371,3 +376,4 @@ const EditProductPageComponent = ({
 };
 
 export default EditProductPageComponent;
+
