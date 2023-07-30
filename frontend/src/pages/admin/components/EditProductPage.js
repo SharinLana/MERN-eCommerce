@@ -117,6 +117,18 @@ const EditProductPageComponent = ({
     }
   }, [product]);
 
+  const changeCategory = (e) => {
+    const highLevelCategory = e.target.value.split("/")[0];
+    const highLevelCategoryAllData = categories.find(
+      (cat) => cat.name === highLevelCategory
+    );
+    if (highLevelCategoryAllData && highLevelCategoryAllData.attrs) {
+      setAttributesFromDb(highLevelCategoryAllData.attrs);
+    } else {
+      setAttributesFromDb([]);
+    }
+  };
+
   return (
     <Container>
       <Row className="justify-content-md-center mt-5">
@@ -175,6 +187,7 @@ const EditProductPageComponent = ({
                 required
                 name="category"
                 aria-label="Default select example"
+                onChange={changeCategory}
               >
                 <option value="">Choose category</option>
                 {categories.map((category, idx) => {
