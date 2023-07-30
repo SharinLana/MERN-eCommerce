@@ -120,7 +120,7 @@ const EditProductPageComponent = ({
         setAttributesFromDb(mainCategoryOfEditedProductAllData.attrs);
       }
     }
-     setCategoryChosen(product.category);
+    setCategoryChosen(product.category);
     setAttributesTable(product.attrs);
   }, [product]);
 
@@ -134,7 +134,7 @@ const EditProductPageComponent = ({
     } else {
       setAttributesFromDb([]);
     }
- setCategoryChosen(e.target.value);
+    setCategoryChosen(e.target.value);
   };
 
   const attributeValueSelected = (e) => {
@@ -145,8 +145,7 @@ const EditProductPageComponent = ({
 
   const setAttributesTableWrapper = (key, val) => {
     setAttributesTable((attr) => {
-      console.log(attr)
-      if (attr.length !== 0) {
+      if (attr !== undefined) {
         var keyExistsInOldTable = false;
 
         let modifiedTable = attr.map((item) => {
@@ -158,6 +157,7 @@ const EditProductPageComponent = ({
             return item;
           }
         });
+
         if (keyExistsInOldTable) return [...modifiedTable];
         else return [...modifiedTable, { key: key, value: val }];
       } else {
@@ -251,7 +251,7 @@ const EditProductPageComponent = ({
                   <Form.Group className="mb-3" controlId="formBasicAttributes">
                     <Form.Label>Choose attribute and set value</Form.Label>
                     <Form.Select
-                     disabled={categoryChosen === "Choose category"}
+                      disabled={categoryChosen === "Choose category"}
                       name="attrKey"
                       aria-label="Default select example"
                       ref={attrKey}
@@ -273,7 +273,7 @@ const EditProductPageComponent = ({
                   >
                     <Form.Label>Attribute value</Form.Label>
                     <Form.Select
-                     disabled={categoryChosen === "Choose category"}
+                      disabled={categoryChosen === "Choose category"}
                       name="attrVal"
                       aria-label="Default select example"
                       ref={attrVal}
@@ -376,4 +376,3 @@ const EditProductPageComponent = ({
 };
 
 export default EditProductPageComponent;
-
