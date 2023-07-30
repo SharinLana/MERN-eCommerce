@@ -35,7 +35,9 @@ const EditProductPageComponent = ({
   });
   const { id } = useParams();
   const navigate = useNavigate();
-  const [attributesFromDb, setAttributesFromDb] = useState([]);
+
+  const [attributesFromDb, setAttributesFromDb] = useState([]); // for select lists
+  const [attributesTable, setAttributesTable] = useState([]); // for html table
 
   const attrVal = useRef(null);
   const attrKey = useRef(null);
@@ -115,6 +117,7 @@ const EditProductPageComponent = ({
         setAttributesFromDb(mainCategoryOfEditedProductAllData.attrs);
       }
     }
+    setAttributesTable(product.attrs);
   }, [product]);
 
   const changeCategory = (e) => {
@@ -243,24 +246,28 @@ const EditProductPageComponent = ({
             )}
 
             <Row>
-              <Table hover>
-                <thead>
-                  <tr>
-                    <th>Attribute</th>
-                    <th>Value</th>
-                    <th>Delete</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>attr key</td>
-                    <td>attr value</td>
-                    <td>
-                      <CloseButton />
-                    </td>
-                  </tr>
-                </tbody>
-              </Table>
+              {attributesTable && attributesTable.length > 0 && (
+                <Table hover>
+                  <thead>
+                    <tr>
+                      <th>Attribute</th>
+                      <th>Value</th>
+                      <th>Delete</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {attributesTable.map((item, idx) => (
+                      <tr key={idx}>
+                        <td>{item.key}</td>
+                        <td>{item.value}</td>
+                        <td>
+                          <CloseButton />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              )}
             </Row>
 
             <Row>
