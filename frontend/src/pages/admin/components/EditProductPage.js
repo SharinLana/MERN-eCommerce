@@ -106,10 +106,12 @@ const EditProductPageComponent = ({
     if (categoryOfEditedProduct) {
       const mainCategoryOfEditedProduct =
         categoryOfEditedProduct.name.split("/")[0];
+
       const mainCategoryOfEditedProductAllData = categories.find(
         (categoryOfEditedProduct) =>
           categoryOfEditedProduct.name === mainCategoryOfEditedProduct
       );
+
       if (
         mainCategoryOfEditedProductAllData &&
         mainCategoryOfEditedProductAllData.attrs.length > 0
@@ -140,8 +142,10 @@ const EditProductPageComponent = ({
 
   const setAttributesTableWrapper = (key, val) => {
     setAttributesTable((attr) => {
+      console.log(attr)
       if (attr.length !== 0) {
         var keyExistsInOldTable = false;
+
         let modifiedTable = attr.map((item) => {
           if (item.key === key) {
             keyExistsInOldTable = true;
@@ -159,6 +163,9 @@ const EditProductPageComponent = ({
     });
   };
 
+  const deleteAttribute = (key) => {
+    setAttributesTable((table) => table.filter((item) => item.key !== key));
+  };
 
   return (
     <Container>
@@ -290,7 +297,9 @@ const EditProductPageComponent = ({
                         <td>{item.key}</td>
                         <td>{item.value}</td>
                         <td>
-                          <CloseButton />
+                          <CloseButton
+                            onClick={() => deleteAttribute(item.key)}
+                          />
                         </td>
                       </tr>
                     ))}
