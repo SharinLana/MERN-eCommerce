@@ -17,6 +17,20 @@ const updateProductApiRequest = async (productId, formInputs) => {
   return data;
 };
 
+const uploadHandler = async (images, productId) => {
+  const formData = new FormData();
+
+  Array.from(images).forEach((image) => {
+    formData.append("images", image);
+  });
+
+  await axios.post(
+    "/api/products/admin/upload?productId=" + productId,
+    formData
+  );
+};
+
+
 const AdminEditProductPage = () => {
   const { categories } = useSelector((state) => state.getCategories);
   const dispatch = useDispatch();
@@ -34,6 +48,7 @@ const AdminEditProductPage = () => {
       dispatch={dispatch}
       saveAttributeToCatDoc={saveAttributeToCatDoc}
       imageDeleteHandler={imageDeleteHandler}
+      uploadHandler={uploadHandler}
     />
   );
 };
