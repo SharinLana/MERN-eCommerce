@@ -39,9 +39,13 @@ const EditProductPageComponent = ({
   const [attributesFromDb, setAttributesFromDb] = useState([]); // for select lists
   const [attributesTable, setAttributesTable] = useState([]); // for html table
   const [categoryChosen, setCategoryChosen] = useState("Choose category");
+  const [newAttrKey, setNewAttrKey] = useState(false);
+  const [newAttrValue, setNewAttrValue] = useState(false);
 
   const attrVal = useRef(null);
   const attrKey = useRef(null);
+  const createNewAttrKey = useRef(null);
+  const createNewAttrVal = useRef(null);
 
   const setValuesForAttrFromDbSelectForm = (e) => {
     if (e.target.value !== "Choose attribute") {
@@ -175,18 +179,29 @@ const EditProductPageComponent = ({
     if (e.code === "Enter") e.preventDefault();
   };
 
-  // Prevent page reloading when creating a new attribute
+  // Prevent page reloading when creating a new attribute by hitting Enter
   const newAttrKeyHandler = (e) => {
     e.preventDefault();
-    if (e.keyCode && e.keyCode === 13) {
-      console.log("add new attribute");
-    }
+    setNewAttrKey(e.target.value);
+    addNewAttributeManually(e);
   };
 
   const newAttrValueHandler = (e) => {
     e.preventDefault();
+    setNewAttrValue(e.target.value);
+    addNewAttributeManually(e);
+  };
+
+  const addNewAttributeManually = (e) => {
     if (e.keyCode && e.keyCode === 13) {
-      console.log("add new attribute");
+      if (newAttrKey && newAttrValue) {
+        setAttributesTableWrapper(newAttrKey, newAttrValue);
+        e.target.value = "";
+        createNewAttrKey.current.value = "";
+        createNewAttrVal.current.value = "";
+        setNewAttrKey(false);
+        setNewAttrValue(false);
+      }
     }
   };
 
@@ -343,6 +358,7 @@ const EditProductPageComponent = ({
                 <Form.Group className="mb-3" controlId="formBasicNewAttribute">
                   <Form.Label>Create new attribute</Form.Label>
                   <Form.Control
+                    ref={createNewAttrKey}
                     disabled={false}
                     placeholder="first choose or create category"
                     name="newAttrValue"
@@ -358,6 +374,7 @@ const EditProductPageComponent = ({
                 >
                   <Form.Label>Attribute value</Form.Label>
                   <Form.Control
+                    ref={createNewAttrVal}
                     disabled={false}
                     placeholder="first choose or create category"
                     required={true}
