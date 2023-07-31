@@ -28,6 +28,7 @@ const EditProductPageComponent = ({
   updateProductApiRequest,
   saveAttributeToCatDoc,
   dispatch,
+  imageDeleteHandler,
 }) => {
   const [validated, setValidated] = useState(false);
   const [product, setProduct] = useState({});
