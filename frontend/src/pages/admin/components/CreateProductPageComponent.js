@@ -53,7 +53,8 @@ const CreateProductPageComponent = ({
                 )
               );
           }
-          if (data.message === "product created") navigate("/admin/products");
+          if (data.message === "Product was successfully created")
+            navigate("/admin/products");
         })
         .catch((er) => {
           setCreateProductResponseState({
