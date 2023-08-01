@@ -12,7 +12,10 @@ import {
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
-const CreateProductPageComponent = () => {
+const CreateProductPageComponent = ({
+  createProductApiRequest,
+  uploadImagesApiRequest,
+}) => {
   const [validated, setValidated] = useState(false);
 
   const handleSubmit = (event) => {
