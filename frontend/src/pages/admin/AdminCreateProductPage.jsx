@@ -18,11 +18,35 @@ const uploadImagesApiRequest = async (images, productId) => {
   );
 };
 
+const uploadImagesCloudinaryApiRequest = (images) => {
+  // the "dasv6qbzy" string came from Cloudinary => Settings => Account => Product environment cloud name
+  const url = "https://api.cloudinary.com/v1_1/dasv6qbzy/image/upload";
+
+  const formData = new FormData();
+  for (let i = 0; i < images.length; i++) {
+    let file = images[i];
+    formData.append("file", file);
+    // ! Make sure that you are appending images to the UNSIGNED upload preset!
+    formData.append("upload_preset", "ywbtq4ii"); // the "ywbtq4ii" was taken from Cloudinary => settings => Upload => Upload presets: add upload preset => Upload preset name => Upload preset name => Save
+    fetch(url, {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+      });
+  }
+};
+
 const AdminCreateProductPage = () => {
   return (
     <CreateProductPageComponent
       createProductApiRequest={createProductApiRequest}
       uploadImagesApiRequest={uploadImagesApiRequest}
+      uploadImagesCloudinaryApiRequest={uploadImagesCloudinaryApiRequest}
     />
   );
 };

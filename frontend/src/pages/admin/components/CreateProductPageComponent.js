@@ -15,9 +15,10 @@ import { useState } from "react";
 const CreateProductPageComponent = ({
   createProductApiRequest,
   uploadImagesApiRequest,
+  uploadImagesCloudinaryApiRequest,
 }) => {
   const [validated, setValidated] = useState(false);
-  const [attributesTable, setAttributesTable] = useState([]);
+  const [attributesArray] = useState([]);
   const [images, setImages] = useState(false);
   const [isCreating, setIsCreating] = useState("");
   const [createProductResponseState, setCreateProductResponseState] = useState({
@@ -37,21 +38,27 @@ const CreateProductPageComponent = ({
       count: form.count.value,
       price: form.price.value,
       category: form.category.value,
-      attributesTable: attributesTable,
+      attributesArray: attributesArray,
     };
     if (event.currentTarget.checkValidity() === true) {
       createProductApiRequest(formInputs)
         .then((data) => {
           if (images) {
-            uploadImagesApiRequest(images, data.productId)
-              .then((res) => {})
-              .catch((er) =>
-                setIsCreating(
-                  er.response.data.message
-                    ? er.response.data.message
-                    : er.response.data
-                )
-              );
+            // eslint-disable-next-line
+            if (process.env.NODE_ENV === "production") {
+              // to do: change to !==
+              uploadImagesApiRequest(images, data.productId)
+                .then((res) => console.log(res))
+                .catch((er) =>
+                  setIsCreating(
+                    er.response.data.message
+                      ? er.response.data.message
+                      : er.response.data
+                  )
+                );
+            } else {
+              uploadImagesCloudinaryApiRequest(images);
+            }
           }
           if (data.message === "Product was successfully created")
             navigate("/admin/products");
