@@ -18,7 +18,7 @@ const uploadImagesApiRequest = async (images, productId) => {
   );
 };
 
-const uploadImagesCloudinaryApiRequest = (images) => {
+const uploadImagesCloudinaryApiRequest = (images, productId) => {
   // the "dasv6qbzy" string came from Cloudinary => Settings => Account => Product environment cloud name
   const url = "https://api.cloudinary.com/v1_1/dasv6qbzy/image/upload";
 
@@ -36,7 +36,10 @@ const uploadImagesCloudinaryApiRequest = (images) => {
         return response.json();
       })
       .then((data) => {
-        console.log(data);
+        axios.post(
+          "/api/products/admin/upload?cloudinary=true&productId=" + productId,
+          data
+        );
       });
   }
 };

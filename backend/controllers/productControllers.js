@@ -257,6 +257,17 @@ const adminUpdateProduct = async (req, res, next) => {
 };
 
 const adminFileUpload = async (req, res, next) => {
+  if (req.query.cloudinary === "true") {
+    try {
+      let product = await Product.findById(req.query.productId).orFail();
+      product.images.push({ path: req.body.url });
+      await product.save();
+    } catch (err) {
+      next(err);
+    }
+    return;
+  }
+
   // work with form-data in Postman: images => file => upload a file
   try {
     if (!req.files || !req.files.images) {

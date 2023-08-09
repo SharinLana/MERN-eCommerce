@@ -57,11 +57,17 @@ const CreateProductPageComponent = ({
                   )
                 );
             } else {
-              uploadImagesCloudinaryApiRequest(images);
+              uploadImagesCloudinaryApiRequest(images, data.productId);
             }
           }
-          if (data.message === "Product was successfully created")
-            navigate("/admin/products");
+          return data;
+        })
+        .then((data) => {
+          setIsCreating("Product is being created....");
+          setTimeout(() => {
+            setIsCreating("");
+            if (data.message === "product created") navigate("/admin/products");
+          }, 2000);
         })
         .catch((er) => {
           setCreateProductResponseState({

@@ -406,10 +406,11 @@ const EditProductPageComponent = ({
               <Row>
                 {product.images &&
                   product.images.map((image, idx) => (
+                    
                     <Col key={idx} style={{ position: "relative" }} xs={3}>
                       <Image
                         crossOrigin="anonymous"
-                        src={image.path ?? null}
+                        src={image.path}
                         fluid
                       />
                       <i
