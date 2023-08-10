@@ -3,6 +3,10 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import EditProductPageComponent from "./components/EditProductPage";
 import { saveAttributeToCatDoc } from "../../redux/actions/categoryActions";
+import {
+  uploadImagesApiRequest,
+  uploadImagesCloudinaryApiRequest,
+} from "./utils/utils";
 
 const fetchProduct = async (productId) => {
   const { data } = await axios.get(`/api/products/get-one/${productId}`);
@@ -15,19 +19,6 @@ const updateProductApiRequest = async (productId, formInputs) => {
     ...formInputs,
   });
   return data;
-};
-
-const uploadHandler = async (images, productId) => {
-  const formData = new FormData();
-
-  Array.from(images).forEach((image) => {
-    formData.append("images", image);
-  });
-
-  await axios.post(
-    "/api/products/admin/upload?productId=" + productId,
-    formData
-  );
 };
 
 const AdminEditProductPage = () => {
@@ -55,7 +46,8 @@ const AdminEditProductPage = () => {
       dispatch={dispatch}
       saveAttributeToCatDoc={saveAttributeToCatDoc}
       imageDeleteHandler={imageDeleteHandler}
-      uploadHandler={uploadHandler}
+      uploadImagesApiRequest={uploadImagesApiRequest}
+      uploadImagesCloudinaryApiRequest={uploadImagesCloudinaryApiRequest}
     />
   );
 };
