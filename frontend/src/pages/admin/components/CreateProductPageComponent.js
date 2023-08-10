@@ -16,6 +16,9 @@ const CreateProductPageComponent = ({
   createProductApiRequest,
   uploadImagesApiRequest,
   uploadImagesCloudinaryApiRequest,
+  categories,
+  dispatch,
+  newCategory,
 }) => {
   const [validated, setValidated] = useState(false);
   const [attributesArray] = useState([]);
@@ -41,7 +44,7 @@ const CreateProductPageComponent = ({
       attributesArray: attributesArray,
     };
     if (event.currentTarget.checkValidity() === true) {
-      if(images.length > 3) {
+      if (images.length > 3) {
         setIsCreating("too many files");
         return;
       }
@@ -64,8 +67,8 @@ const CreateProductPageComponent = ({
               uploadImagesCloudinaryApiRequest(images, data.productId);
             }
           }
-          if (data.message === "Product was successfully created") navigate("/admin/products")
-           
+          if (data.message === "Product was successfully created")
+            navigate("/admin/products");
         })
         .catch((er) => {
           setCreateProductResponseState({
@@ -81,6 +84,12 @@ const CreateProductPageComponent = ({
 
   const uploadHandler = (images) => {
     setImages(images);
+  };
+
+  const newCategoryHandler = (e) => {
+    if (e.keyCode && e.keyCode === 13 && e.target.value) {
+      dispatch(newCategory(e.target.value));
+    }
   };
 
   return (
@@ -131,9 +140,11 @@ const CreateProductPageComponent = ({
                 aria-label="Default select example"
               >
                 <option value="">Choose category</option>
-                <option value="1">Laptops</option>
-                <option value="2">TV</option>
-                <option value="3">Games</option>
+                {categories.map((category, idx) => {
+                  <option key={idx} value={category.name}>
+                    {category.name}
+                  </option>;
+                })}
               </Form.Select>
             </Form.Group>
 
@@ -141,7 +152,11 @@ const CreateProductPageComponent = ({
               <Form.Label>
                 Or create a new category (e.g. Computers/Laptops/Intel){" "}
               </Form.Label>
-              <Form.Control name="newCategory" type="text" />
+              <Form.Control
+                onKeyUp={newCategoryHandler}
+                name="newCategory"
+                type="text"
+              />
             </Form.Group>
 
             <Row className="mt-5">
