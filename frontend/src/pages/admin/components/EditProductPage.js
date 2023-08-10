@@ -29,7 +29,8 @@ const EditProductPageComponent = ({
   saveAttributeToCatDoc,
   dispatch,
   imageDeleteHandler,
-  uploadHandler,
+  uploadImagesApiRequest,
+  uploadImagesCloudinaryApiRequest,
 }) => {
   const [validated, setValidated] = useState(false);
   const [product, setProduct] = useState({});
@@ -79,7 +80,6 @@ const EditProductPageComponent = ({
       .then((product) => setProduct(product.product))
       .catch((er) => console.log(er));
   }, [id]);
-
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -408,13 +408,8 @@ const EditProductPageComponent = ({
               <Row>
                 {product.images &&
                   product.images.map((image, idx) => (
-                    
                     <Col key={idx} style={{ position: "relative" }} xs={3}>
-                      <Image
-                        crossOrigin="anonymous"
-                        src={image.path}
-                        fluid
-                      />
+                      <Image crossOrigin="anonymous" src={image.path} fluid />
                       <i
                         style={onHover}
                         onClick={() =>
@@ -432,18 +427,31 @@ const EditProductPageComponent = ({
                 multiple
                 onChange={(e) => {
                   setIsUploading("upload files in progress ...");
-                  uploadHandler(e.target.files, id)
-                    .then(() => {
-                      setIsUploading("upload file completed");
-                      setImageUploaded(!imageUploaded);
-                    })
-                    .catch((er) =>
-                      setIsUploading(
-                        er.response.data.message
-                          ? er.response.data.message
-                          : er.response.data
-                      )
+                  // eslint-disable-next-line
+                  if (process.env.NODE_ENV === "production") {
+                    // to do: change to !==
+                    uploadImagesApiRequest(e.target.files, id)
+                      .then((data) => {
+                        console.log(data);
+                        setIsUploading("upload file completed");
+                        setImageUploaded(!imageUploaded);
+                      })
+                      .catch((er) =>
+                        setIsUploading(
+                          er.response.data.message
+                            ? er.response.data.message
+                            : er.response.data
+                        )
+                      );
+                  } else {
+                    uploadImagesCloudinaryApiRequest(e.target.files, id);
+                    setIsUploading(
+                      "Upload file completed. Wait for the result take effect, refresh also if neccassry"
                     );
+                    setTimeout(() => {
+                      setImageUploaded(!imageUploaded);
+                    }, 5000);
+                  }
                 }}
               />
               {isUploading}
