@@ -327,11 +327,24 @@ const adminFileUpload = async (req, res, next) => {
 };
 
 const adminDeleteProductImage = async (req, res, next) => {
+  const imagePath = decodeURIComponent(req.params.imagePath);
+
+  if (req.query.cloudinary === "true") {
+    try {
+      await Product.findOneAndUpdate(
+        { _id: req.params.productId },
+        { $pull: { images: { path: imagePath } } }
+      ).orFail();
+      return res.end();
+    } catch (er) {
+      next(er);
+    }
+    return;
+  }
   // full path in Postman:
   // {{URL_eCommerce}}/products/admin/image/%2Fimages%2Fproducts%2F675a6eb7-c4e5-499c-8234-911cec22ab0a.jpg/6494f07d53d2960298a777b3
   try {
     // the path is encoded on the frontend as e.g. %2Fimages%2Fproducts%2F675a6eb7-c4e5-499c-8234-911cec22ab0a.jpg
-    const imagePath = decodeURIComponent(req.params.imagePath);
     const finalPath = path.resolve("../frontend/public") + imagePath;
 
     fs.unlink(finalPath, function (err) {

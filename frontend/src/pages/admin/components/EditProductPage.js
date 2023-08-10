@@ -38,6 +38,7 @@ const EditProductPageComponent = ({
     error: "",
   });
   const { id } = useParams();
+
   const navigate = useNavigate();
 
   const [attributesFromDb, setAttributesFromDb] = useState([]); // for select lists
@@ -75,9 +76,10 @@ const EditProductPageComponent = ({
 
   useEffect(() => {
     fetchProduct(id)
-      .then((product) => setProduct(product))
+      .then((product) => setProduct(product.product))
       .catch((er) => console.log(er));
   }, [id]);
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
