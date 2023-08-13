@@ -125,7 +125,11 @@ const EditProductPageComponent = ({
 
   const attributeValueSelected = (e) => {
     if (e.target.value !== "Choose attribute value") {
-      setAttributesTableWrapper(attrKey.current.value, e.target.value);
+      setAttributesTableWrapper(
+        attrKey.current.value,
+        e.target.value,
+        setAttributesTable
+      );
     }
   };
 
