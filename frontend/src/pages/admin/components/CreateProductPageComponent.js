@@ -14,6 +14,7 @@ import { useState } from "react";
 import {
   changeCategory,
   setValuesForAttrFromDbSelectForm,
+  setAttributesTableWrapper,
 } from "./utils/utils";
 
 const CreateProductPageComponent = ({
@@ -27,7 +28,7 @@ const CreateProductPageComponent = ({
 }) => {
   const [attributesFromDb, setAttributesFromDb] = useState([]); // for select lists
   const [validated, setValidated] = useState(false);
-  const [attributesArray] = useState([]);
+  const [attributesArray, setAttributesArray] = useState([]);
   const [images, setImages] = useState(false);
   const [isCreating, setIsCreating] = useState("");
   const [createProductResponseState, setCreateProductResponseState] = useState({
@@ -119,6 +120,16 @@ const CreateProductPageComponent = ({
     let element = document.getElementById("cats");
     dispatch(deleteCategory(element.value));
     setCategoryChosen("Choose category");
+  };
+
+  const attributeValueSelected = (e) => {
+    if (e.target.value !== "Choose attribute value") {
+      setAttributesTableWrapper(
+        attrKey.current.value,
+        e.target.value,
+        setAttributesArray
+      );
+    }
   };
 
   return (
@@ -232,6 +243,7 @@ const CreateProductPageComponent = ({
                       name="attrVal"
                       aria-label="Default select example"
                       ref={attrVal}
+                      onChange={attributeValueSelected}
                     >
                       <option>Choose attribute value</option>
                     </Form.Select>
