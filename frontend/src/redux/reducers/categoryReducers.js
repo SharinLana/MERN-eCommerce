@@ -16,7 +16,12 @@ export const getCategoriesReducer = (state = { categories: [] }, action) => {
       return {
         ...state,
         categories: action.payload,
-      }
+      };
+    case actionTypes.DELETE_CATEGORY:
+      return {
+        ...state, // old state...
+        categories: action.payload, // ...and overwritten categories property
+      };
     default:
       return state;
   }
