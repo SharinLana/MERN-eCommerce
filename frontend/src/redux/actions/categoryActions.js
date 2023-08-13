@@ -27,10 +27,26 @@ export const saveAttributeToCatDoc =
 export const newCategory = (category) => async (dispatch, getState) => {
   const cat = getState().getCategories.categories;
   const { data } = await axios.post("/api/categories", { category });
-  if (data.newCategory) { // newCategory came from the categoryControllers (it just has the same name as the function itself)
+  if (data.newCategory) {
+    // newCategory came from the categoryControllers (it just has the same name as the function itself)
     dispatch({
       type: actionTypes.INSERT_CATEGORY,
       payload: [...cat, data.newCategory],
+    });
+  }
+};
+
+export const deleteCategory = (category) => async (dispatch, getState) => {
+  const cat = getState().getCategories.categories;
+  const categories = cat.filter((item) => item.name !== category);
+  const { data } = await axios.delete(
+    "/api/categories" + encodeURIComponent(category) // use encodeURIComponent(category) in case of slashes in the category name
+  );
+
+  if (data.message === "Category has been deleted") {
+    dispatch({
+      type: actionTypes.DELETE_CATEGORY,
+      payload: [...categories]
     });
   }
 };
