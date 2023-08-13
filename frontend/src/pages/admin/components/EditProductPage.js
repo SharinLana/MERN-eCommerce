@@ -157,7 +157,7 @@ const EditProductPageComponent = ({
         dispatch(
           saveAttributeToCatDoc(newAttrKey, newAttrValue, categoryChosen)
         );
-        setAttributesTableWrapper(newAttrKey, newAttrValue);
+        setAttributesTableWrapper(newAttrKey, newAttrValue, setAttributesTable);
         e.target.value = "";
         createNewAttrKey.current.value = "";
         createNewAttrVal.current.value = "";
