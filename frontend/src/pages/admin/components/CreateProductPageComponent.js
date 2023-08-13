@@ -154,6 +154,7 @@ const CreateProductPageComponent = ({
                 name="category"
                 aria-label="Default select example"
                 onChange={selectCategory}
+                value={categoryChosen}
               >
                 <option value="Choose category">Choose category</option>
                 {categories.map((category, idx) => {
