@@ -28,6 +28,7 @@ const CreateProductPageComponent = ({
     message: "",
     error: "",
   });
+  const [categoryChosen, setCategoryChosen] = useState("Choose category");
 
   const navigate = useNavigate();
 
@@ -86,11 +87,24 @@ const CreateProductPageComponent = ({
     setImages(images);
   };
 
+  const selectCategory = (e) => {
+    setCategoryChosen(e.target.value);
+  };
+
   const newCategoryHandler = (e) => {
     if (e.keyCode && e.keyCode === 13 && e.target.value) {
       dispatch(newCategory(e.target.value));
+      // To automatically select a new category right after its creation
+      setTimeout(() => {
+       
+        let element = document.getElementById("cats")
+        element.value = e.target.value;
+        setCategoryChosen(e.target.value);
+        e.target.value = "";
+      }, 200);
     }
   };
+  console.log(categoryChosen);
 
   return (
     <Container>
@@ -135,15 +149,19 @@ const CreateProductPageComponent = ({
                 <CloseButton />(<small>remove selected</small>)
               </Form.Label>
               <Form.Select
+                id="cats"
                 required
                 name="category"
                 aria-label="Default select example"
+                onChange={selectCategory}
               >
-                <option value="">Choose category</option>
+                <option value="Choose category">Choose category</option>
                 {categories.map((category, idx) => {
-                  <option key={idx} value={category.name}>
-                    {category.name}
-                  </option>;
+                  return (
+                    <option key={idx} value={category.name}>
+                      {category.name}
+                    </option>
+                  );
                 })}
               </Form.Select>
             </Form.Group>
@@ -162,7 +180,7 @@ const CreateProductPageComponent = ({
             <Row className="mt-5">
               <Col md={6}>
                 <Form.Group className="mb-3" controlId="formBasicAttributes">
-                  <Form.Label>Choose atrribute </Form.Label>
+                  <Form.Label>Choose attribute </Form.Label>
                   <Form.Select
                     name="atrrKey"
                     aria-label="Default select example"
@@ -214,7 +232,7 @@ const CreateProductPageComponent = ({
                 <Form.Group className="mb-3" controlId="formBasicNewAttribute">
                   <Form.Label>Create new attribute</Form.Label>
                   <Form.Control
-                    disabled={false}
+                    disabled={categoryChosen === "Choose category"}
                     placeholder="first choose or create category"
                     name="newAttrValue"
                     type="text"
@@ -228,7 +246,7 @@ const CreateProductPageComponent = ({
                 >
                   <Form.Label>Attribute value</Form.Label>
                   <Form.Control
-                    disabled={false}
+                    disabled={categoryChosen === "Choose category"}
                     placeholder="first choose or create category"
                     required={true}
                     name="newAttrValue"
