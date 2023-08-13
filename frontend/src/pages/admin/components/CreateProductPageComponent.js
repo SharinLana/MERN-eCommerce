@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import {
   Row,
   Col,
@@ -11,7 +11,10 @@ import {
 } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { changeCategory } from "./utils/utils";
+import {
+  changeCategory,
+  setValuesForAttrFromDbSelectForm,
+} from "./utils/utils";
 
 const CreateProductPageComponent = ({
   createProductApiRequest,
@@ -34,6 +37,9 @@ const CreateProductPageComponent = ({
   const [categoryChosen, setCategoryChosen] = useState("Choose category");
 
   const navigate = useNavigate();
+
+  const attrVal = useRef(null);
+  const attrKey = useRef(null);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -101,8 +107,9 @@ const CreateProductPageComponent = ({
       // To automatically select a new category right after its creation
       setTimeout(() => {
         let element = document.getElementById("cats");
-        element.value = e.target.value;
+
         setCategoryChosen(e.target.value);
+        element.value = e.target.value;
         e.target.value = "";
       }, 200);
     }
@@ -195,6 +202,14 @@ const CreateProductPageComponent = ({
                     <Form.Select
                       name="attrKey"
                       aria-label="Default select example"
+                      ref={attrKey}
+                      onChange={(e) =>
+                        setValuesForAttrFromDbSelectForm(
+                          e,
+                          attributesFromDb,
+                          attrVal
+                        )
+                      }
                     >
                       <option>Choose attribute</option>
                       {attributesFromDb.map((item, idx) => {
@@ -216,6 +231,7 @@ const CreateProductPageComponent = ({
                     <Form.Select
                       name="attrVal"
                       aria-label="Default select example"
+                      ref={attrVal}
                     >
                       <option>Choose attribute value</option>
                     </Form.Select>
