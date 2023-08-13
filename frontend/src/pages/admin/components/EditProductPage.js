@@ -137,18 +137,18 @@ const EditProductPageComponent = ({
     setAttributesTable(product.attrs);
   }, [product]);
 
-  const changeCategory = (e) => {
-    const highLevelCategory = e.target.value.split("/")[0];
-    const highLevelCategoryAllData = categories.find(
-      (cat) => cat.name === highLevelCategory
-    );
-    if (highLevelCategoryAllData && highLevelCategoryAllData.attrs) {
-      setAttributesFromDb(highLevelCategoryAllData.attrs);
-    } else {
-      setAttributesFromDb([]);
-    }
-    setCategoryChosen(e.target.value);
-  };
+  // const changeCategory = (e) => {
+  //   const highLevelCategory = e.target.value.split("/")[0];
+  //   const highLevelCategoryAllData = categories.find(
+  //     (cat) => cat.name === highLevelCategory
+  //   );
+  //   if (highLevelCategoryAllData && highLevelCategoryAllData.attrs) {
+  //     setAttributesFromDb(highLevelCategoryAllData.attrs);
+  //   } else {
+  //     setAttributesFromDb([]);
+  //   }
+  //   setCategoryChosen(e.target.value);
+  // };
 
   const attributeValueSelected = (e) => {
     if (e.target.value !== "Choose attribute value") {
