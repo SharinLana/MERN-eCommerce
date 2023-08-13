@@ -104,7 +104,12 @@ const CreateProductPageComponent = ({
       }, 200);
     }
   };
-  console.log(categoryChosen);
+  
+  const deleteCategoryHandler = () => {
+    let element = document.getElementById("cats");
+    dispatch(deleteCategory(element.value));
+    setCategoryChosen("Choose category");
+  }
 
   return (
     <Container>
@@ -146,7 +151,7 @@ const CreateProductPageComponent = ({
             <Form.Group className="mb-3" controlId="formBasicCategory">
               <Form.Label>
                 Category
-                <CloseButton />(<small>remove selected</small>)
+                <CloseButton onClick={deleteCategoryHandler}/>(<small>remove selected</small>)
               </Form.Label>
               <Form.Select
                 id="cats"
