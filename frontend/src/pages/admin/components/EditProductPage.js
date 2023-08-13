@@ -13,7 +13,10 @@ import {
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { changeCategory } from "./utils/utils";
+import {
+  changeCategory,
+  setValuesForAttrFromDbSelectForm,
+} from "./utils/utils";
 
 const onHover = {
   cursor: "pointer",
@@ -57,7 +60,6 @@ const EditProductPageComponent = ({
   const createNewAttrKey = useRef(null);
   const createNewAttrVal = useRef(null);
 
-  
   useEffect(() => {
     fetchProduct(id)
       .then((product) => setProduct(product.product))
@@ -284,7 +286,13 @@ const EditProductPageComponent = ({
                       name="attrKey"
                       aria-label="Default select example"
                       ref={attrKey}
-                      onChange={setValuesForAttrFromDbSelectForm}
+                      onChange={(e) =>
+                        setValuesForAttrFromDbSelectForm(
+                          e,
+                          attributesFromDb,
+                          attrVal
+                        )
+                      }
                     >
                       <option>Choose attribute</option>
                       {attributesFromDb.map((item, idx) => (
