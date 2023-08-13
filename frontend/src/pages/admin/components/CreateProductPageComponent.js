@@ -19,6 +19,7 @@ const CreateProductPageComponent = ({
   categories,
   dispatch,
   newCategory,
+  deleteCategory,
 }) => {
   const [validated, setValidated] = useState(false);
   const [attributesArray] = useState([]);
@@ -96,8 +97,7 @@ const CreateProductPageComponent = ({
       dispatch(newCategory(e.target.value));
       // To automatically select a new category right after its creation
       setTimeout(() => {
-       
-        let element = document.getElementById("cats")
+        let element = document.getElementById("cats");
         element.value = e.target.value;
         setCategoryChosen(e.target.value);
         e.target.value = "";

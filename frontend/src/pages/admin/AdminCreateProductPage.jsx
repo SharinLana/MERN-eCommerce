@@ -7,7 +7,10 @@ import {
 } from "./utils/utils";
 
 import { useSelector, useDispatch } from "react-redux";
-import { newCategory } from "../../redux/actions/categoryActions";
+import {
+  newCategory,
+  deleteCategory,
+} from "../../redux/actions/categoryActions";
 
 const createProductApiRequest = async (formInputs) => {
   const { data } = await axios.post(`/api/products/admin`, { ...formInputs });
@@ -26,6 +29,7 @@ const AdminCreateProductPage = () => {
       categories={categories}
       dispatch={dispatch}
       newCategory={newCategory}
+      deleteCategory={deleteCategory}
     />
   );
 };
