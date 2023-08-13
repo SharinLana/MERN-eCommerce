@@ -38,3 +38,26 @@ export const setValuesForAttrFromDbSelectForm = (
     }
   }
 };
+
+export const setAttributesTableWrapper = (key, val, setAttributesTable) => {
+  setAttributesTable((attr) => {
+    if (attr !== undefined) {
+      var keyExistsInOldTable = false;
+
+      let modifiedTable = attr.map((item) => {
+        if (item.key === key) {
+          keyExistsInOldTable = true;
+          item.value = val;
+          return item;
+        } else {
+          return item;
+        }
+      });
+
+      if (keyExistsInOldTable) return [...modifiedTable];
+      else return [...modifiedTable, { key: key, value: val }];
+    } else {
+      return [{ key: key, value: val }];
+    }
+  });
+};
