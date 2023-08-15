@@ -11,7 +11,7 @@ export const getCategories = () => async (dispatch) => {
 
 export const saveAttributeToCatDoc =
   (key, val, categoryChosen) => async (dispatch) => {
-    const { data } = await axios.post("/api/categories/attr", {
+    const { data } = await axios.post("/api/categories/attrs", {
       key,
       val,
       categoryChosen,

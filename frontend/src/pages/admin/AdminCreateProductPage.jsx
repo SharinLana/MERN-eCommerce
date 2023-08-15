@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   newCategory,
   deleteCategory,
+  saveAttributeToCatDoc,
 } from "../../redux/actions/categoryActions";
 
 const createProductApiRequest = async (formInputs) => {
@@ -30,6 +31,7 @@ const AdminCreateProductPage = () => {
       dispatch={dispatch}
       newCategory={newCategory}
       deleteCategory={deleteCategory}
+      saveAttributeToCatDoc={saveAttributeToCatDoc}
     />
   );
 };
