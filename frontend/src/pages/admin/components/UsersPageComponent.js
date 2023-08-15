@@ -21,17 +21,28 @@ const UsersPageComponent = ({ fetchUsers, deleteUser }) => {
     }
   };
 
+  // useEffect(() => {
+  //   const abortController = new AbortController();
+  //   fetchUsers(abortController)
+  //     .then((res) => setUsers(res))
+  //     .catch((er) => {
+  //       if (er) {
+  //         console.log(er)
+  //         // dispatch(logout());
+  //       }
+  //     });
+  //   return () => abortController.abort(); // break the connection to the DB if the speed is slow or if the  user left the page
+  // }, [deletedUser]);
+
   useEffect(() => {
-    const abortController = new AbortController();
-    fetchUsers(abortController)
+    fetchUsers()
       .then((res) => setUsers(res))
       .catch((er) => {
         if (er) {
-          console.log(er)
+          console.log(er);
           // dispatch(logout());
         }
       });
-    return () => abortController.abort(); // break the connection to the DB if the speed is slow or if the  user left the page
   }, [deletedUser]);
 
   return (
