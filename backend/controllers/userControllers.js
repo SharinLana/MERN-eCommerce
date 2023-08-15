@@ -276,7 +276,6 @@ const updateSingleUser = async (req, res, next) => {
   try {
     const user = await User.findById(req.params.id).orFail();
     const { name, lastName, email, isAdmin } = req.body;
-    console.log(name, lastName, email, isAdmin);
 
     // On the frontend, Admin needs only the following fields to update the user:
     user.name = name;
