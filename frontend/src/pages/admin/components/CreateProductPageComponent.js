@@ -132,6 +132,10 @@ const CreateProductPageComponent = ({
     }
   };
 
+  const deleteAttribute = (key) => {
+    setAttributesArray((arr) => arr.filter((item) => item.key !== key));
+  };
+
   return (
     <Container>
       <Row className="justify-content-md-center mt-5">
@@ -269,7 +273,9 @@ const CreateProductPageComponent = ({
                           <td>{attr.key}</td>
                           <td>{attr.value}</td>
                           <td>
-                            <CloseButton />
+                            <CloseButton
+                              onClick={() => deleteAttribute(attr.key)}
+                            />
                           </td>
                         </tr>
                       );
