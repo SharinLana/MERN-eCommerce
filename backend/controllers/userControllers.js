@@ -158,7 +158,7 @@ const updateUserProfile = async (req, res, next) => {
     await user.save();
 
     res.status(200).json({
-      success: "The profile has been updated",
+      message: "user updated",
       userUpdated: {
         _id: user._id,
         name: user.name,
@@ -275,17 +275,19 @@ const getSingleUser = async (req, res, next) => {
 const updateSingleUser = async (req, res, next) => {
   try {
     const user = await User.findById(req.params.id).orFail();
+    const { name, lastName, email, isAdmin } = req.body;
+    console.log(name, lastName, email, isAdmin);
 
     // On the frontend, Admin needs only the following fields to update the user:
-    user.name = req.body.name || user.name;
-    user.lastName = req.body.lastName || user.lastName;
-    user.email = req.body.email || user.email;
-    user.isAdmin = req.body.isAdmin || user.isAdmin;
+    user.name = name;
+    user.lastName = lastName;
+    user.email = email;
+    user.isAdmin = isAdmin;
 
     await user.save();
 
     res.status(200).json({
-      message: "user updated!",
+      message: "user updated",
       user,
     });
   } catch (err) {
