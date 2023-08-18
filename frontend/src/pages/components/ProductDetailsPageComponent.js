@@ -26,6 +26,7 @@ const ProductDetailsPageComponent = ({
   const [product, setProduct] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [productReviewed, setProductReviewed] = useState(false);
 
   const addToCartHandler = () => {
     dispatch(addToCartReduxAction(id, productQuantity));
@@ -64,6 +65,21 @@ const ProductDetailsPageComponent = ({
         );
       });
   }, []);
+
+  const sendReviewHandler = (e) => {
+    e.preventDefault();
+    console.log("click")
+
+    const formInputs = {
+      comment: e.currentTarget.comment.value, // comment came from the "name" property in the <Form.Select>
+      rating: e.currentTarget.rating.value
+    }
+
+    if (e.currentTarget.checkValidity() === true) {
+      console.log(product._id, formInputs);
+    }
+    setProductReviewed(true);
+  }
 
   return (
     <Container>
@@ -175,7 +191,7 @@ const ProductDetailsPageComponent = ({
                 <Alert variant="danger">Login first to write a review</Alert>
               )}
 
-              <Form>
+              <Form onSubmit={sendReviewHandler}>
                 <Form.Group
                   className="mb-3"
                   controlId="exampleForm.ControlTextarea1"
@@ -206,9 +222,11 @@ const ProductDetailsPageComponent = ({
                   variant="primary"
                   className="mb-3 mt-3"
                   disabled={!userInfo.name}
+                  type="submit"
                 >
                   Submit
                 </Button>
+                {productReviewed}
               </Form>
             </Col>
           </>
