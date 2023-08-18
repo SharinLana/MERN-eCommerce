@@ -169,7 +169,7 @@ const ProductDetailsPageComponent = ({
                 </Col>
               </Row>
               <hr />
-              
+
               {/* Send review form */}
               {!userInfo.name && (
                 <Alert variant="danger">Login first to write a review</Alert>
@@ -181,17 +181,32 @@ const ProductDetailsPageComponent = ({
                   controlId="exampleForm.ControlTextarea1"
                 >
                   <Form.Label>Write a review</Form.Label>
-                  <Form.Control as="textarea" rows={3} />
+                  <Form.Control
+                    name="comment"
+                    as="textarea"
+                    rows={3}
+                    required
+                    disabled={!userInfo.name}
+                  />
                 </Form.Group>
-                <Form.Select aria-label="Default select example">
-                  <option>Open this select menu</option>
+                <Form.Select
+                  name="rating"
+                  aria-label="Default select example"
+                  required
+                  disabled={!userInfo.name}
+                >
+                  <option value="">Open this select menu</option>
                   <option value="5">5 (excellent)</option>
                   <option value="4">4 (good)</option>
                   <option value="3">3 (average)</option>
                   <option value="2">2 (bad)</option>
                   <option value="1">1 (awful)</option>
                 </Form.Select>
-                <Button variant="primary" className="mb-3 mt-3">
+                <Button
+                  variant="primary"
+                  className="mb-3 mt-3"
+                  disabled={!userInfo.name}
+                >
                   Submit
                 </Button>
               </Form>
