@@ -83,7 +83,7 @@ const ProductDetailsPageComponent = ({
           }
         })
         .catch((err) => {
-          setError(
+          setProductReviewed(
             err.response.data.message
               ? err.response.data.message
               : err.response.data
