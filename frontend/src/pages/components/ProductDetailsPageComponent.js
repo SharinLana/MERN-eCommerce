@@ -18,6 +18,7 @@ const ProductDetailsPageComponent = ({
   addToCartReduxAction,
   dispatch,
   getProductDetails,
+  userInfo,
 }) => {
   const { id } = useParams(); // the product id extracted from the route
   const [productQuantity, setProductQuantity] = useState(1);
@@ -168,8 +169,12 @@ const ProductDetailsPageComponent = ({
                 </Col>
               </Row>
               <hr />
+              
               {/* Send review form */}
-              <Alert variant="danger">Login first to write a review</Alert>
+              {!userInfo.name && (
+                <Alert variant="danger">Login first to write a review</Alert>
+              )}
+
               <Form>
                 <Form.Group
                   className="mb-3"
