@@ -19,6 +19,7 @@ const ProductDetailsPageComponent = ({
   dispatch,
   getProductDetails,
   userInfo,
+  writeReviewAPIRequest,
 }) => {
   const { id } = useParams(); // the product id extracted from the route
   const [productQuantity, setProductQuantity] = useState(1);
@@ -49,7 +50,7 @@ const ProductDetailsPageComponent = ({
           new ImageZoom(document.getElementById(`imageId${id + 1}`), options)
       );
     }
-  });
+  }, []);
 
   useEffect(() => {
     getProductDetails(id)
@@ -64,22 +65,35 @@ const ProductDetailsPageComponent = ({
             : err.response.data
         );
       });
-  }, []);
+  }, [id, productReviewed]);
 
   const sendReviewHandler = (e) => {
     e.preventDefault();
-    console.log("click")
 
     const formInputs = {
       comment: e.currentTarget.comment.value, // comment came from the "name" property in the <Form.Select>
-      rating: e.currentTarget.rating.value
-    }
+      rating: e.currentTarget.rating.value,
+    };
 
     if (e.currentTarget.checkValidity() === true) {
-      console.log(product._id, formInputs);
+      writeReviewAPIRequest(product._id, formInputs)
+        .then((data) => {
+          if (data === "review created") {
+            setProductReviewed("Thanks for your review!");
+          }
+        })
+        .catch((err) => {
+          setError(
+            err.response.data.message
+              ? err.response.data.message
+              : err.response.data
+          );
+        });
+
+        e.currentTarget.comment.value = "";
+        e.currentTarget.rating.value = "";
     }
-    setProductReviewed(true);
-  }
+  };
 
   return (
     <Container>

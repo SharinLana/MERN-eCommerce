@@ -253,7 +253,7 @@ const writeReview = async (req, res, next) => {
 
     await session.commitTransaction(); // ! Session transaction
     session.endSession(); // ! Session transaction
-    res.status(201).send("Review created successfully");
+    res.status(201).send("review created");
   } catch (err) {
     await session.abortTransaction(); // ! Session transaction
     next(err);
