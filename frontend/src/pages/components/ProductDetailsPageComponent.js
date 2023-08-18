@@ -31,22 +31,23 @@ const ProductDetailsPageComponent = ({
     setShowCartMessage(true);
   };
 
-  // To zoom in on the images
-  let options = {
-    scale: 2,
-    offset: { vertical: 0, horizontal: 0 },
-    width: 400,
-    zoomWidth: 500,
-    fillContainer: true,
-    zoomPosition: "right",
-  };
-
   useEffect(() => {
-    new ImageZoom(document.querySelector("#first"), options);
-    new ImageZoom(document.querySelector("#second"), options);
-    new ImageZoom(document.querySelector("#third"), options);
-    new ImageZoom(document.querySelector("#fourth"), options);
-  }, []);
+    if (product.images) {
+      var options = {
+        // width: 400,
+        // zoomWidth: 500,
+        // fillContainer: true,
+        // zoomPosition: "bottom",
+        scale: 2,
+        offset: { vertical: 0, horizontal: 0 },
+      };
+
+      product.images.map(
+        (image, id) =>
+          new ImageZoom(document.getElementById(`imageId${id + 1}`), options)
+      );
+    }
+  });
 
   useEffect(() => {
     getProductDetails(id)
@@ -63,8 +64,6 @@ const ProductDetailsPageComponent = ({
       });
   }, []);
 
-  console.log(product);
-
   return (
     <Container>
       <AddedToCartMessageComponent
@@ -80,25 +79,15 @@ const ProductDetailsPageComponent = ({
           <>
             {/* zIndex needed for zooming in on the image */}
             <Col md={4} style={{ zIndex: 1 }}>
-              <div id="first">
-                {/* fluid prop helps to fit the component nicely to the parent element */}
-                <Image fluid src="/images/games-category.png" />
-              </div>
-              <br />
+              {product.images
+                ? product.images.map((image, id) => (
+                    <div key={id} id={`imageId${id + 1}`}>
+                      {/* fluid prop helps to fit the component nicely to the parent element */}
+                      <Image fluid src={`${image.path ?? null}`} />
+                    </div>
+                  ))
+                : null}
 
-              <div id="second">
-                <Image fluid src="/images/monitors-category.png" />
-              </div>
-              <br />
-
-              <div id="third">
-                <Image fluid src="/images/tablets-category.png" />
-              </div>
-              <br />
-
-              <div id="fourth">
-                <Image fluid src="/images/games-category.png" />
-              </div>
               <br />
             </Col>
             <Col md={8}>
