@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   Container,
   Row,
@@ -29,10 +29,21 @@ const ProductDetailsPageComponent = ({
   const [error, setError] = useState(false);
   const [productReviewed, setProductReviewed] = useState(false);
 
+  const messageEndRef = useRef(null);
+
   const addToCartHandler = () => {
     dispatch(addToCartReduxAction(id, productQuantity));
     setShowCartMessage(true);
   };
+
+  // Scroll after submitting the product review
+  useEffect(() => {
+    if (productReviewed) {
+      setTimeout(() => {
+        messageEndRef.current.scrollIntoView({ behavior: "smooth" });
+      }, 200);
+    }
+  }, [productReviewed]);
 
   useEffect(() => {
     if (product.images) {
@@ -90,8 +101,8 @@ const ProductDetailsPageComponent = ({
           );
         });
 
-        e.currentTarget.comment.value = "";
-        e.currentTarget.rating.value = "";
+      e.currentTarget.comment.value = "";
+      e.currentTarget.rating.value = "";
     }
   };
 
@@ -195,6 +206,7 @@ const ProductDetailsPageComponent = ({
                         {review.comment}
                       </ListGroup.Item>
                     ))}
+                    <div ref={messageEndRef}></div>
                   </ListGroup>
                 </Col>
               </Row>
