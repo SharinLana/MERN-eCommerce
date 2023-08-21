@@ -10,11 +10,19 @@ import RatingFilterComponent from "../../components/filteringOptions/RatingFilte
 
 const ProductListPageComponent = ({ getAllProducts }) => {
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     getAllProducts()
-      .then((data) => setProducts(data.products))
-      .catch((err) => console.log(err));
+      .then((data) => {
+        setProducts(data.products);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setError(true);
+      });
   }, []);
 
   return (
@@ -46,18 +54,25 @@ const ProductListPageComponent = ({ getAllProducts }) => {
             </ListGroup>
           </Col>
           <Col md={9}>
-            {products.map((product) => (
-              <ProductCardComponent
-                key={product._id}
-                images={product.images}
-                name={product.name}
-                description={product.description}
-                price={product.price}
-                rating={product.rating}
-                reviewsNumber={product.reviewsNumber}
-                productId={product._id}
-              />
-            ))}
+            {loading ? (
+              <h2>Loading products...</h2>
+            ) : error ? (
+              <h2>Error while loading products. Try again later</h2>
+            ) : (
+              products.map((product) => (
+                <ProductCardComponent
+                  key={product._id}
+                  images={product.images}
+                  name={product.name}
+                  description={product.description}
+                  price={product.price}
+                  rating={product.rating}
+                  reviewsNumber={product.reviewsNumber}
+                  productId={product._id}
+                />
+              ))
+            )}
+
             <PaginationComponent />
           </Col>
         </Row>
