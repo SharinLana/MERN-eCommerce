@@ -15,6 +15,7 @@ const ProductListPageComponent = ({ getAllProducts, categories }) => {
   const [error, setError] = useState(false);
   const [attrsFilter, setAttrsFilter] = useState([]);
   const [attrsFromFilter, setAttrsFromFilter] = useState([]);
+  const [showResetFiltersBtn, setShowResetFiltersBtn] = useState(false);
 
   const { categoryName } = useParams() || "";
 
@@ -46,6 +47,16 @@ const ProductListPageComponent = ({ getAllProducts, categories }) => {
       });
   }, []);
 
+  const handleFilters = (e) => {
+    e.preventDefault();
+    setShowResetFiltersBtn(true);
+  };
+
+  const resetFilters = (e) => {
+    e.preventDefault();
+    setShowResetFiltersBtn(false);
+  };
+
   return (
     <div>
       <Container fluid>
@@ -72,8 +83,14 @@ const ProductListPageComponent = ({ getAllProducts, categories }) => {
                 />
               </ListGroup.Item>
               <ListGroup.Item>
-                <Button variant="primary">Primary</Button>{" "}
-                <Button variant="danger">Danger</Button>
+                <Button variant="primary" onClick={handleFilters}>
+                  Filter
+                </Button>{" "}
+                {showResetFiltersBtn && (
+                  <Button variant="danger" onClick={resetFilters}>
+                    Reset filters
+                  </Button>
+                )}
               </ListGroup.Item>
             </ListGroup>
           </Col>
