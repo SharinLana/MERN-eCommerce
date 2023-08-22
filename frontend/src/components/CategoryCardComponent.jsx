@@ -5,15 +5,14 @@ import { LinkContainer } from "react-router-bootstrap";
 const CategoryCardComponent = ({ item }) => {
   return (
     <Card>
-      <Card.Img variant="top" src="images/games-category.png" />
+      <Card.Img variant="top" src={item.image ?? null} />
       <Card.Body>
-        <Card.Title>{item}</Card.Title>
+        <Card.Title>{item.name}</Card.Title>
         <Card.Text>
-          Some quick example text to build on the card title and make up the
-          bulk of the card content.
+          {item.description}
         </Card.Text>
 
-        <LinkContainer to="/product-list">
+        <LinkContainer to={`/product-list/category/${item.name}`}>
           <Button variant="primary">Go to Category</Button>
         </LinkContainer>
       </Card.Body>

@@ -40,7 +40,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/product-list" element={<ProductListPage />} />
+          <Route path="/product-list/category/:categoryName" element={<ProductListPage />} />
           <Route path="/product-details/:id" element={<ProductDetailsPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="*" element="Page not found 404" />
