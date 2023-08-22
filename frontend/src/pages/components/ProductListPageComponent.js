@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { Row, Col, Container, ListGroup, Button } from "react-bootstrap";
 import ProductCardComponent from "../../components/ProductCardComponent";
 import SortingComponent from "../../components/SortingComponent";
@@ -8,10 +9,29 @@ import CategoryFilterComponent from "../../components/filteringOptions/CategoryF
 import PriceFilterComponent from "../../components/filteringOptions/PriceFilterComponent";
 import RatingFilterComponent from "../../components/filteringOptions/RatingFilterComponent";
 
-const ProductListPageComponent = ({ getAllProducts }) => {
+const ProductListPageComponent = ({ getAllProducts, categories }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [attrsFilter, setAttrsFilter] = useState([]);
+
+  const { categoryName } = useParams() || "";
+
+  useEffect(() => {
+    if (categoryName) {
+      let categoryAllData = categories.find(
+        (item) => item.name === categoryName.replaceAll(",", "/")
+      );
+
+      if (categoryAllData) {
+        let mainCategory = categoryAllData.name.split("/")[0];
+        let index = categories.findindex((item) => item.name === mainCategory);
+        setAttrsFilter(categories[index].attrs);
+      }
+    } else {
+      setAttrsFilter([]);
+    }
+  }, [categoryName]);
 
   useEffect(() => {
     getAllProducts()
@@ -45,7 +65,7 @@ const ProductListPageComponent = ({ getAllProducts }) => {
                 <CategoryFilterComponent />
               </ListGroup.Item>
               <ListGroup.Item>
-                <AttributesFilterComponent />
+                <AttributesFilterComponent attrsFilter={attrsFilter} />
               </ListGroup.Item>
               <ListGroup.Item>
                 <Button variant="primary">Primary</Button>{" "}

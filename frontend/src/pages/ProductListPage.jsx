@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { useSelector } from "react-redux";
 import ProductListPageComponent from "./components/ProductListPageComponent";
 
 const getAllProducts = async () => {
@@ -8,7 +9,14 @@ const getAllProducts = async () => {
 };
 
 const ProductListPage = () => {
-  return <ProductListPageComponent getAllProducts={getAllProducts} />;
+  const { categories } = useSelector((state) => state.getCategories);
+
+  return (
+    <ProductListPageComponent
+      getAllProducts={getAllProducts}
+      categories={categories}
+    />
+  );
 };
 
 export default ProductListPage;
