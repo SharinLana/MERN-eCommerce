@@ -3,7 +3,6 @@ import React from "react";
 import { Form } from "react-bootstrap";
 
 const AttributesFilterComponent = ({ attrsFilter, setAttrsFromFilter }) => {
-  console.log(attrsFilter);
 
   return (
     <>
@@ -22,6 +21,9 @@ const AttributesFilterComponent = ({ attrsFilter, setAttrsFromFilter }) => {
                     type="checkbox"
                     id="default-checkbox"
                     label={val}
+                    onChange={e => setAttrsFromFilter(items => {
+                      console.log(item.key)
+                    })}
                   />
                 );
               })}
