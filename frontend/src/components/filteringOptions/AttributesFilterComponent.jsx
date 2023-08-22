@@ -2,27 +2,32 @@ import React from "react";
 
 import { Form } from "react-bootstrap";
 
-const AttributesFilterComponent = () => {
+const AttributesFilterComponent = ({ attrsFilter, setAttrsFromFilter }) => {
+  console.log(attrsFilter);
+
   return (
     <>
-      {[
-        { color: ["red", "blue", "green"] },
-        { ram: ["1 TB", "2 TB", "3 TB"] },
-      ].map((item, index) => (
-        <div key={index}>
-          <Form.Label>
-            <b>{Object.keys(item)}</b>
-          </Form.Label>
-          {item[Object.keys(item)].map((i, idx) => (
-            <Form.Check
-              key={idx}
-              type="checkbox"
-              id="default-checkbox"
-              label={i}
-            />
-          ))}
-        </div>
-      ))}
+      {attrsFilter &&
+        attrsFilter.length > 0 &&
+        attrsFilter.map((item, idx) => {
+          return (
+            <div key={idx}>
+              <Form.Label>
+                <b>{item.key}</b>
+              </Form.Label>
+              {item.value.map((val, i) => {
+                return (
+                  <Form.Check
+                    key={i}
+                    type="checkbox"
+                    id="default-checkbox"
+                    label={val}
+                  />
+                );
+              })}
+            </div>
+          );
+        })}
     </>
   );
 };
