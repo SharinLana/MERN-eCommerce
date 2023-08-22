@@ -16,6 +16,8 @@ const ProductListPageComponent = ({ getAllProducts, categories }) => {
   const [attrsFilter, setAttrsFilter] = useState([]);
   const [attrsFromFilter, setAttrsFromFilter] = useState([]);
   const [showResetFiltersBtn, setShowResetFiltersBtn] = useState(false);
+  const [filters, setFilters] = useState({});
+  console.log(filters);
 
   const { categoryName } = useParams() || "";
 
@@ -47,14 +49,17 @@ const ProductListPageComponent = ({ getAllProducts, categories }) => {
       });
   }, []);
 
-  const handleFilters = (e) => {
-    e.preventDefault();
+  const handleFilters = () => {
     setShowResetFiltersBtn(true);
+    setFilters({
+      attrs: attrsFromFilter,
+    });
   };
 
-  const resetFilters = (e) => {
-    e.preventDefault();
+  const resetFilters = () => {
     setShowResetFiltersBtn(false);
+    setFilters({});
+    window.location.href = "/product-list";
   };
 
   return (
