@@ -13,11 +13,11 @@ const ProductListPageComponent = ({ getAllProducts, categories }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const [attrsFilter, setAttrsFilter] = useState([]);
-  const [attrsFromFilter, setAttrsFromFilter] = useState([]);
+  const [attrsFilter, setAttrsFilter] = useState([]); // collect ategory attributes from DB and show on the webpage
+  const [attrsFromFilter, setAttrsFromFilter] = useState([]); // collect user filters for category attributes
   const [showResetFiltersBtn, setShowResetFiltersBtn] = useState(false);
-  const [filters, setFilters] = useState({});
-  console.log(filters);
+  const [filters, setFilters] = useState({}); // collect all filters
+  const [price, setPrice] = useState(500);
 
   const { categoryName } = useParams() || "";
 
@@ -47,11 +47,13 @@ const ProductListPageComponent = ({ getAllProducts, categories }) => {
         console.log(err);
         setError(true);
       });
-  }, []);
+      console.log(filters)
+  }, [filters]);
 
   const handleFilters = () => {
     setShowResetFiltersBtn(true);
     setFilters({
+      price: price,
       attrs: attrsFromFilter,
     });
   };
@@ -73,7 +75,7 @@ const ProductListPageComponent = ({ getAllProducts, categories }) => {
               </ListGroup.Item>
               <ListGroup.Item>
                 FILTER: <br />
-                <PriceFilterComponent />
+                <PriceFilterComponent price={price} setPrice={setPrice}/>
               </ListGroup.Item>
               <ListGroup.Item>
                 <RatingFilterComponent />
