@@ -18,7 +18,8 @@ const ProductListPageComponent = ({ getAllProducts, categories }) => {
   const [showResetFiltersBtn, setShowResetFiltersBtn] = useState(false);
   const [filters, setFilters] = useState({}); // collect all filters
   const [price, setPrice] = useState(500);
-  const [ratingsFromFilter, setRatingsFromFilter] = useState({}); 
+  const [ratingsFromFilter, setRatingsFromFilter] = useState({});
+  const [categoriesFromFilter, setCategoriesFromFilter] = useState({});
 
   const { categoryName } = useParams() || "";
 
@@ -48,7 +49,7 @@ const ProductListPageComponent = ({ getAllProducts, categories }) => {
         console.log(err);
         setError(true);
       });
-      console.log(filters)
+    console.log(filters);
   }, [filters]);
 
   const handleFilters = () => {
@@ -56,6 +57,7 @@ const ProductListPageComponent = ({ getAllProducts, categories }) => {
     setFilters({
       price: price,
       rating: ratingsFromFilter,
+      category: categoriesFromFilter,
       attrs: attrsFromFilter,
     });
   };
@@ -85,7 +87,9 @@ const ProductListPageComponent = ({ getAllProducts, categories }) => {
                 />
               </ListGroup.Item>
               <ListGroup.Item>
-                <CategoryFilterComponent />
+                <CategoryFilterComponent
+                  setCategoriesFromFilter={setCategoriesFromFilter}
+                />
               </ListGroup.Item>
               <ListGroup.Item>
                 <AttributesFilterComponent
