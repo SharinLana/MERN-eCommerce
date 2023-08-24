@@ -36,13 +36,35 @@ function App() {
       <HeaderComponent />
       <ScrollToTop />
       <Routes>
+        {/* Publicly available routes */}
         <Route element={<RoutesWithUserChatComponent />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/product-list" element={<ProductListPage />} />
+          <Route path="/product-list/:pageNum" element={<ProductListPage />} />
           <Route
             path="/product-list/category/:categoryName"
+            element={<ProductListPage />}
+          />
+          <Route
+            path="/product-list/category/:categoryName/:pageNum"
+            element={<ProductListPage />}
+          />
+          <Route
+            path="/product-list/search/:searchQuery"
+            element={<ProductListPage />}
+          />
+          <Route
+            path="/product-list/search/:searchQuery/:pageNum"
+            element={<ProductListPage />}
+          />
+          <Route
+            path="/product-list/category/:categoryName/search/:searchQuery"
+            element={<ProductListPage />}
+          />
+          <Route
+            path="/product-list/category/:categoryName/search/:searchQuery/:pageNum"
             element={<ProductListPage />}
           />
           <Route path="/product-details/:id" element={<ProductDetailsPage />} />
