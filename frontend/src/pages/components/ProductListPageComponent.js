@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { Row, Col, Container, ListGroup, Button } from "react-bootstrap";
 import ProductCardComponent from "../../components/ProductCardComponent";
 import SortingComponent from "../../components/SortingComponent";
@@ -22,6 +22,7 @@ const ProductListPageComponent = ({ getAllProducts, categories }) => {
   const [categoriesFromFilter, setCategoriesFromFilter] = useState({});
 
   const { categoryName } = useParams() || "";
+  const location = useLocation();
 
   useEffect(() => {
     if (categoryName) {
@@ -106,11 +107,15 @@ const ProductListPageComponent = ({ getAllProducts, categories }) => {
                   setRatingsFromFilter={setRatingsFromFilter}
                 />
               </ListGroup.Item>
-              <ListGroup.Item>
-                <CategoryFilterComponent
-                  setCategoriesFromFilter={setCategoriesFromFilter}
-                />
-              </ListGroup.Item>
+              
+              {!location.pathname.match(/\/category/) && (
+                <ListGroup.Item>
+                  <CategoryFilterComponent
+                    setCategoriesFromFilter={setCategoriesFromFilter}
+                  />
+                </ListGroup.Item>
+              )}
+
               <ListGroup.Item>
                 <AttributesFilterComponent
                   attrsFilter={attrsFilter}
