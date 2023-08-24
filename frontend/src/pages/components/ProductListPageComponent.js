@@ -13,7 +13,7 @@ const ProductListPageComponent = ({ getAllProducts, categories }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const [attrsFilter, setAttrsFilter] = useState([]); // collect ategory attributes from DB and show on the webpage
+  const [attrsFilter, setAttrsFilter] = useState([]); // collect category attributes from DB and show on the webpage
   const [attrsFromFilter, setAttrsFromFilter] = useState([]); // collect user filters for category attributes
   const [showResetFiltersBtn, setShowResetFiltersBtn] = useState(false);
   const [filters, setFilters] = useState({}); // collect all filters
@@ -37,7 +37,27 @@ const ProductListPageComponent = ({ getAllProducts, categories }) => {
     } else {
       setAttrsFilter([]);
     }
-  }, [categoryName]);
+  }, [categoryName, categories]);
+
+  // Fetching category attributes when a category checkbox on the left is selected
+  useEffect(() => {
+    if (Object.entries(categoriesFromFilter).length > 0) {
+      setAttrsFilter([]);
+      let cat = [];
+      let count;
+      Object.entries(categoriesFromFilter).forEach(([category, checked]) => {
+        if (checked) {
+          let name = category.split("/")[0];
+          cat.push(name);
+          count = cat.filter((x) => x === name).length;
+          if (count === 1) {
+            let index = categories.findIndex((item) => item.name === name);
+            setAttrsFilter((attrs) => [...attrs, ...categories[index].attrs]);
+          }
+        }
+      });
+    }
+  }, [categoriesFromFilter, categories]);
 
   useEffect(() => {
     getAllProducts()
