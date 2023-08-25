@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { Row, Col, Container, ListGroup, Button } from "react-bootstrap";
 import ProductCardComponent from "../../components/ProductCardComponent";
 import SortingComponent from "../../components/SortingComponent";
@@ -21,11 +21,14 @@ const ProductListPageComponent = ({ getAllProducts, categories }) => {
   const [ratingsFromFilter, setRatingsFromFilter] = useState({});
   const [categoriesFromFilter, setCategoriesFromFilter] = useState({});
   const [sortOption, setSortOption] = useState("");
+  const [paginationLinksNumber, setPaginationLinksNumber] = useState(null);
+  const [pageNum, setPageNum] = useState(null);
 
   const { categoryName } = useParams() || "";
-  const { pageNumParam } = useParams() || "";
+  const { pageNumParam } = useParams() || 1;
   const { searchQuery } = useParams() || "";
   const location = useLocation();
+    const navigate = useNavigate();
 
   useEffect(() => {
     if (categoryName) {
@@ -66,8 +69,11 @@ const ProductListPageComponent = ({ getAllProducts, categories }) => {
   useEffect(() => {
     getAllProducts(filters, sortOption, categoryName, pageNumParam, searchQuery)
       .then((data) => {
+        console.log(data);
         setProducts(data.products);
         setLoading(false);
+        setPaginationLinksNumber(data.numOfPaginationButtons);
+        setPageNum(data.pageNum);
       })
       .catch((err) => {
         console.log(err);
@@ -77,6 +83,7 @@ const ProductListPageComponent = ({ getAllProducts, categories }) => {
   }, [filters, sortOption, categoryName, pageNumParam, searchQuery]);
 
   const handleFilters = () => {
+    navigate(location.pathname.replace(/\/[0-9]+$/, "")); 
     setShowResetFiltersBtn(true);
     setFilters({
       price: price,
@@ -157,8 +164,14 @@ const ProductListPageComponent = ({ getAllProducts, categories }) => {
                 />
               ))
             )}
-
-            <PaginationComponent />
+            {paginationLinksNumber > 0 ? (
+              <PaginationComponent
+                paginationLinksNumber={paginationLinksNumber}
+                pageNum={pageNum}
+                categoryName={categoryName}
+                searchQuery={searchQuery}
+              />
+            ) : null}
           </Col>
         </Row>
       </Container>
