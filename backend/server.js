@@ -1,4 +1,6 @@
 require("dotenv").config();
+const { createServer } = require("http");
+const { Server } = require("socket.io");
 const mongoose = require("mongoose");
 const express = require("express");
 const cookieParser = require("cookie-parser");
@@ -16,6 +18,8 @@ app.use(cookieParser());
 app.use(fileUpload());
 
 // Port
+const httpServer = createServer(app);
+global.io = new Server(httpServer);
 const port = process.env.PORT || 5001;
 
 // Routes middleware
@@ -45,7 +49,7 @@ app.use((error, req, res, next) => {
 const start = async () => {
   try {
     connectDB();
-    app.listen(port, () => {
+    httpServer.listen(port, () => {
       console.log(`Server running on port ${port}`);
     });
   } catch (err) {

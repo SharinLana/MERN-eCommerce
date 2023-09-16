@@ -73,4 +73,12 @@ const orderSchema = mongoose.Schema(
 );
 
 const Order = mongoose.model("Order", orderSchema);
+// For analytics chart: 
+// if something is added to the order MongoDB collection, the below function will be executed
+Order.watch().on("change", (data) => {
+  // using Socket.io
+  if (data.operationType === "insert") {
+    io.emit("newOrder", data.fullDocument);
+  }
+})
 module.exports = Order;
