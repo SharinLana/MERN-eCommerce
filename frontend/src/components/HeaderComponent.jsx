@@ -14,16 +14,24 @@ import {
 
 import { LinkContainer } from "react-router-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
+import socketIOClient from "socket.io-client";
 
 import { logout } from "../redux/actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategories } from "../redux/actions/categoryActions";
+import {
+  setChatRooms,
+  setSocket,
+  setMessageReceived,
+  removeChatRoom,
+} from "../redux/actions/chatActions";
 
 const HeaderComponent = () => {
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.userRegisterLogin);
   const itemsCount = useSelector((state) => state.cart.itemsCount);
   const { categories } = useSelector((state) => state.getCategories);
+  const { messageReceived } = useSelector((state) => state.adminChat);
   // states
   const [searchCategoryToggle, setSearchCategoryToggle] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
@@ -56,6 +64,35 @@ const HeaderComponent = () => {
       navigate("/product-list");
     }
   };
+
+  // Admin receives chat messages from user
+  useEffect(() => {
+    // ! When testing, make sure you are logged in as an ADMIN, not as client
+    if (userInfo.isAdmin) {
+      const socket = socketIOClient();
+      // If admin is available
+      socket.emit("admin connected with server", "Admin" + Math.floor(Math.random() * 1000000000000));
+      // Listening for the incoming client message
+      socket.on("server sends message from client to admin", ({ user, message }) => {
+        // console.log(message); // to test, open 2 browser windows: one for admin and one for client
+        /*   
+        ! View of the redux chatRooms structure in adminChatReducers.js
+          let chatRooms = {
+             fddf54gfgfSocketID: [{ "client": "dsfdf" }, { "client": "dsfdf" }, { "admin": "dsfdf" }],
+          };
+
+          ! fddf54gfgfSocketID = id of the client, created by Socket.io
+         */
+        dispatch(setMessageReceived(true));
+        dispatch(setSocket(socket));
+        dispatch(setChatRooms(user, message)); // next, go to pages/admin/AdminChatsPage.js
+      });
+      // socket.on("disconnected", ({ reason, socketId }) => {
+      //   dispatch(removeChatRoom(socketId));
+      // });
+      return () => socket.disconnect(); // break connection if user left the chat component
+    }
+  }, [userInfo.isAdmin]);
 
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -101,7 +138,10 @@ const HeaderComponent = () => {
               <LinkContainer to="/admin/orders">
                 <Nav.Link>
                   Admin
-                  <span className="position-absolute top-1 start-10 translate-middle p-2 bg-danger border border-light rounded-circle"></span>
+                  {/* Red indicator for the incoming message */}
+                  {messageReceived && (
+                    <span className="position-absolute top-1 start-10 translate-middle p-2 bg-danger border border-light rounded-circle"></span>
+                  )}
                 </Nav.Link>
               </LinkContainer>
             ) : userInfo.name && !userInfo.isAdmin ? (
